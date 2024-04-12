@@ -2,14 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:testapp/screens/AddressSearchScreen.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
