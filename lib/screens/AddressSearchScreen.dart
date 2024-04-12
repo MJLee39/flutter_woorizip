@@ -19,6 +19,7 @@ class _AddressSearchScreenState extends State<AddressSearchScreen> {
   List<String> _dongList = [];
   List<String> _floorList = [];
   List<String> _hoList = [];
+  bool _isAddressSelected = false;
 
   void _onSearch() async {
     final addresses = await _apiController.fetchDataFromApi(_searchController.text);
@@ -46,7 +47,8 @@ class _AddressSearchScreenState extends State<AddressSearchScreen> {
       _selectedFloor = '';
       _hoList = [];
       _selectedHo = '';
-      _addressList = []; // Clear the address list
+      _addressList = [];
+      _isAddressSelected = true;
     });
   }
 
@@ -86,6 +88,20 @@ class _AddressSearchScreenState extends State<AddressSearchScreen> {
     });
   }
 
+  void _resetAddress() {
+    setState(() {
+      _selectedAddress = '';
+      _selectedDong = '';
+      _selectedFloor = '';
+      _selectedHo = '';
+      _selectedAddressData = {};
+      _dongList = [];
+      _floorList = [];
+      _hoList = [];
+      _isAddressSelected = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -94,26 +110,27 @@ class _AddressSearchScreenState extends State<AddressSearchScreen> {
       ),
       body: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: _searchController,
-                    decoration: InputDecoration(
-                      labelText: '주소 검색',
+          if (!_isAddressSelected)
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                      controller: _searchController,
+                      decoration: InputDecoration(
+                        labelText: '주소 검색',
+                      ),
                     ),
                   ),
-                ),
-                IconButton(
-                  icon: Icon(Icons.search),
-                  onPressed: _onSearch,
-                ),
-              ],
+                  IconButton(
+                    icon: Icon(Icons.search),
+                    onPressed: _onSearch,
+                  ),
+                ],
+              ),
             ),
-          ),
-          if (_selectedAddress.isEmpty)
+          if (!_isAddressSelected)
             Expanded(
               child: ListView.builder(
                 itemCount: _addressList.length,
@@ -125,15 +142,27 @@ class _AddressSearchScreenState extends State<AddressSearchScreen> {
                 },
               ),
             ),
-          if (_selectedAddress.isNotEmpty)
+          if (_isAddressSelected)
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  Text('선택한 주소: $_selectedAddress'),
+                  SizedBox(width: 8),
+                  ElevatedButton(
+                    onPressed: _resetAddress,
+                    child: Text('주소 다시 검색'),
+                  ),
+                ],
+              ),
+            ),
+          if (_isAddressSelected)
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('선택한 주소: $_selectedAddress'),
-                    SizedBox(height: 8),
                     DropdownButtonFormField<String>(
                       value: _selectedDong,
                       items: _dongList.map((dong) {
