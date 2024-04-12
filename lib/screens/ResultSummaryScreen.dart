@@ -27,7 +27,9 @@ class ResultSummaryScreen extends StatelessWidget {
           children: <Widget>[
             Text("선택한 주소: $selectedAddress", style: TextStyle(fontSize: 20)),
             SizedBox(height: 10),
+            if (selectedDong != "")
             Text("선택한 동: $selectedDong", style: TextStyle(fontSize: 20)),
+            if (selectedDong != "")
             SizedBox(height: 10),
             Text("선택한 층: $selectedFloor", style: TextStyle(fontSize: 20)),
             SizedBox(height: 10),

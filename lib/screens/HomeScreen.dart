@@ -37,13 +37,8 @@ class _HomeScreenState extends State<HomeScreen> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12.0),
             child: TextButton(
-              onPressed: () async{
-               Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => AddressSearchScreen(),
-                          ),
-                        );
+              onPressed: () {
+                Get.to(() => AddressSearchScreen());
               },
               style: TextButton.styleFrom(
                 backgroundColor: Colors.white,
