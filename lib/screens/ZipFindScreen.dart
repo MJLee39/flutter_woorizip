@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:http/http.dart';
 import 'package:testapp/widgets/BottomNavigationWidget.dart';
 import 'package:testapp/screens/ZipDetailScreen.dart'; // DetailScreen.dart를 import합니다.
 import 'package:get/get.dart';
