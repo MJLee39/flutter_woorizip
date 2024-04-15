@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:http/http.dart';
 import 'package:testapp/screens/UpdatePictureScreen.dart';
+import 'package:testapp/widgets/AppBarWidget.dart';
+import 'package:testapp/widgets/TextHeaderWidget.dart';
 
 class ResultSummaryScreen extends StatelessWidget {
   final String selectedAddress;
@@ -7,44 +11,40 @@ class ResultSummaryScreen extends StatelessWidget {
   final String selectedFloor;
   final String selectedHo;
 
-  ResultSummaryScreen({
-    Key? key,
+  const ResultSummaryScreen({
+    super.key,
     required this.selectedAddress,
     required this.selectedDong,
     required this.selectedFloor,
     required this.selectedHo,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("선택 확인"),
-      ),
-      body: Center(
+      appBar: const AppBarWidget(),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text("선택한 주소: $selectedAddress", style: TextStyle(fontSize: 20)),
-            SizedBox(height: 10),
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const TextHeaderWidget(text: "선택한 정보를 확인해 주세요"),
+            const SizedBox(height: 10),
+            Text(selectedAddress, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+            const SizedBox(height: 10),
             if (selectedDong != "")
-            Text("선택한 동: $selectedDong", style: TextStyle(fontSize: 20)),
-            if (selectedDong != "")
-            SizedBox(height: 10),
-            Text("선택한 층: $selectedFloor", style: TextStyle(fontSize: 20)),
-            SizedBox(height: 10),
-            Text("선택한 호: $selectedHo", style: TextStyle(fontSize: 20)),
-            SizedBox(height: 10),
+              Text("$selectedDong $selectedFloor $selectedHo", style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+            if (selectedDong == "")
+              Text("$selectedFloor $selectedHo", style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+        
             ElevatedButton(
-            onPressed: () {
-              // Navigate to UpdatePictureScreen when the button is pressed
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => UpdatePictureScreen()),
-              );
-            },
-            child: Text("확인"),
-          ),
+              onPressed: () {
+                // Navigate to UpdatePictureScreen when the button is pressed
+                Get.to(() => UpdatePictureScreen());
+              },
+              child: const Text("확인"),
+            ),
           ],
         ),
       ),

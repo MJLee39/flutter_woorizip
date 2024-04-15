@@ -30,7 +30,6 @@ class DetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[

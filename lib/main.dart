@@ -5,7 +5,6 @@ import 'package:testapp/controllers/NavigationController.dart';
 import 'package:testapp/screens/AddressSearchScreen.dart';
 import 'package:testapp/screens/HomeScreen.dart';
 import 'package:testapp/screens/ZipFindScreen.dart';
-import 'package:testapp/widgets/BottomNavigationWidget.dart'; // BottomNavigationWidget import 추가
 
 
 void main() {
