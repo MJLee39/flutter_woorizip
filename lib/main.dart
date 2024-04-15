@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:testapp/screens/AddressSearchScreen.dart';
 import 'package:testapp/screens/HomeScreen.dart';
 import 'package:testapp/screens/ZipFindScreen.dart';
+import 'package:testapp/widgets/BottomNavigationWidget.dart'; // BottomNavigationWidget import 추가
+
 
 void main() {
   runApp(GetMaterialApp(
@@ -12,7 +14,7 @@ void main() {
     brightness: Brightness.light,
         // scaffoldBackgroundColor를 흰색으로 설정하여 기본 배경을 흰색으로 만듭니다.
     scaffoldBackgroundColor: Colors.white,
-  
+
     ),
     initialRoute: '/',
     getPages: [

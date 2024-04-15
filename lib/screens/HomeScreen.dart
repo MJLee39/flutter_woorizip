@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:testapp/screens/AddressSearchScreen.dart';
+import 'package:testapp/screens/ZipFindScreen.dart'; // ZipFindScreen import 추가
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({Key? key});
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +63,9 @@ class HomeScreen extends StatelessWidget {
               children: [
                 Expanded(
                   child: TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Get.to(() => ZipFindScreen());
+                    },
                     style: TextButton.styleFrom(
                       backgroundColor: Colors.white,
                       minimumSize: const Size(0, 80),
@@ -117,7 +120,9 @@ class HomeScreen extends StatelessWidget {
               children: [
                 Expanded(
                   child: TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Get.to(() => ZipFindScreen());
+                    },
                     style: TextButton.styleFrom(
                       backgroundColor: Colors.white,
                       minimumSize: const Size(0, 80),
