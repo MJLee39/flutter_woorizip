@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:testapp/controllers/ApiController.dart';
-import 'package:testapp/screens/ResultSummaryScreen.dart';
-import 'package:testapp/widgets/AppBarWidget.dart';
-import 'package:testapp/widgets/TextHeaderWidget.dart';
+import 'package:testapp/controllers/api_controller.dart';
+import 'package:testapp/screens/result_summary_screen.dart';
+import 'package:testapp/widgets/app_bar_widget.dart';
+import 'package:testapp/widgets/text_header_widget.dart';
 
 class AddressSearchScreen extends GetView<ApiController> {
   AddressSearchScreen({super.key});

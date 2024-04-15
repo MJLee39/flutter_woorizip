@@ -15,7 +15,7 @@ class _UpdatePictureScreenState extends State<UpdatePictureScreen> {
     final List<XFile>? images = await _picker.pickMultiImage();
 
     if (images != null) {
-      for (XFile image in images) {
+      for (XFile image in images) { 
         final Uint8List imageData = await image.readAsBytes();
         setState(() {
           _imagesData.add(imageData);
@@ -51,7 +51,7 @@ class _UpdatePictureScreenState extends State<UpdatePictureScreen> {
                     itemBuilder: (context, index) {
                       return Stack(
                         children: [
-                          Container(
+                          SizedBox(
                             height: 300,
                             width: double.infinity,
                             child: Image.memory(_imagesData[index], fit: BoxFit.cover),
@@ -60,7 +60,7 @@ class _UpdatePictureScreenState extends State<UpdatePictureScreen> {
                             right: 4,
                             top: 4,
                             child: IconButton(
-                              icon: Icon(Icons.delete, color: Colors.red),
+                              icon: const Icon(Icons.delete, color: Colors.red),
                               onPressed: () => _deleteImage(index),
                             ),
                           ),
@@ -71,22 +71,22 @@ class _UpdatePictureScreenState extends State<UpdatePictureScreen> {
           ),
           if (_imagesData.length > 1)
             Container(
-              padding: EdgeInsets.all(8),
+              padding: const EdgeInsets.all(8),
               alignment: Alignment.center,
               child: ElevatedButton(
                 onPressed: _registerImages,
-                child: Text("등록"),
                 style: ButtonStyle(
-                  padding: MaterialStateProperty.all(EdgeInsets.symmetric(horizontal: 40, vertical: 16),
+                  padding: MaterialStateProperty.all(const EdgeInsets.symmetric(horizontal: 40, vertical: 16),
                   ),
-                )
+                ),
+                child: const Text("등록")
               ),
             ),
         ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _pickImages,
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
     );
   }

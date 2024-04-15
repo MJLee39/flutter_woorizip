@@ -39,6 +39,7 @@ dependencies:
   get:
   image_picker:
   flutter_native_splash:
+  get_storage:
 
 dev_dependencies:
   flutter_test:

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart';
-import 'package:testapp/screens/UpdatePictureScreen.dart';
-import 'package:testapp/widgets/AppBarWidget.dart';
-import 'package:testapp/widgets/TextHeaderWidget.dart';
+import 'package:testapp/screens/update_picture_screen.dart';
+import 'package:testapp/widgets/app_bar_widget.dart';
+import 'package:testapp/widgets/text_header_widget.dart';
 
 class ResultSummaryScreen extends StatelessWidget {
   final String selectedAddress;

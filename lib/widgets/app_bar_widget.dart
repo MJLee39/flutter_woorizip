@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:testapp/utils/AppColors.dart';
+import 'package:testapp/utils/app_colors.dart';
 
 class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
   const AppBarWidget({super.key});

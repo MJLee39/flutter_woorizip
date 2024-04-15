@@ -1,40 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
-import 'package:testapp/controllers/NavigationController.dart';
-import 'package:testapp/screens/AddressSearchScreen.dart';
-import 'package:testapp/screens/HomeScreen.dart';
-import 'package:testapp/screens/ZipFindScreen.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:testapp/controllers/navigation_controller.dart';
+import 'package:testapp/routes/app_pages.dart';
+import 'package:testapp/services/auth_service.dart';
 
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await GetStorage.init(); // 로그인 상태 저장을 위해 GetStorage 초기화
   runApp(GetMaterialApp(
-    
-    initialBinding: BindingsBuilder(() {
-      Get.put(NavigationController());
-    }),
-    
+    initialBinding: BindingsBuilder(
+        () {
+          Get.put(NavigationController());
+          Get.put(AuthService());
+        },
+    ),
     theme: ThemeData(
       fontFamily: 'Pretendard',
       brightness: Brightness.light,
       scaffoldBackgroundColor: Colors.white,
-      canvasColor: Colors.white, // 캔버스 색상 설정
-      primaryColorLight: Colors.white, // 라이트 모드 기본 색상 설정
+      canvasColor: Colors.white,
+      primaryColorLight: Colors.white,
     ),
     darkTheme: ThemeData(
       fontFamily: 'Pretendard',
       brightness: Brightness.light,
-      scaffoldBackgroundColor: Colors.white, // 다크 모드에서 배경색 강제 설정
-      canvasColor: Colors.white, // 캔버스 색상 설정
-      primaryColorLight: Colors.white, // 라이트 모드 기본 색상 설정
+      scaffoldBackgroundColor: Colors.white,
+      canvasColor: Colors.white,
+      primaryColorLight: Colors.white,
     ),
-  
-    initialRoute: '/',
-    getPages: [
-      GetPage(name: '/', page: () => const HomeScreen(), transition: Transition.noTransition),
-      GetPage(name: '/addressSearch', page: () => AddressSearchScreen(), transition: Transition.noTransition),
-      GetPage(name: '/zipFind', page: () => const ZipFindScreen(), transition: Transition.noTransition),
-    ],
+    initialRoute: AppPages.initial,
+    getPages: AppPages.routes,
   ));
-  FlutterNativeSplash.remove(); // 스플래시 화면 제거
+  
+  FlutterNativeSplash.remove();
 }

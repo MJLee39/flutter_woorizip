@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:testapp/utils/AppColors.dart';
+import 'package:testapp/utils/app_colors.dart';
 
 class TextHeaderWidget extends StatelessWidget {
   final String text; // String 타입의 파라미터 추가
