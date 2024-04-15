@@ -37,6 +37,12 @@ class BottomNavigationWidget extends GetView<NavigationController> {
         ],
         onTap: (index) {
           controller.currentIndex = index;
+          print(index);
+          if (index == 0) {
+            Get.toNamed('/'); // 홈 페이지로 이동
+          } else if (index == 1) {
+            Get.toNamed('/addressSearch'); // 다른 페이지로 이동
+          }
           // 필요에 따라 다른 페이지로 이동하는 로직 추가
         },
       ),
