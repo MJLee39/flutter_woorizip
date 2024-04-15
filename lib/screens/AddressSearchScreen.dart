@@ -35,29 +35,29 @@ class _AddressSearchScreenState extends State<AddressSearchScreen> {
     });
   }
 
-  void _fetchDetailAddress(Map<String, dynamic> addressData) async {
-    _detailData = await _apiController.fetchDetailAddress(
-      addressData['admCd'],
-      addressData['rnMgtSn'],
-      addressData['udrtYn'],
-      addressData['searchType'],
-      addressData['dongNm'],
-      addressData['buldMnnm'],
-      addressData['buldSlno'],
-    );
-    setState(() {
-      _selectedAddressData = addressData;
-      _selectedAddress = addressData['roadAddr'];
-      _dongList = _detailData.keys.toList();
-      _selectedDong = _dongList.isNotEmpty ? _dongList.first : '';
-      _floorList = [];
-      _selectedFloor = '';
-      _hoList = [];
-      _selectedHo = '';
-      _addressList = [];
-      _isAddressSelected = true;
-    });
-  }
+void _fetchDetailAddress(Map<String, dynamic> addressData, {String? dongNm, String searchType = 'dong'}) async {
+  _detailData = await _apiController.fetchDetailAddress(
+    addressData['admCd'],
+    addressData['rnMgtSn'],
+    addressData['udrtYn'],
+    searchType,
+    dongNm ?? addressData['dongNm'],
+    addressData['buldMnnm'],
+    addressData['buldSlno'],
+  );
+  setState(() {
+    _selectedAddressData = addressData;
+    _selectedAddress = addressData['roadAddr'];
+    _dongList = _detailData.keys.toList();
+    _selectedDong = _dongList.isNotEmpty ? _dongList.first : '';
+    _floorList = _detailData[_selectedDong]?.keys.toList() ?? [];
+    _selectedFloor = _floorList.isNotEmpty ? _floorList.first : '';
+    _hoList = _detailData[_selectedDong]?[_selectedFloor] ?? [];
+    _selectedHo = _hoList.isNotEmpty ? _hoList.first : '';
+    _addressList = [];
+    _isAddressSelected = true;
+  });
+}
 
   void _resetAddress() {
     setState(() {
@@ -142,7 +142,7 @@ class _AddressSearchScreenState extends State<AddressSearchScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      DropdownButtonFormField<String>(
+                     DropdownButtonFormField<String>(
                         value: _selectedDong,
                         items: _dongList.map((dong) {
                           return DropdownMenuItem(
@@ -153,11 +153,7 @@ class _AddressSearchScreenState extends State<AddressSearchScreen> {
                         onChanged: (value) {
                           setState(() {
                             _selectedDong = value!;
-                            _floorList = _detailData[value]?.keys.toList() ?? [];
-                            _selectedFloor =
-                                _floorList.isNotEmpty ? _floorList.first : '';
-                            _hoList = [];
-                            _selectedHo = '';
+                            _fetchDetailAddress(_selectedAddressData, dongNm: value, searchType: 'floorho');
                           });
                         },
                         decoration: const InputDecoration(
