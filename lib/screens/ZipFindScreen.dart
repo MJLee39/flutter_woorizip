@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:http/http.dart';
 import 'package:testapp/widgets/BottomNavigationWidget.dart';
-import 'package:testapp/screens/DetailScreen.dart'; // DetailScreen.dart를 import합니다.
+import 'package:testapp/screens/ZipDetailScreen.dart'; // DetailScreen.dart를 import합니다.
+import 'package:get/get.dart';
 
 class ZipFindScreen extends StatefulWidget {
   const ZipFindScreen({super.key});
@@ -145,13 +147,9 @@ class _ZipFindScreenState extends State<ZipFindScreen> {
 
           return GestureDetector(
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => DetailScreen(itemID: item['id']), // DetailScreen으로 이동하면서 itemID를 전달합니다.
-                ),
-              );
+              Get.to(DetailScreen(itemID: item['id']), transition: Transition.noTransition);
             },
+
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
               child: Row(
