@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:testapp/controllers/NavigationController.dart';
 
-class BottomNavigationWidget extends StatelessWidget {
+class BottomNavigationWidget extends GetView<NavigationController> {
   const BottomNavigationWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BottomNavigationBar(
+    return Obx(
+      () => BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         selectedItemColor: Colors.blue,
         unselectedItemColor: Colors.grey,
-        currentIndex: 2,
+        currentIndex: controller.currentIndex,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
@@ -32,9 +35,11 @@ class BottomNavigationWidget extends StatelessWidget {
             label: '더보기',
           ),
         ],
-        onTap: (int index) {
-          // Handle navigation
+        onTap: (index) {
+          controller.currentIndex = index;
+          // 필요에 따라 다른 페이지로 이동하는 로직 추가
         },
-      );
+      ),
+    );
   }
 }

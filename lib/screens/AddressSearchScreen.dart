@@ -116,6 +116,7 @@ class AddressSearchScreen extends GetView<ApiController> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          if(controller.dongList.length > 1)
                           DropdownButtonFormField<String>(
                             value: _selectedDong.value.isNotEmpty
                                 ? _selectedDong.value
