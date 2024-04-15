@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
+import 'package:testapp/controllers/NavigationController.dart';
 import 'package:testapp/screens/AddressSearchScreen.dart';
 import 'package:testapp/screens/HomeScreen.dart';
 import 'package:testapp/screens/ZipFindScreen.dart';
@@ -8,14 +10,26 @@ import 'package:testapp/widgets/BottomNavigationWidget.dart'; // BottomNavigatio
 
 void main() {
   runApp(GetMaterialApp(
+    
+    initialBinding: BindingsBuilder(() {
+      Get.put(NavigationController());
+    }),
+    
     theme: ThemeData(
-        // 글꼴 설정
-    fontFamily: 'Pretendard',
-    brightness: Brightness.light,
-        // scaffoldBackgroundColor를 흰색으로 설정하여 기본 배경을 흰색으로 만듭니다.
-    scaffoldBackgroundColor: Colors.white,
-
+      fontFamily: 'Pretendard',
+      brightness: Brightness.light,
+      scaffoldBackgroundColor: Colors.white,
+      canvasColor: Colors.white, // 캔버스 색상 설정
+      primaryColorLight: Colors.white, // 라이트 모드 기본 색상 설정
     ),
+    darkTheme: ThemeData(
+      fontFamily: 'Pretendard',
+      brightness: Brightness.light,
+      scaffoldBackgroundColor: Colors.white, // 다크 모드에서 배경색 강제 설정
+      canvasColor: Colors.white, // 캔버스 색상 설정
+      primaryColorLight: Colors.white, // 라이트 모드 기본 색상 설정
+    ),
+  
     initialRoute: '/',
     getPages: [
       GetPage(name: '/', page: () => const HomeScreen(), transition: Transition.noTransition),
@@ -23,4 +37,5 @@ void main() {
       GetPage(name: '/zipFind', page: () => const ZipFindScreen(), transition: Transition.noTransition),
     ],
   ));
+  FlutterNativeSplash.remove(); // 스플래시 화면 제거
 }

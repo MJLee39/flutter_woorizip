@@ -19,7 +19,7 @@ class ResultSummaryScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("선택 확인"),
+        title: const Text("선택 확인"),
       ),
       body: Center(
         child: Column(
