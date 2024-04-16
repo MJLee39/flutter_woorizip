@@ -24,6 +24,9 @@ class DetailScreen extends StatelessWidget {
     "location": "서울시 마포구 상암동",
     "showYes": "public",
     "note": "상세주소 11동",
+    "room": 1,
+    "toilet":1,
+    "maintenanceFee": 1.0
   };
 
   @override
@@ -97,8 +100,15 @@ class DetailScreen extends StatelessWidget {
                     ],
                   ),
                   SizedBox(height: 10.0),
+                  Row(
+                      children: [
+                        Text("관리비 "+zipData["maintenanceFee"].toString()+"만원",
+                        style: TextStyle(fontSize: 20.0),)
+                      ],
+                  ),
+                  SizedBox(height: 20.0),
                   Divider(color: Colors.blueAccent),
-                  SizedBox(height: 10.0),
+                  SizedBox(height: 20.0),
                   Row(
                     children: <Widget>[
                       Icon(
@@ -150,13 +160,27 @@ class DetailScreen extends StatelessWidget {
                   Row(
                     children: <Widget>[
                       Icon(
+                        Icons.dashboard,
+                        color: Colors.black,
+                        size: 25.0,
+                      ),
+                      SizedBox(width: 10.0),
+                      Text(
+                          "방 "+zipData["room"].toString()+"개, 화장실 "+zipData["toilet"].toString()+"개",
+                          style: TextStyle(fontSize: 25.0)),
+                    ],
+                  ),
+                  SizedBox(height: 10.0),
+                  Row(
+                    children: <Widget>[
+                      Icon(
                         Icons.date_range,
                         color: Colors.black,
                         size: 25.0,
                       ),
                       SizedBox(width: 10.0),
                       Text(
-                          zipData["available"].toString().substring(0, 10),
+                          zipData["available"].toString().substring(0, 10) + " 이후 입주 가능",
                           style: TextStyle(fontSize: 25.0)),
                     ],
                   ),
@@ -185,6 +209,7 @@ class DetailScreen extends StatelessWidget {
                   onPressed: () {
                     // 버튼이 클릭되었을 때 수행할 동작
                     // 예: 문의하기 기능 실행
+
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.blue, // 버튼의 배경색을 파란색으로 설정
