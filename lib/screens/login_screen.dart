@@ -4,7 +4,7 @@ import 'package:testapp/widgets/app_bar_widget.dart';
 import 'package:testapp/widgets/google_login_button_widget.dart';
 import 'package:testapp/widgets/kakao_login_button_widget.dart';
 import 'package:testapp/widgets/naver_login_button_widget.dart';
-import 'package:testapp/widgets/other_login_small_button_widget%20copy.dart';
+import 'package:testapp/widgets/other_login_small_button_widget.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -23,7 +23,7 @@ class LoginScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    '3초만에 로그인 하고',
+                    '1초만에 로그인 하고',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Colors.black,

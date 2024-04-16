@@ -6,16 +6,15 @@ import 'package:testapp/controllers/navigation_controller.dart';
 import 'package:testapp/routes/app_pages.dart';
 import 'package:testapp/services/auth_service.dart';
 
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init(); // 로그인 상태 저장을 위해 GetStorage 초기화
   runApp(GetMaterialApp(
     initialBinding: BindingsBuilder(
-        () {
-          Get.put(NavigationController());
-          Get.put(AuthService());
-        },
+      () {
+        Get.put(NavigationController());
+        Get.put(AuthService());
+      },
     ),
     theme: ThemeData(
       fontFamily: 'Pretendard',
@@ -34,6 +33,6 @@ void main() async {
     initialRoute: AppPages.initial,
     getPages: AppPages.routes,
   ));
-  
+
   FlutterNativeSplash.remove();
 }
