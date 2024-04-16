@@ -11,4 +11,8 @@ class AppColors {
   static const Color subColor2 = Color(0xFF123f6d);
   static const Color subColor3 = Color(0xFF00aec6);
   static const Color subColor4 = Color(0xFF00dfad);
+
+
+  static const Color kakaoColor = Color(0xFFFEE500);
+  static const Color naverColor = Color(0xFF03C75A);
 }
