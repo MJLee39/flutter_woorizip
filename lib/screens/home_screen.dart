@@ -29,7 +29,7 @@ class HomeScreen extends StatelessWidget {
                 style: TextButton.styleFrom(
                   backgroundColor: AppColors.mainColorTest,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(6),
+                    borderRadius: BorderRadius.circular(12),
                     side: BorderSide(
                       color: Colors.grey[300]!,
                       width: 1.0,
