@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:testapp/widgets/BottomNavigationWidget.dart';
-import 'package:testapp/screens/ZipDetailScreen.dart'; // DetailScreen.dart를 import합니다.
+import 'package:testapp/widgets/bottom_navigation_widget.dart';
+import 'package:testapp/screens/zip_detail_screen.dart'; // DetailScreen.dart를 import합니다.
 import 'package:get/get.dart';
 
 class ZipFindScreen extends StatefulWidget {

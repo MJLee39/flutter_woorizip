@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:testapp/widgets/BottomNavigationWidget.dart';
+import 'package:testapp/widgets/bottom_navigation_widget.dart';
 
 class DetailScreen extends StatelessWidget {
   final String itemID; // zipID를 저장하기 위한 필드
