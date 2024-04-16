@@ -79,7 +79,7 @@ class HomeScreen extends StatelessWidget {
                   HalfButtonWidget(
                       text: "원룸",
                       imagePath: "images/icon_oneroom.png",
-                      urlPath: "urlPath"
+                      urlPath: "/map/oneroom"
                   ),
                   SizedBox(width: 10),
                   HalfButtonWidget(
