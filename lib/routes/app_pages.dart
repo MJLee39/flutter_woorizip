@@ -38,7 +38,7 @@ class AppPages {
     ),
     _getPageWithMiddleware(
       name: '/zipFind',
-      page: () => const ZipFindScreen(),
+      page: () => ZipFindScreen(),
       middlewares: [],
     ),
     _getPageWithMiddleware(
@@ -56,7 +56,7 @@ class AppPages {
       middlewares: [],
     ),
     _getPageWithMiddleware(
-      name: '/map/:buildingType',
+      name: '/map/buildingType',
       page: () {
         final buildingType = Get.parameters['buildingType'];
         return MapScreen(buildingType: buildingType ?? "");

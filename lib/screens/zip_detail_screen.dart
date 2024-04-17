@@ -13,7 +13,7 @@ class DetailScreen extends StatefulWidget  {
 }
 
 class _DetailScreenState extends State<DetailScreen> {
-  late Map<String, dynamic> zipData;
+  late Map<String, dynamic> zipData = {};
 
   @override
   void initState() {
@@ -41,7 +41,7 @@ class _DetailScreenState extends State<DetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    if (zipData == null) {
+    if (zipData.isEmpty) {
       return Scaffold(
         body: Center(
           child: CircularProgressIndicator(), // 데이터를 기다리는 동안 로딩 표시
