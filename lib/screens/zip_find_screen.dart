@@ -99,7 +99,8 @@ class ZipFindScreen extends StatelessWidget {
                     children: [
                       Expanded(
                         flex: 2,
-                        child: Image.network('https://test.teamwaf.app/attachment/'+item['attachments']),
+                        child: Image.network('https://test.teamwaf.app/attachment/'+item['attachments'],
+                            fit: BoxFit.cover),
                       ),
                       Expanded(
                         flex: 3,
