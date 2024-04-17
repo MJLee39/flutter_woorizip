@@ -46,6 +46,7 @@ dependencies:
   url_launcher: ^6.2.5
   stomp_dart_client: ^1.0.3
   eventflux: ^1.6.9
+  flutter_svg:
 
 dev_dependencies:
   flutter_test:
@@ -71,8 +72,8 @@ flutter_native_splash:
   # splash screen to a png image.  This is useful for gradients. The image will be stretch to the
   # size of the app. Only one parameter can be used, color and background_image cannot both be set.
   color: "#ffffff"
-  # background_image
-  branding: "assets/images/logo_whitebackground.png"
+  background_image: "assets/images/splash_background.png"
+  # branding: "assets/images/logo_whitebackground.png"
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 

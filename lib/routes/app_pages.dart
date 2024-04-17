@@ -52,11 +52,8 @@ class AppPages {
       middlewares: [],
     ),
     // _getPageWithMiddleware(
-    //   name: '/chat/:accountId',
-    //   page: () {
-    //     final accountId = Get.parameters['accountId'];
-    //     return ChatRoomList(accountId: accountId ?? "qassadsadsa",);
-    //   },
+    //   name: '/zipListLocation',
+    //   page: () => const ZipListLocationScreen(),
     //   middlewares: [],
     // ),
   ];
