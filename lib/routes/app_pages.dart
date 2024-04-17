@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:testapp/chat/chatroom_list_screen.dart';
+import 'package:testapp/map/screens/map_screen.dart';
 import 'package:testapp/middleware/auth_guard.dart';
 import 'package:testapp/screens/address_search_screen.dart';
 import 'package:testapp/screens/home_screen.dart';
@@ -51,6 +53,14 @@ class AppPages {
     _getPageWithMiddleware(
       name: '/my_listings',
       page: () => const ZipListAgentScreen(),
+      middlewares: [],
+    ),
+    _getPageWithMiddleware(
+      name: '/map/:buildingType',
+      page: () {
+        final buildingType = Get.parameters['buildingType'];
+        return MapScreen(buildingType: buildingType ?? "");
+      },
       middlewares: [],
     ),
   ];

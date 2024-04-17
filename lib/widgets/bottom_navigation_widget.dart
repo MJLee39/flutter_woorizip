@@ -49,6 +49,8 @@ class BottomNavigationWidget extends GetView<NavigationController> {
               Get.toNamed('/'); // 홈 페이지로 이동
             } else if (index == 1) {
               Get.toNamed('/other'); // 다른 페이지로 이동
+            } else if (index == 3) {
+              Get.toNamed('/chat');
             } else if (index == 4) {
               Get.toNamed('/seeMore'); // '더보기' 페이지로 이동
             }
