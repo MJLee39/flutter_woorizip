@@ -4,7 +4,7 @@ import 'package:testapp/widgets/app_bar_widget.dart';
 import 'package:testapp/widgets/google_login_button_widget.dart';
 import 'package:testapp/widgets/kakao_login_button_widget.dart';
 import 'package:testapp/widgets/naver_login_button_widget.dart';
-import 'package:testapp/widgets/other_login_small_button_widget%20copy.dart';
+import 'package:testapp/widgets/other_login_small_button_widget.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
