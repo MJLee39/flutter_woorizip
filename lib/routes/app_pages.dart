@@ -41,5 +41,10 @@ class AppPages {
       name: '/addressSearch',
       page: () => AddressSearchScreen(),
     ),
+    // _getPageWithMiddleware(
+    //   name: '/zipListLocation',
+    //   page: () => const ZipListLocationScreen(),
+    //   middlewares: [],
+    // ),
   ];
 }

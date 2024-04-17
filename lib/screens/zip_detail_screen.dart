@@ -8,7 +8,7 @@ class DetailScreen extends StatelessWidget {
 
   final Map<String, dynamic> zipData = {
     "id": "1",
-    "attachments": "data44",
+    "attachments": "af0a4ad6-c546-45c5-b527-32ac565b7f2d",
     "agentId": "명진 부동산44",
     "checkedAt": "2024-04-09T15:00:00",
     "estateId": "1",
@@ -41,7 +41,7 @@ class DetailScreen extends StatelessWidget {
                   height: MediaQuery.of(context).size.height * 0.5,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage("/images/room2.jpg"), // 변경된 배경 이미지 URL
+                      image: NetworkImage('https://test.teamwaf.app/attachment/'+zipData['attachments']), //배경 이미지 URL
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -59,8 +59,23 @@ class DetailScreen extends StatelessWidget {
                 ),
               ],
             ),
+            Row(
+            children: [
+                Container(
+                  padding: EdgeInsets.all(10.0),
+                  decoration: BoxDecoration(
+                    color: Colors.yellow, // 노란색 배경색상
+                    borderRadius: BorderRadius.circular(10.0), // 모서리 둥글게
+                  ),
+                  child: Text( "확인 일자: "+
+                      zipData["checkedAt"].toString().substring(0,10), // checkedAt 정보 표시
+                    style: TextStyle(fontSize: 18.0),
+                  ),
+                ),
+              ]
+            ),
             Padding(
-              padding: const EdgeInsets.all(40.0),
+              padding: const EdgeInsets.all(20.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -81,21 +96,10 @@ class DetailScreen extends StatelessWidget {
 
                   SizedBox(height: 10.0),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
                           "월세 " + zipData["deposit"].toString() + " / " + zipData["fee"].toString(),
-                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 40.0)),
-                      Container(
-                        padding: EdgeInsets.all(10.0),
-                        decoration: BoxDecoration(
-                          color: Colors.yellow, // 노란색 배경색상
-                          borderRadius: BorderRadius.circular(10.0), // 모서리 둥글게
-                        ),
-                        child: Text( "확인 일자: "+
-                          zipData["checkedAt"].toString().substring(0,10), // checkedAt 정보 표시
-                          style: TextStyle(fontSize: 18.0),
-                        ),
+                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 40.0)
                       ),
                     ],
                   ),
