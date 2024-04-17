@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:testapp/widgets/app_bar_widget.dart';
-import 'package:testapp/widgets/google_login_button_widget.dart';
 import 'package:testapp/widgets/kakao_login_button_widget.dart';
-import 'package:testapp/widgets/naver_login_button_widget.dart';
-import 'package:testapp/widgets/other_login_small_button_widget%20copy.dart';
+import 'package:testapp/widgets/other_login_small_button_widget.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -52,7 +49,7 @@ class LoginScreen extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text('다른 방법으로 시작하기', style: TextStyle(color: Colors.grey, fontSize: 14)),
+            Text('다른 방법으로 시작하기', style: TextStyle(color: Color(0xFF9E9E9E), fontSize: 14)),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [

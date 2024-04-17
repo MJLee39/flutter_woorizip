@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:testapp/utils/app_colors.dart';
 
 class GoogleLoginButtonWidget extends StatelessWidget {
   const GoogleLoginButtonWidget({super.key});
