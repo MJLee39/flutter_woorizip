@@ -10,7 +10,7 @@ class KakaoLoginButtonWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: () {
-        Get.toNamed('/');
+        Get.toNamed('/addCondition');
       },
       style: TextButton.styleFrom(
         backgroundColor: AppColors.kakaoColor,

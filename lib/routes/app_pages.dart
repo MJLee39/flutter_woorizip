@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:testapp/middleware/auth_guard.dart';
 import 'package:testapp/screens/address_search_screen.dart';
+import 'package:testapp/screens/add_condition_screen.dart';
 import 'package:testapp/screens/home_screen.dart';
 import 'package:testapp/screens/login_screen.dart';
 import 'package:testapp/screens/zip_find_screen.dart';
@@ -41,5 +42,13 @@ class AppPages {
       name: '/addressSearch',
       page: () => AddressSearchScreen(),
     ),
+
+    _getPageWithMiddleware(
+      name: '/addCondition',
+      page: () => AddConditionScreen(),
+      middlewares: [],
+    ),
+
+
   ];
 }

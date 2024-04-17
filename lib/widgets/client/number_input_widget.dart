@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class NumberInputWidget extends StatelessWidget {
@@ -7,7 +8,7 @@ class NumberInputWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return const TextField(
       decoration: InputDecoration(
-        labelText: 'Enter a number',
+        labelText: '최대값',
         border: OutlineInputBorder(),
       ),
       keyboardType: TextInputType.number,

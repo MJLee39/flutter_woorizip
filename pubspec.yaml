@@ -41,6 +41,7 @@ dependencies:
   flutter_native_splash:
   get_storage:
   flutter_svg:
+  table_calendar:
 
 dev_dependencies:
   flutter_test:
