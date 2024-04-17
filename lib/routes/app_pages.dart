@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:testapp/chat/chatroom_list_screen.dart';
 import 'package:testapp/map/screens/map_screen.dart';
 import 'package:testapp/middleware/auth_guard.dart';
 import 'package:testapp/screens/address_search_screen.dart';
@@ -50,5 +51,13 @@ class AppPages {
       },
       middlewares: [],
     ),
+    // _getPageWithMiddleware(
+    //   name: '/chat/:accountId',
+    //   page: () {
+    //     final accountId = Get.parameters['accountId'];
+    //     return ChatRoomList(accountId: accountId ?? "qassadsadsa",);
+    //   },
+    //   middlewares: [],
+    // ),
   ];
 }
