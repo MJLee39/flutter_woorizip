@@ -3,7 +3,9 @@ import 'package:testapp/middleware/auth_guard.dart';
 import 'package:testapp/screens/address_search_screen.dart';
 import 'package:testapp/screens/home_screen.dart';
 import 'package:testapp/screens/login_screen.dart';
+import 'package:testapp/screens/see_more_screen.dart';
 import 'package:testapp/screens/zip_find_screen.dart';
+import 'package:testapp/screens/zip_list_agent_screen.dart';
 
 class AppPages {
   static const initial = '/';
@@ -41,10 +43,15 @@ class AppPages {
       name: '/addressSearch',
       page: () => AddressSearchScreen(),
     ),
-    // _getPageWithMiddleware(
-    //   name: '/zipListLocation',
-    //   page: () => const ZipListLocationScreen(),
-    //   middlewares: [],
-    // ),
+    _getPageWithMiddleware(
+      name: '/seeMore',
+      page: () => SeeMoreScreen(),
+      middlewares: [],
+    ),
+    _getPageWithMiddleware(
+      name: '/my_listings',
+      page: () => const ZipListAgentScreen(),
+      middlewares: [],
+    ),
   ];
 }
