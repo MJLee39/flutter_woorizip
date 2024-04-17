@@ -6,6 +6,7 @@ class DetailScreen extends StatelessWidget {
 
   DetailScreen({required this.itemID}); // 생성자
 
+
   final Map<String, dynamic> zipData = {
     "id": "1",
     "attachments": "af0a4ad6-c546-45c5-b527-32ac565b7f2d",

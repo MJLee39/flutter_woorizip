@@ -14,16 +14,18 @@ class ZipFindScreen extends StatefulWidget {
 
 class _ZipFindScreenState extends State<ZipFindScreen> {
   late List<Map<String, dynamic>> jsonData = [];
+  late String additionalArgument; // 여기에 추가적인 인자를 선언합니다.
 
   @override
   void initState() {
     super.initState();
+    additionalArgument = Get.arguments;
     fetchData();
   }
 
   Future<void> fetchData() async {
     try {
-      final response = await http.post(Uri.parse('http://10.0.2.2/zipShowYes'));
+      final response = await http.get(Uri.parse('http://10.0.2.2/search?buildingType='+additionalArgument));
       //final response = await http.post(Uri.parse('http://localhost/zipShowYes'));
       if (response.statusCode == 200) {
         List<dynamic> responseData = jsonDecode(utf8.decode(response.bodyBytes));
@@ -52,7 +54,7 @@ class _ZipFindScreenState extends State<ZipFindScreen> {
             //   borderSide: BorderSide(color: Colors.black, width: 1.0),
             // ),
             hintText: '상암동',
-        prefixIcon: Icon(Icons.search),
+            prefixIcon: Icon(Icons.search),
             border: InputBorder.none,
           ),
         ),

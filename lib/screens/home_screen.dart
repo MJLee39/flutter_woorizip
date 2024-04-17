@@ -79,13 +79,15 @@ class HomeScreen extends StatelessWidget {
                   HalfButtonWidget(
                       text: "원룸",
                       imagePath: "assets/images/icon_oneroom.png",
-                      urlPath: "urlPath"
+                      urlPath: "/zipFind",
+                      additionalArgument: "원룸",
                   ),
                   SizedBox(width: 10),
                   HalfButtonWidget(
                       text: "투룸+",
                       imagePath: "assets/images/icon_twomore.png",
-                      urlPath: "/login"
+                      urlPath: "/zipFind",
+                      additionalArgument: "투룸",
                   ),
                 ],
               ),
@@ -95,13 +97,15 @@ class HomeScreen extends StatelessWidget {
                   HalfButtonWidget(
                       text: "오피스텔",
                       imagePath: "assets/images/icon_officetel.png",
-                      urlPath: "/zipFind"
+                      urlPath: "/zipFind",
+                      additionalArgument: "오피스텔",
                   ),
                   SizedBox(width: 10),
                   HalfButtonWidget(
                       text: "아파트",
                       imagePath: "assets/images/icon_apart.png",
-                      urlPath: "urlPath"
+                      urlPath: "/zipFind",
+                      additionalArgument: "아파트",
                   ),
                 ],
               ),
