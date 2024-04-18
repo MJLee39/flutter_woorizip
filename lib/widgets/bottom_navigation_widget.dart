@@ -52,7 +52,9 @@ class BottomNavigationWidget extends GetView<NavigationController> {
             } else if (index == 2) {
               Get.toNamed('/map/total');
             } else if (index == 3) {
-              Get.toNamed('/chat');
+              Get.toNamed('/chatRoomList', arguments: {
+                'accountId': 'qassadsadsa',
+              });
             } else if (index == 4) {
               Get.toNamed('/seeMore'); // '더보기' 페이지로 이동
             }

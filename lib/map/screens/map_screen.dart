@@ -52,7 +52,7 @@ class MapScreen extends StatelessWidget {
                       builder: (context, scrollController) {
                         return Container(
                           color: Colors.white,
-                          child: BottomSheetContent(scrollController: scrollController),
+                          child: BottomSheetContent(scrollController: scrollController, customLocation: snapshot.data,),
                         );
                       },
                     ),
@@ -69,13 +69,14 @@ class MapScreen extends StatelessWidget {
 
 class BottomSheetContent extends StatelessWidget {
   final ScrollController scrollController;
+  final CustomLocation? customLocation;
 
-  BottomSheetContent({required this.scrollController});
+  BottomSheetContent({required this.scrollController, required this.customLocation});
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: _fetchBottomSheetData(),
+      future: _fetchBottomSheetData(customLocation!),
       builder: (context, AsyncSnapshot<List<Map<String, String>>> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(child: CircularProgressIndicator());
@@ -142,7 +143,7 @@ class BottomSheetContent extends StatelessWidget {
     );
   }
 
-  Future<List<Map<String, String>>> _fetchBottomSheetData() async {
+  Future<List<Map<String, String>>> _fetchBottomSheetData(CustomLocation customLocation) async {
     final response = await http.get(Uri.parse('http://10.0.2.2:8818/chat/qassadsadsa/room'),);
     if (response.statusCode == 200) {
       List<dynamic> responseData = jsonDecode(utf8.decode(response.bodyBytes));
