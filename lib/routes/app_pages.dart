@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:testapp/chat/chat_screen.dart';
+import 'package:testapp/chat/chatroom_list_screen.dart';
 import 'package:testapp/map/screens/map_screen.dart';
 import 'package:testapp/middleware/auth_guard.dart';
 import 'package:testapp/screens/address_search_screen.dart';
@@ -54,6 +56,16 @@ class AppPages {
     _getPageWithMiddleware(
       name: '/readAllCondition',
       page: () => const ReadAllConditionScreen(),
+      middlewares: [],
+    ),
+    _getPageWithMiddleware(
+      name: '/chatRoomList',
+      page: () => const ChatRoomListScreen(),
+      middlewares: [],
+    ),
+    _getPageWithMiddleware(
+      name: '/chat',
+      page: () => const ChatScreen(),
       middlewares: [],
     ),
     _getPageWithMiddleware(
