@@ -18,43 +18,46 @@ class SeeMoreScreen extends StatelessWidget {
             SizedBox(height: 10),
             Row(
               children: [
-                Container(
-                  alignment: Alignment.center,
-                  padding: EdgeInsets.all(20),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: AppColors.mainColorTest, width: 2),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Image.asset(
-                    'images/profile.jpg',
-                    width: 150,
-                    height: 150,
-                  ),
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    TextButton(
-                      onPressed: () {
-                        // 닉네임 변경 기능 구현
-                      },
-                      child: Text(
-                        '닉네임 변경하기',
-                        style: TextStyle(color: AppColors.mainColorTest, fontSize: 25),
-                      ),
+                Expanded( // Expanded로 감싸기 시작
+                  child: Container(
+                    alignment: Alignment.center,
+                    padding: EdgeInsets.all(20),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: AppColors.mainColorTest, width: 2),
+                      borderRadius: BorderRadius.circular(10),
                     ),
-                    SizedBox(height: 15),
-                    TextButton(
-                      onPressed: () {
-                        // 로그아웃 기능 구현
-                      },
-                      child: Text(
-                        '로그아웃',
-                        style: TextStyle(color: Colors.red, fontSize: 25),
-                      ),
+                    child: Image.asset(
+                      'images/profile.jpg',
+                      width: 150,
+                      height: 150,
                     ),
-                  ],
-                ),
+                  ),
+                ), // Expanded로 감싸기 끝
+                Expanded( // Expanded로 감싸기 시작
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      TextButton(
+                        onPressed: () {
+                          // 닉네임 변경 기능 구현
+                        },
+                        child: Text(
+                          '닉네임 변경하기',
+                          style: TextStyle(color: AppColors.mainColorTest, fontSize: 20),
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          // 로그아웃 기능 구현
+                        },
+                        child: Text(
+                          '로그아웃',
+                          style: TextStyle(color: Colors.red, fontSize: 20),
+                        ),
+                      ),
+                    ],
+                  ),
+                ), // Expanded로 감싸기 끝
               ],
             ),
             SizedBox(height: 30),
