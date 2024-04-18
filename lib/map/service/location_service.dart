@@ -33,8 +33,8 @@ class LocationService {
     final response = await http.get(
         Uri.parse("https://naveropenapi.apigw.ntruss.com/map-reversegeocode/v2/gc?request=coordsToaddr&coords=$longitude,$latitude&sourcecrs=epsg:4326&output=json&orders=legalcode"),
         headers: {
-          'X-NCP-APIGW-API-KEY-ID': '???',
-          'X-NCP-APIGW-API-KEY': '???'
+          'X-NCP-APIGW-API-KEY-ID': '0akipmvx1h',
+          'X-NCP-APIGW-API-KEY': 'BOBIX0nbXfN4oaTTIJZJeL84cofPI4klhq1FJr7j'
         }
     );
 
@@ -43,6 +43,7 @@ class LocationService {
     final dong = jsonDecode(utf8.decode(response.bodyBytes))["results"][0]["region"]["area3"]["name"];
 
     final address = '$si $gu $dong';
+    print(address);
 
     return address;
   }

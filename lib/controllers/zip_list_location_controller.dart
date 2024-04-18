@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 
-class ZipFindController extends GetxController {
+class ZipListLocationController extends GetxController {
   final RxList<Map<String, dynamic>> jsonData = <Map<String, dynamic>>[].obs;
   final RxBool isLoading = true.obs;
   final RxString error = ''.obs;
@@ -19,7 +19,7 @@ class ZipFindController extends GetxController {
     isLoading.value = true; // 로딩 상태 시작
 
     try {
-      final response = await http.get(Uri.parse('http://192.168.117.31/search?buildingType='+additionalArgument));
+      final response = await http.get(Uri.parse('http://192.168.117.31/search?location='+additionalArgument));
       if (response.statusCode == 200) {
         List<dynamic> responseData = jsonDecode(utf8.decode(response.bodyBytes));
         jsonData.assignAll(responseData.cast<Map<String, dynamic>>());

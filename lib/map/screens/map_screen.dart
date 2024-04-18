@@ -1,5 +1,6 @@
 import 'dart:convert';
-
+import 'package:testapp/screens/zip_detail_screen.dart';
+import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:naver_map_plugin/naver_map_plugin.dart';
 import 'package:http/http.dart' as http;
@@ -67,96 +68,83 @@ class MapScreen extends StatelessWidget {
   }
 }
 
-class BottomSheetContent extends StatelessWidget {
+class BottomSheetContent extends StatefulWidget {
   final ScrollController scrollController;
   final CustomLocation? customLocation;
 
   BottomSheetContent({required this.scrollController, required this.customLocation});
 
   @override
-  Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: _fetchBottomSheetData(customLocation!),
-      builder: (context, AsyncSnapshot<List<Map<String, String>>> snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(child: CircularProgressIndicator());
-        } else if (snapshot.hasError) {
-          return Center(child: Text('Error: ${snapshot.error}'));
-        } else {
-          return Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    DropdownButton<String>(
-                      value: 'Filter 1',
-                      onChanged: (newValue) {
-                        // 필터링 로직 추가
-                      },
-                      items: <String>['Filter 1', 'Filter 2', 'Filter 3', 'Filter 4']
-                          .map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                    ),
-                    DropdownButton<String>(
-                      value: 'Filter A',
-                      onChanged: (newValue) {
-                        // 필터링 로직 추가
-                      },
-                      items: <String>['Filter A', 'Filter B', 'Filter C', 'Filter D']
-                          .map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                    ),
-                    // Add more dropdown buttons here
-                  ],
-                ),
-              ),
-              Expanded(
-                child: ListView.builder(
-                  controller: scrollController,
-                  itemCount: snapshot.data!.length,
-                  itemBuilder: (context, index) {
-                    final item = snapshot.data![index];
-                    return ListTile(
-                      title: Text(item['title']!),
-                      subtitle: Text(item['description']!),
-                      onTap: () {
-                        // 각 항목을 탭했을 때 수행할 작업
-                      },
-                    );
-                  },
-                ),
-              ),
-            ],
-          );
-        }
-      },
-    );
+  _BottomSheetContentState createState() => _BottomSheetContentState();
+}
+
+class _BottomSheetContentState extends State<BottomSheetContent> {
+  List<Map<String, String>> data = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _loadData();
+  }
+
+  Future<void> _loadData() async {
+    try {
+      List<Map<String, String>> result = await _fetchBottomSheetData(widget.customLocation!);
+      setState(() {
+        data = result;
+      });
+    } catch (error) {
+      print('Error: $error');
+    }
   }
 
   Future<List<Map<String, String>>> _fetchBottomSheetData(CustomLocation customLocation) async {
-    final response = await http.get(Uri.parse('http://10.0.2.2:8818/chat/qassadsadsa/room'),);
+    final response = await http.get(Uri.parse('http://192.168.117.31/search?location=${customLocation.address}'));
     if (response.statusCode == 200) {
       List<dynamic> responseData = jsonDecode(utf8.decode(response.bodyBytes));
+      print("나왔다!!!!!!!!!!!!"+responseData.toString());
       return responseData.map<Map<String, String>>((data) {
         return {
           'id': data['id'],
-          'title': data['title'],
-          'nickname': data['nickname'],
-          'description': data['description']
+          'direction': data['direction'],
+          'buildingType': data['buildingType'],
+          'attachments': data['attachments'],
+          'money': '${data['deposit'].toString()}/${data['fee'].toString()}',
         };
       }).toList();
     } else {
       throw Exception('Failed to load data');
     }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<List<Map<String, String>>>(
+      future: _fetchBottomSheetData(widget.customLocation!),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasError) {
+          return Center(child: Text('에러: ${snapshot.error}'));
+        } else {
+          List<Map<String, String>> data = snapshot.data!;
+          return ListView.builder(
+            controller: widget.scrollController,
+            itemCount: data.length,
+            itemBuilder: (context, index) {
+              final item = data[index];
+              print("나와!!!!!!!!!!!!!!!!!!!!"+item.toString());
+              return ListTile(
+                title: Text('보증금/월세 : ${item['money']}'),
+                subtitle: Text('건물 유형: ${item['buildingType']}'),
+                onTap: () {
+                  Get.to(DetailScreen(itemID: '${item["id"]}'), transition: Transition.noTransition);
+                },
+              );
+            },
+          );
+        }
+      },
+    );
   }
 }
