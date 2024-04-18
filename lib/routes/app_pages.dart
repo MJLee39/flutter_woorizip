@@ -69,7 +69,7 @@ class AppPages {
       middlewares: [],
     ),
     _getPageWithMiddleware(
-      name: '/map/buildingType',
+      name: '/map/:buildingType',
       page: () {
         final buildingType = Get.parameters['buildingType'];
         return MapScreen(buildingType: buildingType ?? "");

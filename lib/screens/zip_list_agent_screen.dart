@@ -71,7 +71,7 @@ class _ZipListAgentScreenState extends State<ZipListAgentScreen> {
   ];
 
   void _copyDetailScreenUrl(String itemId) {
-    final detailScreenUrl = 'https://yourdomain.com/detail/$itemId'; // 실제 URL로 대체하세요
+    final detailScreenUrl = 'https://192.168.117.31/zipOne?zip_id=$itemId'; // 실제 URL로 대체하세요
     Clipboard.setData(ClipboardData(text: detailScreenUrl)); // URL을 클립보드에 복사
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
