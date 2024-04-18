@@ -1,11 +1,14 @@
 import 'package:get/get.dart';
+import 'package:testapp/map/screens/map_screen.dart';
 import 'package:testapp/middleware/auth_guard.dart';
 import 'package:testapp/screens/address_search_screen.dart';
 import 'package:testapp/screens/add_condition_screen.dart';
 import 'package:testapp/screens/home_screen.dart';
 import 'package:testapp/screens/login_screen.dart';
 import 'package:testapp/screens/read_all_condition_screen.dart';
+import 'package:testapp/screens/see_more_screen.dart';
 import 'package:testapp/screens/zip_find_screen.dart';
+import 'package:testapp/screens/zip_list_agent_screen.dart';
 
 class AppPages {
   static const initial = '/';
@@ -36,26 +39,40 @@ class AppPages {
     ),
     _getPageWithMiddleware(
       name: '/zipFind',
-      page: () => const ZipFindScreen(),
+      page: () => ZipFindScreen(),
       middlewares: [],
     ),
     _getPageWithMiddleware(
       name: '/addressSearch',
       page: () => AddressSearchScreen(),
     ),
-
     _getPageWithMiddleware(
       name: '/addCondition',
-      page: () => AddConditionScreen(),
+      page: () => const AddConditionScreen(),
       middlewares: [],
     ),
-
     _getPageWithMiddleware(
       name: '/readAllCondition',
-      page: () => ReadAllConditionScreen(),
+      page: () => const ReadAllConditionScreen(),
       middlewares: [],
     ),
-
-
+    _getPageWithMiddleware(
+      name: '/seeMore',
+      page: () => SeeMoreScreen(),
+      middlewares: [],
+    ),
+    _getPageWithMiddleware(
+      name: '/my_listings',
+      page: () => const ZipListAgentScreen(),
+      middlewares: [],
+    ),
+    _getPageWithMiddleware(
+      name: '/map/buildingType',
+      page: () {
+        final buildingType = Get.parameters['buildingType'];
+        return MapScreen(buildingType: buildingType ?? "");
+      },
+      middlewares: [],
+    ),
   ];
 }

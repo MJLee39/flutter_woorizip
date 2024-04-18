@@ -43,7 +43,7 @@ class HomeScreen extends StatelessWidget {
                       child: Padding(
                         padding: EdgeInsets.all(8.0),
                         child: Image(
-                          image: AssetImage('images/icon_house.png'),
+                          image: AssetImage('assets/images/icon_house.png'),
                           width: 40,
                           height: 40,
                         ),
@@ -78,14 +78,16 @@ class HomeScreen extends StatelessWidget {
                 children: [
                   HalfButtonWidget(
                       text: "원룸",
-                      imagePath: "images/icon_oneroom.png",
-                      urlPath: "urlPath"
+                      imagePath: "assets/images/icon_oneroom.png",
+                      urlPath: "/zipFind",
+                      additionalArgument: "원룸",
                   ),
                   SizedBox(width: 10),
                   HalfButtonWidget(
                       text: "투룸+",
-                      imagePath: "images/icon_twomore.png",
-                      urlPath: "/login"
+                      imagePath: "assets/images/icon_twomore.png",
+                      urlPath: "/zipFind",
+                      additionalArgument: "투룸",
                   ),
                 ],
               ),
@@ -94,14 +96,16 @@ class HomeScreen extends StatelessWidget {
                 children: [
                   HalfButtonWidget(
                       text: "오피스텔",
-                      imagePath: "images/icon_officetel.png",
-                      urlPath: "/zipFind"
+                      imagePath: "assets/images/icon_officetel.png",
+                      urlPath: "/zipFind",
+                      additionalArgument: "오피스텔",
                   ),
                   SizedBox(width: 10),
                   HalfButtonWidget(
                       text: "아파트",
-                      imagePath: "images/icon_apart.png",
-                      urlPath: "urlPath"
+                      imagePath: "assets/images/icon_apart.png",
+                      urlPath: "/zipFind",
+                      additionalArgument: "아파트",
                   ),
                 ],
               ),

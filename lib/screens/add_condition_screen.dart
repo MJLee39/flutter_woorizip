@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:testapp/widgets/app_bar_widget.dart';
 import 'package:testapp/widgets/client/number_input_widget.dart';
 import 'package:testapp/widgets/client/calendar_widget.dart';
 import 'package:testapp/screens/read_all_condition_screen.dart';
@@ -9,6 +10,7 @@ class AddConditionScreen extends StatefulWidget {
 
   @override
   _AddConditionScreenState createState() => _AddConditionScreenState();
+
 }
 
 class _AddConditionScreenState extends State<AddConditionScreen> {
@@ -35,27 +37,24 @@ class _AddConditionScreenState extends State<AddConditionScreen> {
 
     for (int i = 0; i < buttonLabels.length; i += 2) {
       buttonRows.add(
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: SizedBox(
-            width: buttonWidth * 2 + 10, // 버튼 너비 * 2 + 간격
-            child: ToggleButtons(
-              isSelected: isSelected.sublist(i, i + 2),
-              onPressed: (int index) {
-                setState(() {
-                  isSelected[i + index] = !isSelected[i + index];
-                });
-                // TODO: 선택된 버튼에 대한 작업 수행
-              },
-              fillColor: Colors.indigo[200],
-              selectedColor: Colors.white,
-              splashColor: Colors.transparent,
-              borderRadius: BorderRadius.circular(10),
-              children: [
-                SizedBox(width: buttonWidth, child: Center(child: Text(buttonLabels[i]))),
-                SizedBox(width: buttonWidth, child: Center(child: Text(buttonLabels[i + 1]))),
-              ],
-            ),
+        SizedBox(
+          width: buttonWidth * 2 + 10, // 버튼 너비 * 2 + 간격
+          child: ToggleButtons(
+            isSelected: isSelected.sublist(i, i + 2),
+            onPressed: (int index) {
+              setState(() {
+                isSelected[i + index] = !isSelected[i + index];
+              });
+              // TODO: 선택된 버튼에 대한 작업 수행
+            },
+            fillColor: Colors.indigo[200],
+            selectedColor: Colors.white,
+            splashColor: Colors.transparent,
+            borderRadius: BorderRadius.circular(10),
+            children: [
+              SizedBox(width: buttonWidth, child: Center(child: Text(buttonLabels[i]))),
+              SizedBox(width: buttonWidth, child: Center(child: Text(buttonLabels[i + 1]))),
+            ],
           ),
         ),
       );
@@ -65,15 +64,11 @@ class _AddConditionScreenState extends State<AddConditionScreen> {
     }
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('상세 조건을 설정해보세요',
-          style: TextStyle(
-            fontSize: 30,
-          ),),
-      ),
+      appBar: const AppBarWidget(),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
+
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const SizedBox(height: 20),
