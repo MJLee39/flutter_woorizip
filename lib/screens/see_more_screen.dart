@@ -4,6 +4,7 @@ import 'package:testapp/widgets/app_bar_widget.dart';
 import 'package:testapp/widgets/page_normal_padding_widget.dart';
 import 'package:testapp/widgets/text_header_widget.dart';
 import 'package:testapp/utils/app_colors.dart';
+import 'package:testapp/widgets/bottom_navigation_widget.dart';
 
 class SeeMoreScreen extends StatelessWidget {
   @override
@@ -45,16 +46,6 @@ class SeeMoreScreen extends StatelessWidget {
                     SizedBox(height: 15),
                     TextButton(
                       onPressed: () {
-                        // 사진 변경 기능 구현
-                      },
-                      child: Text(
-                        '사진 변경하기',
-                        style: TextStyle(color: AppColors.mainColorTest, fontSize: 25),
-                      ),
-                    ),
-                    SizedBox(height: 15),
-                    TextButton(
-                      onPressed: () {
                         // 로그아웃 기능 구현
                       },
                       child: Text(
@@ -87,7 +78,7 @@ class SeeMoreScreen extends StatelessWidget {
                     ),
                     SizedBox(width: 10.0),
                     Text(
-                      '내가 쓴 조건 보기',
+                      '내가 쓴 조건 관리',
                       style: TextStyle(
                         fontSize: 25,
                         color: AppColors.mainColorTest
@@ -118,7 +109,7 @@ class SeeMoreScreen extends StatelessWidget {
                     ),
                     SizedBox(width: 10.0),
                     Text(
-                      '내가 올린 매물 보기',
+                      '내가 올린 매물 관리',
                       style: TextStyle(
                         fontSize: 25,
                         color: AppColors.mainColorTest
@@ -128,9 +119,41 @@ class SeeMoreScreen extends StatelessWidget {
                 ),
               ),
             ),
+            SizedBox(height: 30),
+            GestureDetector(
+              onTap: () {
+                // '/my_listings' 경로로 이동
+                Get.toNamed('/my_private');
+              },
+              child: Container(
+                padding: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  border: Border.all(color: AppColors.mainColorTest),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Row(
+                  children: <Widget>[
+                    Icon(
+                      Icons.lock,
+                      color: AppColors.mainColorTest,
+                      size: 30.0,
+                    ),
+                    SizedBox(width: 10.0),
+                    Text(
+                      '비공개 매물 관리',
+                      style: TextStyle(
+                          fontSize: 25,
+                          color: AppColors.mainColorTest
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ],
         ),
       ),
+      bottomNavigationBar: BottomNavigationWidget(),
     );
   }
 }

@@ -9,6 +9,8 @@ import 'package:testapp/screens/login_screen.dart';
 import 'package:testapp/screens/see_more_screen.dart';
 import 'package:testapp/screens/zip_find_screen.dart';
 import 'package:testapp/screens/zip_list_agent_screen.dart';
+import 'package:testapp/screens/zip_list_agent_private_screen.dart';
+import 'package:testapp/screens/split_test.dart';
 
 class AppPages {
   static const initial = '/';
@@ -68,11 +70,21 @@ class AppPages {
       middlewares: [],
     ),
     _getPageWithMiddleware(
-      name: '/map/buildingType',
+      name: '/map/:buildingType',
       page: () {
         final buildingType = Get.parameters['buildingType'];
         return MapScreen(buildingType: buildingType ?? "");
       },
+      middlewares: [],
+    ),
+    _getPageWithMiddleware(
+      name: '/my_private',
+      page: () => const ZipListAgentPrivateScreen(),
+      middlewares: [],
+    ),
+    _getPageWithMiddleware(
+      name: '/split',
+      page: () => SplitTest(),
       middlewares: [],
     ),
   ];

@@ -23,7 +23,7 @@ class _DetailScreenState extends State<DetailScreen> {
 
   void fetchData() async {
     final response = await http.get(
-        Uri.parse('http://localhost/zipOne?zip_id=${widget.itemID}'));
+        Uri.parse('http://192.168.117.31/zipOne?zip_id=${widget.itemID}'));
         //Uri.parse('http://10.0.2.2/zipOne?zip_id=${widget.itemID}'));
 
     if (response.statusCode == 200) {
