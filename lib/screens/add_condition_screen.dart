@@ -4,6 +4,8 @@ import 'package:testapp/widgets/app_bar_widget.dart';
 import 'package:testapp/widgets/client/number_input_widget.dart';
 import 'package:testapp/widgets/client/calendar_widget.dart';
 import 'package:testapp/screens/read_all_condition_screen.dart';
+import 'package:testapp/widgets/page_normal_padding_widget.dart';
+import 'package:testapp/widgets/text_header_widget.dart';
 
 class AddConditionScreen extends StatefulWidget {
   const AddConditionScreen({super.key});
@@ -65,87 +67,79 @@ class _AddConditionScreenState extends State<AddConditionScreen> {
 
     return Scaffold(
       appBar: const AppBarWidget(),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const SizedBox(height: 20),
-            const Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Expanded(
-                  child: Text(
-                    "가격대: ~",
-                    textAlign: TextAlign.right,
-                    style: TextStyle(
-                      fontSize: 20,
+      body: PageNormalPaddingWidget(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            
+        
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              TextHeaderWidget(text: '원하시는 조건을 설정해보세욘'),
+              const SizedBox(height: 20),
+              const Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: Text(
+                      "가격대: ~",
+                      textAlign: TextAlign.right,
+                      style: TextStyle(
+                        fontSize: 20,
+                      ),
                     ),
                   ),
-                ),
-                SizedBox(width: 10),
-                Expanded(child: NumberInputWidget()),
-
-                Expanded(
-                  child: Text(
-                    "만원까지",
-                    style: TextStyle(
-                      fontSize: 20,
+                  SizedBox(width: 10),
+                  Expanded(child: NumberInputWidget()),
+        
+                  Expanded(
+                    child: Text(
+                      "만원까지",
+                      style: TextStyle(
+                        fontSize: 20,
+                      ),
                     ),
                   ),
-                ),
-              ],
-            ),
+                ],
+              ),
+        
+              const SizedBox(width: 10),
+              TextButton(
+                  onPressed: () {
+                    Get.toNamed('/setmoveindate');
+                  },
+                  child: Text('확인'),
+              ),
 
-            const SizedBox(width: 10),
-            Container(
-              width: double.infinity,
-              height: 1,
-              color: Colors.grey[300], // 얇은 회색 선 추가
-            ),
 
-            const SizedBox(height: 40),
-            const Text(
-              '입주가능일을 알려주세요',
-              style: TextStyle(
-                fontSize: 20,
-              ),
-            ),
-            const SizedBox(height: 40),
-            const CalendarWidget(),
-            Container(
-              width: double.infinity,
-              height: 1,
-              color: Colors.grey[300], // 얇은 회색 선 추가
-            ),
-            const SizedBox(height: 40),
-            const Text(
-              '원하는 옵션을 선택해주세요',
-              style: TextStyle(
-                fontSize: 20,
-              ),
-            ),
-            const SizedBox(height: 20),
-            Column(children: buttonRows),
-            const SizedBox(height: 40),
-            ElevatedButton(
-              onPressed: () {
-                Get.to(() => ReadAllConditionScreen(),
-                transition: Transition.cupertino);
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.indigo, // 버튼의 배경색을 인디고 색상으로 설정
-              ),
-              child: const Text(
-                '확인',
+              const SizedBox(height: 40),
+              const Text(
+                '원하는 옵션을 선택해주세요',
                 style: TextStyle(
-                  color: Colors.white, // 버튼의 텍스트 색상을 흰색으로 설정
+                  fontSize: 20,
                 ),
               ),
-            ),
-
-          ],
+              const SizedBox(height: 20),
+              Column(children: buttonRows),
+              const SizedBox(height: 40),
+              ElevatedButton(
+                onPressed: () {
+                  Get.to(() => ReadAllConditionScreen(),
+                  transition: Transition.cupertino);
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.indigo, // 버튼의 배경색을 인디고 색상으로 설정
+                ),
+                child: const Text(
+                  '확인',
+                  style: TextStyle(
+                    color: Colors.white, // 버튼의 텍스트 색상을 흰색으로 설정
+                  ),
+                ),
+              ),
+        
+            ],
+          ),
         ),
       ),
     );
