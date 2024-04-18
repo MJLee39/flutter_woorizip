@@ -4,16 +4,15 @@ import 'package:testapp/widgets/bottom_navigation_widget.dart';
 import 'package:testapp/screens/zip_detail_screen.dart'; // DetailScreen.dart를 import합니다.
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
-import 'package:flutter/services.dart'; // ClipboardData 가져오기
 
-class ZipListAgentScreen extends StatefulWidget {
-  const ZipListAgentScreen({Key? key}) : super(key: key);
+class ZipListAgentPrivateScreen extends StatefulWidget {
+  const ZipListAgentPrivateScreen({Key? key}) : super(key: key);
 
   @override
-  State<ZipListAgentScreen> createState() => _ZipListAgentScreenState();
+  State<ZipListAgentPrivateScreen> createState() => _ZipListAgentScreenState();
 }
 
-class _ZipListAgentScreenState extends State<ZipListAgentScreen> {
+class _ZipListAgentScreenState extends State<ZipListAgentPrivateScreen> {
   //late List<Map<String, dynamic>> jsonData = [];
   //late String additionalArgument; // 여기에 agent id
 
@@ -26,8 +25,8 @@ class _ZipListAgentScreenState extends State<ZipListAgentScreen> {
 
   // Future<void> fetchData() async {
   //   try {
-  //     final response = await http.post(Uri.parse('http://localhost/zipListByAgent'));
-  //     //final response = await http.post(Uri.parse('http://localhost/zipShowYes'));
+  //     final response = await http.post(Uri.parse('http://localhost/zipShowNo'));
+  //     //final response = await http.post(Uri.parse('http://localhost/zipShowNo'));
   //     if (response.statusCode == 200) {
   //       List<dynamic> responseData = jsonDecode(utf8.decode(response.bodyBytes));
   //       print(responseData);
@@ -46,14 +45,14 @@ class _ZipListAgentScreenState extends State<ZipListAgentScreen> {
     {
       'id' : '067cae69-ad7a-4a46-aa2f-685c4cc83c08',
       'attachments': 'af0a4ad6-c546-45c5-b527-32ac565b7f2d',
-      'm2': 33,
-      'buildingType': '오피스텔',
+      'm2': 84,
+      'buildingType': '아파트',
       'location': '서울시 마포구 상암동',
       'buildingFloor': 15,
       'totalFloor': 30,
       'direction': '남동향',
-      'deposit': 2000,
-      'fee': 200
+      'deposit': 2800,
+      'fee': 250
     },
     {
       "id": "1bd238b4-5498-41c9-b010-a8e37b2ea899",
@@ -69,16 +68,6 @@ class _ZipListAgentScreenState extends State<ZipListAgentScreen> {
     }
     // 더미 데이터 추가...
   ];
-
-  void _copyDetailScreenUrl(String itemId) {
-    final detailScreenUrl = 'https://yourdomain.com/detail/$itemId'; // 실제 URL로 대체하세요
-    Clipboard.setData(ClipboardData(text: detailScreenUrl)); // URL을 클립보드에 복사
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('상세 화면 URL이 복사되었습니다'), // 사용자에게 피드백 표시
-      ),
-    );
-  }
 
 
   @override
@@ -198,12 +187,6 @@ class _ZipListAgentScreenState extends State<ZipListAgentScreen> {
                                     icon: Icon(Icons.delete),
                                     onPressed: () {
                                       // Handle delete action
-                                    },
-                                  ),
-                                  IconButton(
-                                    icon: Icon(Icons.content_copy), // 복사 버튼 아이콘
-                                    onPressed: () {
-                                      _copyDetailScreenUrl(item['id']); // URL을 복사하는 함수 호출
                                     },
                                   ),
                                 ],
