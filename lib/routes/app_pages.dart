@@ -4,6 +4,7 @@ import 'package:testapp/screens/address_search_screen.dart';
 import 'package:testapp/screens/add_condition_screen.dart';
 import 'package:testapp/screens/home_screen.dart';
 import 'package:testapp/screens/login_screen.dart';
+import 'package:testapp/screens/read_all_condition_screen.dart';
 import 'package:testapp/screens/zip_find_screen.dart';
 
 class AppPages {
@@ -46,6 +47,12 @@ class AppPages {
     _getPageWithMiddleware(
       name: '/addCondition',
       page: () => AddConditionScreen(),
+      middlewares: [],
+    ),
+
+    _getPageWithMiddleware(
+      name: '/readAllCondition',
+      page: () => ReadAllConditionScreen(),
       middlewares: [],
     ),
 

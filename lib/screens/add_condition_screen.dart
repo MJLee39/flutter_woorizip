@@ -1,16 +1,75 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:testapp/widgets/client/number_input_widget.dart';
 import 'package:testapp/widgets/client/calendar_widget.dart';
-import 'package:testapp/widgets/client/button_widget.dart';
+import 'package:testapp/screens/read_all_condition_screen.dart';
 
-class AddConditionScreen extends StatelessWidget {
+class AddConditionScreen extends StatefulWidget {
   const AddConditionScreen({super.key});
 
   @override
+  _AddConditionScreenState createState() => _AddConditionScreenState();
+}
+
+class _AddConditionScreenState extends State<AddConditionScreen> {
+  late List<bool> isSelected;
+
+  @override
+  void initState() {
+    super.initState();
+    isSelected = List<bool>.filled(20, false);
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final List<Widget> buttonRows = [];
+
+    final buttonLabels = [
+      '풀옵션', '주차가능', '엘리베이터', '베란다', '보안/안전시설',
+      '단기임대', '역세권', '붙박이 옷장', '1종 근린', '2종 근린',
+      '반려동물 가능', '신축', '에어컨', '냉장고', '세탁기',
+      '신발장', '싱크대', '인덕션', 'CCTV', '사용자 등록'
+    ];
+
+    const buttonWidth = 120.0; // 버튼의 너비
+
+    for (int i = 0; i < buttonLabels.length; i += 2) {
+      buttonRows.add(
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: SizedBox(
+            width: buttonWidth * 2 + 10, // 버튼 너비 * 2 + 간격
+            child: ToggleButtons(
+              isSelected: isSelected.sublist(i, i + 2),
+              onPressed: (int index) {
+                setState(() {
+                  isSelected[i + index] = !isSelected[i + index];
+                });
+                // TODO: 선택된 버튼에 대한 작업 수행
+              },
+              fillColor: Colors.indigo[200],
+              selectedColor: Colors.white,
+              splashColor: Colors.transparent,
+              borderRadius: BorderRadius.circular(10),
+              children: [
+                SizedBox(width: buttonWidth, child: Center(child: Text(buttonLabels[i]))),
+                SizedBox(width: buttonWidth, child: Center(child: Text(buttonLabels[i + 1]))),
+              ],
+            ),
+          ),
+        ),
+      );
+
+      // 각 행과 행 사이에 간격을 두기 위한 SizedBox 추가
+      buttonRows.add(const SizedBox(height: 10));
+    }
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('상세 조건 설정'),
+        title: const Text('상세 조건을 설정해보세요',
+          style: TextStyle(
+            fontSize: 30,
+          ),),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
@@ -31,8 +90,8 @@ class AddConditionScreen extends StatelessWidget {
                   ),
                 ),
                 SizedBox(width: 10),
-                Expanded(child: const NumberInputWidget()),
-                // 숫자 입력 위젯은 화면 너비에 맞게 확장
+                Expanded(child: NumberInputWidget()),
+
                 Expanded(
                   child: Text(
                     "만원까지",
@@ -51,67 +110,49 @@ class AddConditionScreen extends StatelessWidget {
               color: Colors.grey[300], // 얇은 회색 선 추가
             ),
 
-            const SizedBox(height: 20),
-            const Text('입주가능일'),
-            const SizedBox(height: 20),
+            const SizedBox(height: 40),
+            const Text(
+              '입주가능일을 알려주세요',
+              style: TextStyle(
+                fontSize: 20,
+              ),
+            ),
+            const SizedBox(height: 40),
             const CalendarWidget(),
             Container(
               width: double.infinity,
               height: 1,
               color: Colors.grey[300], // 얇은 회색 선 추가
             ),
+            const SizedBox(height: 40),
+            const Text(
+              '원하는 옵션을 선택해주세요',
+              style: TextStyle(
+                fontSize: 20,
+              ),
+            ),
             const SizedBox(height: 20),
-            const Text('원하는 옵션을 선택해주세요'),
-            _buildButtonRows(),
-            const SizedBox(height: 20),
+            Column(children: buttonRows),
+            const SizedBox(height: 40),
             ElevatedButton(
               onPressed: () {
-                // Handle confirmation button press
+                Get.to(() => ReadAllConditionScreen(),
+                transition: Transition.cupertino);
               },
-              child: const Text('확인'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.indigo, // 버튼의 배경색을 인디고 색상으로 설정
+              ),
+              child: const Text(
+                '확인',
+                style: TextStyle(
+                  color: Colors.white, // 버튼의 텍스트 색상을 흰색으로 설정
+                ),
+              ),
             ),
+
           ],
         ),
       ),
     );
-  }
-
-  Widget _buildButtonRows() {
-    final List<Widget> buttonRows = [];
-
-    for (int i = 0; i < 20; i += 2) {
-      buttonRows.add(
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: SizedBox(
-            width: 120,
-            child: ToggleButtons(
-              isSelected: [false, false], // 초기 선택 상태 설정
-              onPressed: (int index) {
-                // 버튼을 눌렀을 때 해당 버튼의 선택 상태를 토글
-                // 여기서는 각 버튼이 서로 독립적으로 선택될 수 있도록 하기 위해
-                // 현재 버튼의 선택 상태를 반전시킴
-                final List<bool> selected = [false, false];
-                selected[index] = !selected[index];
-                // TODO: 선택된 버튼에 대한 작업 수행
-              },
-              fillColor: Colors.grey[200], // 선택된 버튼의 배경색
-              selectedColor: Colors.black, // 선택된 버튼의 텍스트 색상
-              splashColor: Colors.transparent, // 터치 피드백 없애기
-              borderRadius: BorderRadius.circular(10),
-              children: [
-                Text('${i + 1}'),
-                Text('${i + 2}'),
-              ], // 버튼 모서리 둥글게 처리
-            ),
-          ),
-        ),
-      );
-
-      // 각 행과 행 사이에 간격을 두기 위한 SizedBox 추가
-      buttonRows.add(SizedBox(height: 10));
-    }
-
-    return Column(children: buttonRows);
   }
 }
