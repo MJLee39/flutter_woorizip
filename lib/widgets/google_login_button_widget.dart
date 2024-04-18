@@ -8,6 +8,7 @@ class GoogleLoginButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return TextButton(
       onPressed: () {
         Get.toNamed('/');

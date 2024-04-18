@@ -4,7 +4,8 @@ class CustomLocation extends LatLng {
 
   final double latitude;
   final double longitude;
+  final String address;
 
-  const CustomLocation({required this.latitude, required this.longitude}) : super(latitude, longitude);
+  const CustomLocation({required this.latitude, required this.longitude, required this.address}) : super(latitude, longitude);
 
 }
