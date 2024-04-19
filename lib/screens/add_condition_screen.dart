@@ -12,7 +12,6 @@ class AddConditionScreen extends StatefulWidget {
 
   @override
   _AddConditionScreenState createState() => _AddConditionScreenState();
-
 }
 
 class _AddConditionScreenState extends State<AddConditionScreen> {
@@ -29,10 +28,26 @@ class _AddConditionScreenState extends State<AddConditionScreen> {
     final List<Widget> buttonRows = [];
 
     final buttonLabels = [
-      '풀옵션', '주차가능', '엘리베이터', '베란다', '보안/안전시설',
-      '단기임대', '역세권', '붙박이 옷장', '1종 근린', '2종 근린',
-      '반려동물 가능', '신축', '에어컨', '냉장고', '세탁기',
-      '신발장', '싱크대', '인덕션', 'CCTV', '사용자 등록'
+      '풀옵션',
+      '주차가능',
+      '엘리베이터',
+      '베란다',
+      '보안/안전시설',
+      '단기임대',
+      '역세권',
+      '붙박이 옷장',
+      '1종 근린',
+      '2종 근린',
+      '반려동물 가능',
+      '신축',
+      '에어컨',
+      '냉장고',
+      '세탁기',
+      '신발장',
+      '싱크대',
+      '인덕션',
+      'CCTV',
+      '사용자 등록'
     ];
 
     const buttonWidth = 120.0; // 버튼의 너비
@@ -54,8 +69,12 @@ class _AddConditionScreenState extends State<AddConditionScreen> {
             splashColor: Colors.transparent,
             borderRadius: BorderRadius.circular(10),
             children: [
-              SizedBox(width: buttonWidth, child: Center(child: Text(buttonLabels[i]))),
-              SizedBox(width: buttonWidth, child: Center(child: Text(buttonLabels[i + 1]))),
+              SizedBox(
+                  width: buttonWidth,
+                  child: Center(child: Text(buttonLabels[i]))),
+              SizedBox(
+                  width: buttonWidth,
+                  child: Center(child: Text(buttonLabels[i + 1]))),
             ],
           ),
         ),
@@ -71,11 +90,9 @@ class _AddConditionScreenState extends State<AddConditionScreen> {
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(16.0),
           child: Column(
-            
-        
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              TextHeaderWidget(text: '원하시는 조건을 설정해보세욘'),
+              const TextHeaderWidget(text: '원하시는 조건을 설정해보세욘'),
               const SizedBox(height: 20),
               const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -91,7 +108,6 @@ class _AddConditionScreenState extends State<AddConditionScreen> {
                   ),
                   SizedBox(width: 10),
                   Expanded(child: NumberInputWidget()),
-        
                   Expanded(
                     child: Text(
                       "만원까지",
@@ -102,16 +118,13 @@ class _AddConditionScreenState extends State<AddConditionScreen> {
                   ),
                 ],
               ),
-        
               const SizedBox(width: 10),
               TextButton(
-                  onPressed: () {
-                    Get.toNamed('/setmoveindate');
-                  },
-                  child: Text('확인'),
+                onPressed: () {
+                  Get.toNamed('/setmoveindate');
+                },
+                child: Text('확인'),
               ),
-
-
               const SizedBox(height: 40),
               const Text(
                 '원하는 옵션을 선택해주세요',
@@ -125,7 +138,7 @@ class _AddConditionScreenState extends State<AddConditionScreen> {
               ElevatedButton(
                 onPressed: () {
                   Get.to(() => ReadAllConditionScreen(),
-                  transition: Transition.cupertino);
+                      transition: Transition.cupertino);
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.indigo, // 버튼의 배경색을 인디고 색상으로 설정
@@ -137,7 +150,6 @@ class _AddConditionScreenState extends State<AddConditionScreen> {
                   ),
                 ),
               ),
-        
             ],
           ),
         ),
