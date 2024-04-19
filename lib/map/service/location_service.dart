@@ -43,7 +43,6 @@ class LocationService {
     final dong = jsonDecode(utf8.decode(response.bodyBytes))["results"][0]["region"]["area3"]["name"];
 
     final address = '$si $gu $dong';
-    print(address);
 
     return address;
   }
