@@ -160,7 +160,7 @@ class ChatState extends State<Chat> {
             borderRadius: BorderRadius.circular(10),
           ),
           child: Text(
-            text,
+            '매물 보러가기',
             style: TextStyle(
               color: Colors.blue,
               decoration: TextDecoration.underline,
