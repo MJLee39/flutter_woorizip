@@ -6,6 +6,8 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:stomp_dart_client/stomp.dart';
 import 'package:stomp_dart_client/stomp_config.dart';
 import 'package:stomp_dart_client/stomp_frame.dart';
+import 'package:get/get.dart';
+import 'package:testapp/screens/zip_detail_screen.dart';
 
 class Chat extends StatefulWidget {
   final String chatRoomId;
@@ -140,14 +142,15 @@ class ChatState extends State<Chat> {
   }
 
   Widget _buildMessageWidget(Map<String, dynamic> message) {
-    final String text = message['message'] ?? "안녕하세요.";
+    final String originalText = message['message'] ?? "안녕하세요.";
+    final String text = originalText.replaceAll('%%room%%', ''); // "%%room%%"을 제거한 텍스트
     final bool isMyMessage = message['accountId'] == widget.accountId;
-    final bool containsWoorizip = text.toLowerCase().contains('woorizip');
+    final bool containsWoorizip = originalText.toLowerCase().contains('%%room%%');
 
     if (containsWoorizip) {
       return GestureDetector(
         onTap: () {
-          _handleWoorizipButtonTap();
+          Get.to(DetailScreen(itemID: text), transition: Transition.noTransition);
         },
         child: Container(
           padding: EdgeInsets.all(10),
@@ -157,7 +160,7 @@ class ChatState extends State<Chat> {
             borderRadius: BorderRadius.circular(10),
           ),
           child: Text(
-            text,
+            '매물 보러가기',
             style: TextStyle(
               color: Colors.blue,
               decoration: TextDecoration.underline,
@@ -181,11 +184,6 @@ class ChatState extends State<Chat> {
         ),
       );
     }
-  }
-
-  void _handleWoorizipButtonTap() {
-    // 특정 작업 수행
-    print('Woorizip 버튼이 클릭되었습니다.');
   }
 
   @override
