@@ -4,9 +4,14 @@ import 'package:testapp/chat/chatroom_list.dart';
 import 'package:testapp/map/screens/map_screen.dart';
 import 'package:testapp/middleware/auth_guard.dart';
 import 'package:testapp/screens/address_search_screen.dart';
+import 'package:testapp/screens/add_condition_screen.dart';
 import 'package:testapp/screens/home_screen.dart';
 import 'package:testapp/screens/login_screen.dart';
+import 'package:testapp/screens/read_all_condition_screen.dart';
 import 'package:testapp/screens/see_more_screen.dart';
+import 'package:testapp/screens/set_hashtag_screen.dart';
+import 'package:testapp/screens/set_details_screen.dart';
+import 'package:testapp/screens/set_move_in_date_screen.dart';
 import 'package:testapp/screens/zip_find_screen.dart';
 import 'package:testapp/screens/zip_list_agent_screen.dart';
 import 'package:testapp/screens/zip_list_agent_private_screen.dart';
@@ -49,18 +54,28 @@ class AppPages {
       page: () => AddressSearchScreen(),
     ),
     _getPageWithMiddleware(
-      name: '/chatRoomList',
-      page: () => ChatRoomList(accountId: 'qassadsadsa',),
+      name: '/addCondition',
+      page: () => const AddConditionScreen(),
       middlewares: [],
     ),
-
+    _getPageWithMiddleware(
+      name: '/readAllCondition',
+      page: () => const ReadAllConditionScreen(),
+      middlewares: [],
+    ),
+    _getPageWithMiddleware(
+      name: '/chatRoomList',
+      page: () => ChatRoomList(
+        accountId: 'qassadsadsa',
+      ),
+      middlewares: [],
+    ),
     _getPageWithMiddleware(
       name: '/chat/:chatRoomId',
       page: () {
         final chatRoomId = Get.parameters['chatRoomId'];
         final accountId = Get.arguments['accountId'];
-        return Chat(
-            chatRoomId: chatRoomId ?? "", accountId: accountId ?? "");
+        return Chat(chatRoomId: chatRoomId ?? "", accountId: accountId ?? "");
       },
       middlewares: [],
     ),
@@ -85,6 +100,32 @@ class AppPages {
     _getPageWithMiddleware(
       name: '/my_private',
       page: () => const ZipListAgentPrivateScreen(),
+      middlewares: [],
+    ),
+    /*
+    client set location, building, fee
+     */
+    _getPageWithMiddleware(
+      name: '/setdetails',
+      page: () => const SetDetailsScreen(),
+      middlewares: [],
+    ),
+
+    /*
+    client set Move In Data
+     */
+    _getPageWithMiddleware(
+      name: '/setmoveindate',
+      page: () => const SetMoveInDateScreen(),
+      middlewares: [],
+    ),
+
+    /*
+    client set Hashtag
+     */
+    _getPageWithMiddleware(
+      name: '/sethashtag',
+      page: () => const SetHashtagScreen(),
       middlewares: [],
     ),
   ];

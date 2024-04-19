@@ -23,7 +23,7 @@ class LoginScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    '3초만에 로그인 하고',
+                    '1초만에 로그인 하고',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Colors.black,
