@@ -11,6 +11,7 @@ import 'package:testapp/screens/zip_find_screen.dart';
 import 'package:testapp/screens/zip_list_agent_screen.dart';
 import 'package:testapp/screens/zip_list_agent_private_screen.dart';
 import 'package:testapp/screens/split_test.dart';
+import 'package:testapp/screens/zip_detail_screen.dart';
 
 class AppPages {
   static const initial = '/';

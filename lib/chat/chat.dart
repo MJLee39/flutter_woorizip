@@ -6,6 +6,8 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:stomp_dart_client/stomp.dart';
 import 'package:stomp_dart_client/stomp_config.dart';
 import 'package:stomp_dart_client/stomp_frame.dart';
+import 'package:get/get.dart';
+import 'package:testapp/screens/zip_detail_screen.dart';
 
 class Chat extends StatefulWidget {
   final String chatRoomId;
@@ -18,7 +20,7 @@ class Chat extends StatefulWidget {
 }
 
 class ChatState extends State<Chat> {
-  final String webSocketUrl = 'http://10.0.2.2:8818/stomp/chat';
+  final String webSocketUrl = 'https://chat.teamwaf.app/stomp/chat';
   late StompClient _client;
   final TextEditingController _controller = TextEditingController();
   final ScrollController _scrollController = ScrollController();
@@ -53,13 +55,14 @@ class ChatState extends State<Chat> {
   Future<void> _fetchChatRoom() async {
     if (!mounted) return;
 
-    final url = Uri.parse("http://10.0.2.2:8818/chat/room/resp?chatRoomId=${widget.chatRoomId}&accountId=${widget.accountId}");
+    final url = Uri.parse("https://chat.teamwaf.app/chat/room/resp?chatRoomId=${widget.chatRoomId}&accountId=${widget.accountId}");
     final response = await http.get(url);
 
     if (mounted) {
       if (response.statusCode == 200) {
         final jsonResponse = jsonDecode(utf8.decode(response.bodyBytes));
         final chatMessages = jsonResponse['chatMessagesInRoom'];
+        print(chatMessages);
         setState(() {
           messages.addAll(chatMessages);
         });
@@ -85,54 +88,25 @@ class ChatState extends State<Chat> {
     }
   }
 
-  Widget _buildMessageText(String text) { // RichText 위젯 생성을 위한 함수 추가
-    List<InlineSpan> spans = [];
+  void _showItemList() async {
+    final String url = 'http://10.0.2.2/zipListByAgent';
+    final Map<String, dynamic> requestBody = {'agentId': '명진 부동산88'};
 
-    RegExp linkRegExp = RegExp(
-      r'(?:(?:https?|ftp):\/\/)?[\w/\-?=%.]+\.[\w/\-?=%.]+',
-      caseSensitive: false,
+    final response = await http.post(
+      Uri.parse(url),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(requestBody),
     );
 
-    Iterable<Match> matches = linkRegExp.allMatches(text);
-    int lastMatchEnd = 0;
-
-    for (Match match in matches) {
-      if (match.start > lastMatchEnd) {
-        spans.add(
-          TextSpan(
-            text: text.substring(lastMatchEnd, match.start),
-          ),
-        );
-      }
-      spans.add(
-        TextSpan(
-          text: match.group(0),
-          style: TextStyle(
-            color: Colors.blue,
-            decoration: TextDecoration.underline,
-          ),
-          recognizer: TapGestureRecognizer()
-            ..onTap = () {
-              _launchURL(match.group(0)!);
-            },
-        ),
-      );
-      lastMatchEnd = match.end;
+    if (response.statusCode == 200) {
+      final List<dynamic> items = json.decode(utf8.decode(response.bodyBytes));
+      print("나왔다!!!!!!!!!!!!!!!!!!!!"+items.toString());
+      _showItems(items);
+    } else {
+      throw Exception('Failed to load items');
     }
-
-    if (lastMatchEnd < text.length) {
-      spans.add(
-        TextSpan(
-          text: text.substring(lastMatchEnd),
-        ),
-      );
-    }
-
-    return RichText(
-      text: TextSpan(
-        children: spans,
-      ),
-    );
   }
 
   void _showItems(List<dynamic> items) {
@@ -145,10 +119,11 @@ class ChatState extends State<Chat> {
             child: Column(
               children: items.map((item) {
                 return ListTile(
-                  title: Text(item['title']),
-                  subtitle: Text(item['description']),
+                  title: Text(item['direction']),
+                  subtitle: Text(item['buildingType']),
                   onTap: () {
                     _handleMessageTap(item['id']);
+                    Navigator.of(context).pop(); // BottomSheet 닫기
                   },
                 );
               }).toList(),
@@ -160,19 +135,58 @@ class ChatState extends State<Chat> {
   }
 
   void _handleMessageTap(String? id) {
-    String url = 'http://example.com/item?id=$id'; // Construct URL based on the ID
-    _controller.text = url;
-  }
-
-  void _showItemList() async {
-    final response = await http.get(Uri.parse('http://10.0.2.2:8818/chat/${widget.accountId}/room'));
-    if (response.statusCode == 200) {
-      final List<dynamic> items = json.decode(response.body);
-      _showItems(items);
-    } else {
-      throw Exception('Failed to load items');
+    if (id != null) {
+      _controller.text = '%%room%%'+id+'%%room%%';
+      _sendMessage(); // 메시지 전송 함수 호출
     }
   }
+
+  Widget _buildMessageWidget(Map<String, dynamic> message) {
+    final String originalText = message['message'] ?? "안녕하세요.";
+    final String text = originalText.replaceAll('%%room%%', ''); // "%%room%%"을 제거한 텍스트
+    final bool isMyMessage = message['accountId'] == widget.accountId;
+    final bool containsWoorizip = originalText.toLowerCase().contains('%%room%%');
+
+    if (containsWoorizip) {
+      return GestureDetector(
+        onTap: () {
+          Get.to(DetailScreen(itemID: text), transition: Transition.noTransition);
+        },
+        child: Container(
+          padding: EdgeInsets.all(10),
+          margin: EdgeInsets.symmetric(vertical: 5),
+          decoration: BoxDecoration(
+            color: isMyMessage ? Color(0xFF224488) : Colors.grey,
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Text(
+            text,
+            style: TextStyle(
+              color: Colors.blue,
+              decoration: TextDecoration.underline,
+            ),
+          ),
+        ),
+      );
+    } else {
+      return Container(
+        padding: EdgeInsets.all(10),
+        margin: EdgeInsets.symmetric(vertical: 5),
+        decoration: BoxDecoration(
+          color: isMyMessage ? Color(0xFF224488) : Colors.grey,
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Text(
+          text,
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
+      );
+    }
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -193,36 +207,7 @@ class ChatState extends State<Chat> {
                 controller: _scrollController,
                 itemBuilder: (context, index) {
                   Map<String, dynamic> item = messages[index];
-                  bool isMyMessage = item['accountId'] == widget.accountId;
-                  return Column(
-                    crossAxisAlignment: isMyMessage ? CrossAxisAlignment.end : CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        item['nickname'],
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.grey,
-                        ),
-                      ),
-                      Align(
-                        alignment: isMyMessage ? Alignment.centerRight : Alignment.centerLeft,
-                        child: GestureDetector(
-                          onTap: () {
-                            _launchURL(item['message'] ?? "안녕하세요.");
-                          },
-                          child: Container(
-                            padding: EdgeInsets.all(10),
-                            margin: EdgeInsets.symmetric(vertical: 5),
-                            decoration: BoxDecoration(
-                              color: isMyMessage ? Color(0xFF224488) : Colors.grey,
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: _buildMessageText(item['message'] ?? "안녕하세요."), // 메시지 텍스트 위젯 대체
-                          ),
-                        ),
-                      ),
-                    ],
-                  );
+                  return _buildMessageWidget(item);
                 },
               ),
             ),

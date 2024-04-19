@@ -42,7 +42,7 @@ class _ChatRoomListScreenState extends State<ChatRoomListScreen> {
   }
 
   Future<void> _fetchChatRooms() async {
-    final url = Uri.parse("http://10.0.2.2:8818/chat/${widget.accountId}/room");
+    final url = Uri.parse("https://chat.teamwaf.app/chat/${widget.accountId}/room");
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
@@ -62,7 +62,7 @@ class _ChatRoomListScreenState extends State<ChatRoomListScreen> {
   void subscribeToChatRoom(String chatRoomId) {
     EventFlux.instance.connect(
       EventFluxConnectionType.get,
-      'http://10.0.2.2:8818/chat/connect/$chatRoomId',
+      'https://chat.teamwaf.app/chat/connect/$chatRoomId',
       onSuccessCallback: (EventFluxResponse? response) {
         response!.stream?.listen((data) {
           if (data.event == 'chat') {

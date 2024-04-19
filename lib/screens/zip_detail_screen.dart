@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:testapp/widgets/bottom_navigation_widget.dart';
+import 'package:testapp/controllers/zip_detail_controller.dart';
 
 class DetailScreen extends StatefulWidget  {
   final String itemID; // zipID를 저장하기 위한 필드
@@ -14,6 +15,7 @@ class DetailScreen extends StatefulWidget  {
 
 class _DetailScreenState extends State<DetailScreen> {
   late Map<String, dynamic> zipData = {};
+  final ZipDataController _zipDataController = ZipDataController();
 
   @override
   void initState() {
@@ -22,20 +24,15 @@ class _DetailScreenState extends State<DetailScreen> {
   }
 
   void fetchData() async {
-    final response = await http.get(
-        Uri.parse('http://192.168.117.31/zipOne?zip_id=${widget.itemID}'));
-        //Uri.parse('http://10.0.2.2/zipOne?zip_id=${widget.itemID}'));
-
-    if (response.statusCode == 200) {
-      // HTTP 요청이 성공하면 응답을 처리합니다.
-      final Map<String, dynamic> responseData = json.decode(
-          utf8.decode(response.bodyBytes));
+    try {
+      final Map<String, dynamic> result =
+      await _zipDataController.fetchZipData(widget.itemID);
       setState(() {
-        // zipData를 업데이트하여 받은 데이터로 화면을 다시 그립니다.
-        zipData = responseData;
+        zipData = result;
       });
-    } else {
-      // HTTP 요청이 실패한 경우에 대한 처리를 여기에 추가할 수 있습니다.
+    } catch (error) {
+      print('Error: $error');
+      // 데이터 로드 실패 시 처리
     }
   }
 
