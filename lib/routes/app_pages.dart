@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
-import 'package:testapp/chat/chat_screen.dart';
-import 'package:testapp/chat/chatroom_list_screen.dart';
+import 'package:testapp/chat/chat.dart';
+import 'package:testapp/chat/chatroom_list.dart';
 import 'package:testapp/map/screens/map_screen.dart';
 import 'package:testapp/middleware/auth_guard.dart';
 import 'package:testapp/screens/address_search_screen.dart';
@@ -46,13 +46,18 @@ class AppPages {
     ),
     _getPageWithMiddleware(
       name: '/chatRoomList',
-      page: () => const ChatRoomListScreen(),
+      page: () => ChatRoomList(accountId: 'qassadsadsa',),
       middlewares: [],
     ),
-    _getPageWithMiddleware(
-      name: '/chat',
-      page: () => const ChatScreen(),
 
+    _getPageWithMiddleware(
+      name: '/chat/:chatRoomId',
+      page: () {
+        final chatRoomId = Get.parameters['chatRoomId'];
+        final accountId = Get.arguments['accountId'];
+        return Chat(
+            chatRoomId: chatRoomId ?? "", accountId: accountId ?? "");
+      },
       middlewares: [],
     ),
     _getPageWithMiddleware(
