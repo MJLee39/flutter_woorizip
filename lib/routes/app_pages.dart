@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
-import 'package:testapp/chat/chat_screen.dart';
-import 'package:testapp/chat/chatroom_list_screen.dart';
+import 'package:testapp/chat/chat.dart';
+import 'package:testapp/chat/chatroom_list.dart';
 import 'package:testapp/map/screens/map_screen.dart';
 import 'package:testapp/middleware/auth_guard.dart';
 import 'package:testapp/screens/address_search_screen.dart';
@@ -15,7 +15,7 @@ import 'package:testapp/screens/set_move_in_date_screen.dart';
 import 'package:testapp/screens/zip_find_screen.dart';
 import 'package:testapp/screens/zip_list_agent_screen.dart';
 import 'package:testapp/screens/zip_list_agent_private_screen.dart';
-import 'package:testapp/screens/split_test.dart';
+import 'package:testapp/screens/zip_detail_screen.dart';
 
 class AppPages {
   static const initial = '/';
@@ -65,12 +65,18 @@ class AppPages {
     ),
     _getPageWithMiddleware(
       name: '/chatRoomList',
-      page: () => const ChatRoomListScreen(),
+      page: () => ChatRoomList(
+        accountId: 'qassadsadsa',
+      ),
       middlewares: [],
     ),
     _getPageWithMiddleware(
-      name: '/chat',
-      page: () => const ChatScreen(),
+      name: '/chat/:chatRoomId',
+      page: () {
+        final chatRoomId = Get.parameters['chatRoomId'];
+        final accountId = Get.arguments['accountId'];
+        return Chat(chatRoomId: chatRoomId ?? "", accountId: accountId ?? "");
+      },
       middlewares: [],
     ),
     _getPageWithMiddleware(
@@ -96,7 +102,6 @@ class AppPages {
       page: () => const ZipListAgentPrivateScreen(),
       middlewares: [],
     ),
-
     /*
     client set location, building, fee
      */
@@ -121,11 +126,6 @@ class AppPages {
     _getPageWithMiddleware(
       name: '/sethashtag',
       page: () => const SetHashtagScreen(),
-      middlewares: [],
-    ),
-    _getPageWithMiddleware(
-      name: '/split',
-      page: () => SplitTest(),
       middlewares: [],
     ),
   ];

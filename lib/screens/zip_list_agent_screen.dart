@@ -71,7 +71,7 @@ class _ZipListAgentScreenState extends State<ZipListAgentScreen> {
   ];
 
   void _copyDetailScreenUrl(String itemId) {
-    final detailScreenUrl = 'https://192.168.117.31/zipOne?zip_id=$itemId'; // 실제 URL로 대체하세요
+    final detailScreenUrl = '$itemId'; // 실제 URL로 대체하세요
     Clipboard.setData(ClipboardData(text: detailScreenUrl)); // URL을 클립보드에 복사
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -170,6 +170,7 @@ class _ZipListAgentScreenState extends State<ZipListAgentScreen> {
                     child: Image.network(
                       'https://test.teamwaf.app/attachment/' + item['attachments'],
                       fit: BoxFit.cover,
+                      width: 100, // 이미지의 가로 길이를 조절합니다.
                     ),
                   ),
                   Expanded(
@@ -186,36 +187,35 @@ class _ZipListAgentScreenState extends State<ZipListAgentScreen> {
                                 "월세 " + item['deposit'].toString() + "/" + item['fee'].toString(),
                                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
                               ),
-                              Row(
-                                children: [
-                                  IconButton(
-                                    icon: Icon(Icons.edit),
-                                    onPressed: () {
-                                      // Handle edit action
-                                    },
-                                  ),
-                                  IconButton(
-                                    icon: Icon(Icons.delete),
-                                    onPressed: () {
-                                      // Handle delete action
-                                    },
-                                  ),
-                                  IconButton(
-                                    icon: Icon(Icons.content_copy), // 복사 버튼 아이콘
-                                    onPressed: () {
-                                      _copyDetailScreenUrl(item['id']); // URL을 복사하는 함수 호출
-                                    },
-                                  ),
-                                ],
-                              ),
                             ],
                           ),
                           const SizedBox(height: 8.0),
-                          Text((item['m2'] * 0.3025).toStringAsFixed(2).toString() + "평 | " +
+                          Text((item['m2'] * 0.3025).toStringAsFixed(2).toString() + "평|" +
                               item['buildingFloor'].toString() + "층/" + item['totalFloor'].toString() +
-                              "층 | " + item['direction']),
-                          Text(item['location'] + " | " + item['buildingType']),
-                          const SizedBox(height: 8.0),
+                              "층|" + item['direction']),
+                          Text(item['location'] + "|" + item['buildingType']),
+                          Row(
+                            children: [
+                              IconButton(
+                                icon: Icon(Icons.edit),
+                                onPressed: () {
+                                  // Handle edit action
+                                },
+                              ),
+                              IconButton(
+                                icon: Icon(Icons.delete),
+                                onPressed: () {
+                                  // Handle delete action
+                                },
+                              ),
+                              IconButton(
+                                icon: Icon(Icons.content_copy), // 복사 버튼 아이콘
+                                onPressed: () {
+                                  _copyDetailScreenUrl(item['id']); // URL을 복사하는 함수 호출
+                                },
+                              ),
+                            ],
+                          ),
                         ],
                       ),
                     ),

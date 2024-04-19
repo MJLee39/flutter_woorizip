@@ -4,6 +4,8 @@ import 'package:testapp/widgets/bottom_navigation_widget.dart';
 import 'package:testapp/screens/zip_detail_screen.dart'; // DetailScreen.dart를 import합니다.
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
+import 'package:flutter/services.dart'; // ClipboardData 가져오기
+
 
 class ZipListAgentPrivateScreen extends StatefulWidget {
   const ZipListAgentPrivateScreen({Key? key}) : super(key: key);
@@ -25,7 +27,7 @@ class _ZipListAgentScreenState extends State<ZipListAgentPrivateScreen> {
 
   // Future<void> fetchData() async {
   //   try {
-  //     final response = await http.post(Uri.parse('http://localhost/zipShowNo'));
+  //     final response = await http.post(Uri.parse('http://10.0.2.2/zipShowNo'));
   //     //final response = await http.post(Uri.parse('http://localhost/zipShowNo'));
   //     if (response.statusCode == 200) {
   //       List<dynamic> responseData = jsonDecode(utf8.decode(response.bodyBytes));
@@ -68,6 +70,16 @@ class _ZipListAgentScreenState extends State<ZipListAgentPrivateScreen> {
     }
     // 더미 데이터 추가...
   ];
+
+  void _copyDetailScreenUrl(String itemId) {
+    final detailScreenUrl = '$itemId'; // 실제 URL로 대체하세요
+    Clipboard.setData(ClipboardData(text: detailScreenUrl)); // URL을 클립보드에 복사
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('상세 화면 URL이 복사되었습니다'), // 사용자에게 피드백 표시
+      ),
+    );
+  }
 
 
   @override
@@ -159,6 +171,7 @@ class _ZipListAgentScreenState extends State<ZipListAgentPrivateScreen> {
                     child: Image.network(
                       'https://test.teamwaf.app/attachment/' + item['attachments'],
                       fit: BoxFit.cover,
+                      width: 100, // 이미지의 가로 길이를 조절합니다.
                     ),
                   ),
                   Expanded(
@@ -175,30 +188,35 @@ class _ZipListAgentScreenState extends State<ZipListAgentPrivateScreen> {
                                 "월세 " + item['deposit'].toString() + "/" + item['fee'].toString(),
                                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
                               ),
-                              Row(
-                                children: [
-                                  IconButton(
-                                    icon: Icon(Icons.edit),
-                                    onPressed: () {
-                                      // Handle edit action
-                                    },
-                                  ),
-                                  IconButton(
-                                    icon: Icon(Icons.delete),
-                                    onPressed: () {
-                                      // Handle delete action
-                                    },
-                                  ),
-                                ],
-                              ),
                             ],
                           ),
                           const SizedBox(height: 8.0),
-                          Text((item['m2'] * 0.3025).toStringAsFixed(2).toString() + "평 | " +
+                          Text((item['m2'] * 0.3025).toStringAsFixed(2).toString() + "평|" +
                               item['buildingFloor'].toString() + "층/" + item['totalFloor'].toString() +
-                              "층 | " + item['direction']),
-                          Text(item['location'] + " | " + item['buildingType']),
-                          const SizedBox(height: 8.0),
+                              "층|" + item['direction']),
+                          Text(item['location'] + "|" + item['buildingType']),
+                          Row(
+                            children: [
+                              IconButton(
+                                icon: Icon(Icons.edit),
+                                onPressed: () {
+                                  // Handle edit action
+                                },
+                              ),
+                              IconButton(
+                                icon: Icon(Icons.delete),
+                                onPressed: () {
+                                  // Handle delete action
+                                },
+                              ),
+                              IconButton(
+                                icon: Icon(Icons.content_copy), // 복사 버튼 아이콘
+                                onPressed: () {
+                                  _copyDetailScreenUrl(item['id']); // URL을 복사하는 함수 호출
+                                },
+                              ),
+                            ],
+                          ),
                         ],
                       ),
                     ),
