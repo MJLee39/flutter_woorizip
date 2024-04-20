@@ -144,6 +144,7 @@ class ChatState extends State<Chat> {
   Widget _buildMessageWidget(Map<String, dynamic> message) {
     final String originalText = message['message'] ?? "안녕하세요.";
     final String text = originalText.replaceAll('%%room%%', ''); // "%%room%%"을 제거한 텍스트
+    final String nickname = message['nickname'] ?? "익명"; // 닉네임
     final bool isMyMessage = message['accountId'] == widget.accountId;
     final bool containsWoorizip = originalText.toLowerCase().contains('%%room%%');
 
@@ -152,36 +153,72 @@ class ChatState extends State<Chat> {
         onTap: () {
           Get.to(DetailScreen(itemID: text), transition: Transition.noTransition);
         },
-        child: Container(
-          padding: EdgeInsets.all(10),
-          margin: EdgeInsets.symmetric(vertical: 5),
-          decoration: BoxDecoration(
-            color: isMyMessage ? Color(0xFF224488) : Colors.grey,
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: Text(
-            '매물 보러가기',
-            style: TextStyle(
-              color: Colors.blue,
-              decoration: TextDecoration.underline,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              nickname, // 닉네임 표시
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+              ),
             ),
-          ),
+            Column(
+              children: [
+                Container(
+                  padding: EdgeInsets.all(10),
+                  margin: EdgeInsets.symmetric(vertical: 5),
+                  decoration: BoxDecoration(
+                    color: isMyMessage ? Color(0xFF224488) : Colors.grey,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Text(
+                    '매물 보러가기',
+                    style: TextStyle(
+                      color: Colors.blue,
+                      decoration: TextDecoration.underline,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
         ),
       );
     } else {
-      return Container(
-        padding: EdgeInsets.all(10),
-        margin: EdgeInsets.symmetric(vertical: 5),
-        decoration: BoxDecoration(
-          color: isMyMessage ? Color(0xFF224488) : Colors.grey,
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: Text(
-          text,
-          style: TextStyle(
-            color: Colors.white,
+      return Column(
+        crossAxisAlignment: isMyMessage ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+        children: [
+          Text(
+            nickname, // 닉네임 표시
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+            ),
           ),
-        ),
+          Container(
+            padding: EdgeInsets.all(10),
+            margin: EdgeInsets.symmetric(vertical: 5),
+            decoration: BoxDecoration(
+              color: isMyMessage ? Color(0xFF224488) : Colors.grey,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  text,
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
+              ],
+            ),
+            constraints: BoxConstraints(
+              maxWidth: MediaQuery.of(context).size.width * 0.7, // 채팅 메시지의 최대 너비 지정
+            ),
+          ),
+        ],
       );
     }
   }
