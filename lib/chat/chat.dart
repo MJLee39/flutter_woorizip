@@ -8,6 +8,7 @@ import 'package:stomp_dart_client/stomp_config.dart';
 import 'package:stomp_dart_client/stomp_frame.dart';
 import 'package:get/get.dart';
 import 'package:testapp/screens/zip_detail_screen.dart';
+import 'package:flutter_font_icons/flutter_font_icons.dart';
 
 class Chat extends StatefulWidget {
   final String chatRoomId;
@@ -224,12 +225,18 @@ class ChatState extends State<Chat> {
                 SizedBox(width: 10),
                 ElevatedButton(
                   onPressed: _sendMessage,
-                  child: Text('Send'),
+                  child: const Icon(
+                    Icons.send,
+                    color: Colors.black,
+                  ),
                 ),
                 SizedBox(width: 10),
                 ElevatedButton(
                   onPressed: _showItemList,
-                  child: Text('Show Items'),
+                  child: const Icon(
+                    Icons.add,
+                    color: Colors.black,
+                  ),
                 ),
               ],
             ),
