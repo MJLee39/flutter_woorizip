@@ -49,6 +49,7 @@ dependencies:
   stomp_dart_client: ^1.0.3
   eventflux: ^1.6.9
   flutter_svg:
+  table_calendar:
 
 dev_dependencies:
   flutter_test:
