@@ -122,37 +122,6 @@ class SeeMoreScreen extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 30),
-            GestureDetector(
-              onTap: () {
-                // '/my_listings' 경로로 이동
-                Get.toNamed('/my_private');
-              },
-              child: Container(
-                padding: EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  border: Border.all(color: AppColors.mainColorTest),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Row(
-                  children: <Widget>[
-                    Icon(
-                      Icons.lock,
-                      color: AppColors.mainColorTest,
-                      size: 30.0,
-                    ),
-                    SizedBox(width: 10.0),
-                    Text(
-                      '비공개 매물 관리',
-                      style: TextStyle(
-                          fontSize: 25,
-                          color: AppColors.mainColorTest
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
           ],
         ),
       ),
