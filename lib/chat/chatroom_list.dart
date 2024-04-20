@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:eventflux/eventflux.dart';
+import 'package:testapp/controllers/chat_controller.dart';
 
 import 'chat.dart';
 
@@ -34,6 +35,8 @@ class ChatRoomListScreen extends StatefulWidget {
 
 class _ChatRoomListScreenState extends State<ChatRoomListScreen> {
   late List<ChatRoomResponseDTO> chatRooms = [];
+
+  final ChatController _chatController = ChatController();
 
   @override
   void initState() {

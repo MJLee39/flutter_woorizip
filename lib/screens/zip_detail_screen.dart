@@ -1,8 +1,11 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:testapp/controllers/chat_controller.dart';
 import 'package:testapp/widgets/bottom_navigation_widget.dart';
 import 'package:testapp/controllers/zip_detail_controller.dart';
+
+import '../chat/chat.dart';
 
 class DetailScreen extends StatefulWidget  {
   final String itemID; // zipID를 저장하기 위한 필드
@@ -16,6 +19,7 @@ class DetailScreen extends StatefulWidget  {
 class _DetailScreenState extends State<DetailScreen> {
   late Map<String, dynamic> zipData = {};
   final ZipDataController _zipDataController = ZipDataController();
+  final ChatController _chatController = ChatController();
 
   @override
   void initState() {
@@ -235,12 +239,22 @@ class _DetailScreenState extends State<DetailScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  ElevatedButton(
-                    onPressed: () {
-                      // 버튼이 클릭되었을 때 수행할 동작
-                      // 예: 문의하기 기능 실행
+                    ElevatedButton(
+                      onPressed: () {
+                        final agentId = zipData["agentId"];
+                        const clientId = "qweqwewqeewq";
 
-                    },
+                        _chatController.createChatRoom(clientId, agentId).then((chatRoomInfo) {
+                          Navigator.push(
+                            context, MaterialPageRoute(
+                              builder: (context) => Chat(
+                                chatRoomId: chatRoomInfo['id'],
+                                accountId: clientId,
+                              ),
+                            ),
+                          );
+                        });
+                      },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.blue,
                       // 버튼의 배경색을 파란색으로 설정
