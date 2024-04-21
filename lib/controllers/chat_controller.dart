@@ -28,7 +28,18 @@ class ChatController {
     if (response.statusCode == 200) {
       return json.decode(utf8.decode(response.bodyBytes));
     } else {
-      throw Exception('Failed to load zip data');
+      throw Exception('Failed to create chatRoom');
+    }
+  }
+
+  Future<String> exitChatRoom(String chatRoomId) async {
+    final url = Uri.parse("https://chat.teamwaf.app/chat/room/$chatRoomId");
+    final response = await http.delete(url);
+
+    if (response.statusCode == 200) {
+      return "deleted";
+    } else {
+      throw Exception('Failed to delete exit chatRoom');
     }
   }
 }
