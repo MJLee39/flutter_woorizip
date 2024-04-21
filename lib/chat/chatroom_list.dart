@@ -41,25 +41,13 @@ class _ChatRoomListScreenState extends State<ChatRoomListScreen> {
   @override
   void initState() {
     super.initState();
-    _fetchChatRooms();
-  }
-
-  Future<void> _fetchChatRooms() async {
-    final url = Uri.parse("https://chat.teamwaf.app/chat/${widget.accountId}/room");
-    final response = await http.get(url);
-
-    if (response.statusCode == 200) {
-      final List<dynamic> jsonList = jsonDecode(utf8.decode(response.bodyBytes));
-      setState(() {
-        chatRooms = jsonList.map((json) => ChatRoomResponseDTO.fromJson(json)).toList();
-      });
-
-      for (final chatRoom in chatRooms) {
-        subscribeToChatRoom(chatRoom.id);
-      }
-    } else {
-      throw Exception("Failed to fetch chat rooms");
-    }
+    _chatController.fetchChatRooms(widget.accountId)
+        .then((value) => {
+          setState(() {
+            chatRooms = value;
+          }
+        )
+    }).catchError((err) => print(err));
   }
 
   void subscribeToChatRoom(String chatRoomId) {
@@ -121,6 +109,29 @@ class _ChatRoomListScreenState extends State<ChatRoomListScreen> {
                       backgroundColor: Colors.white,
                       child: Text(chatRoom.nickname[0], style: TextStyle(color: Color(0xFF224488)),),
                     ),
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        IconButton(
+                          icon: Icon(
+                            Icons.warning,
+                            color: Colors.white,
+                          ),
+                          onPressed: () {
+                            print('Report Button Pressed for Chat Room ID: ${chatRoom.id}');
+                          },
+                        ),
+                        IconButton(
+                          icon: Icon(
+                            Icons.exit_to_app,
+                            color: Colors.white,
+                          ),
+                          onPressed: () {
+                            _chatController.exitChatRoom(chatRoom.id);
+                          },
+                        ),
+                      ],
+                    ),
                     onTap: () {
                       Navigator.push(
                         context,
@@ -139,35 +150,6 @@ class _ChatRoomListScreenState extends State<ChatRoomListScreen> {
           ),
         ],
       ),
-    );
-  }
-}
-
-class ChatRoomResponseDTO {
-  final String id;
-  final List<String> participantIds;
-  final String nickname;
-  final String clientId;
-  final String brokerId;
-  String recentMessage;
-
-  ChatRoomResponseDTO({
-    required this.id,
-    required this.participantIds,
-    required this.nickname,
-    required this.clientId,
-    required this.brokerId,
-    required this.recentMessage,
-  });
-
-  factory ChatRoomResponseDTO.fromJson(Map<String, dynamic> json) {
-    return ChatRoomResponseDTO(
-      id: json['id'],
-      participantIds: List<String>.from(json['participantIds']),
-      nickname: json['nickname'],
-      clientId: json['clientId'],
-      brokerId: json['brokerId'],
-      recentMessage: json['recentMessage'] ?? "",
     );
   }
 }
