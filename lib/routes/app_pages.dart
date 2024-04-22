@@ -4,17 +4,18 @@ import 'package:testapp/chat/chatroom_list.dart';
 import 'package:testapp/map/screens/map_screen.dart';
 import 'package:testapp/middleware/auth_guard.dart';
 import 'package:testapp/screens/address_search_screen.dart';
-import 'package:testapp/screens/add_condition_screen.dart';
+import 'package:testapp/screens/condition/condition_detail_screen.dart';
+import 'package:testapp/screens/condition/condition_update_screen.dart';
+// import 'package:testapp/screens/condition_update_screen.dart';
 import 'package:testapp/screens/home_screen.dart';
 import 'package:testapp/screens/login_screen.dart';
-import 'package:testapp/screens/read_all_condition_screen.dart';
+import 'package:testapp/screens/condition/condition_read_all_screen.dart';
 import 'package:testapp/screens/see_more_screen.dart';
-import 'package:testapp/screens/set_hashtag_screen.dart';
-import 'package:testapp/screens/set_details_screen.dart';
-import 'package:testapp/screens/set_move_in_date_screen.dart';
+import 'package:testapp/screens/condition/set_hashtag_screen.dart';
+import 'package:testapp/screens/condition/set_details_screen.dart';
+import 'package:testapp/screens/condition/set_move_in_date_screen.dart';
 import 'package:testapp/screens/zip_find_screen.dart';
 import 'package:testapp/screens/zip_list_agent_screen.dart';
-
 
 class AppPages {
   static const initial = '/';
@@ -53,16 +54,6 @@ class AppPages {
       page: () => AddressSearchScreen(),
     ),
     _getPageWithMiddleware(
-      name: '/addCondition',
-      page: () => const AddConditionScreen(),
-      middlewares: [],
-    ),
-    _getPageWithMiddleware(
-      name: '/readAllCondition',
-      page: () => const ReadAllConditionScreen(),
-      middlewares: [],
-    ),
-    _getPageWithMiddleware(
       name: '/chatRoomList',
       page: () => ChatRoomList(
         accountId: 'qassadsadsa',
@@ -96,6 +87,7 @@ class AppPages {
       },
       middlewares: [],
     ),
+
     /*
     client set location, building, fee
      */
@@ -120,6 +112,33 @@ class AppPages {
     _getPageWithMiddleware(
       name: '/sethashtag',
       page: () => const SetHashtagScreen(),
+      middlewares: [],
+    ),
+
+    /*
+    client condition read all
+     */
+    _getPageWithMiddleware(
+      name: '/conditionreadall',
+      page: () => ConditionReadAllScreen(),
+      middlewares: [],
+    ),
+
+    /*
+    client condition detail
+     */
+    _getPageWithMiddleware(
+      name: '/setconditiondetail',
+      page: () => const ConditionDetailScreen(),
+      middlewares: [],
+    ),
+
+    /*
+    client condition update
+     */
+    _getPageWithMiddleware(
+      name: '/updatecondition',
+      page: () => ConditionUpdateScreen(),
       middlewares: [],
     ),
   ];
