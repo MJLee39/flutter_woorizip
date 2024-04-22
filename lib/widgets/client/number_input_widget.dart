@@ -2,16 +2,24 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class NumberInputWidget extends StatelessWidget {
-  const NumberInputWidget({super.key});
+  final ValueChanged<int>? onChanged;
+
+  const NumberInputWidget({super.key, this.onChanged});
 
   @override
   Widget build(BuildContext context) {
-    return const TextField(
-      decoration: InputDecoration(
+    return TextField(
+      decoration: const InputDecoration(
         labelText: '최대값',
         border: OutlineInputBorder(),
       ),
       keyboardType: TextInputType.number,
+      onChanged: (String newValue) {
+        int? intValue = int.tryParse(newValue);
+        if (intValue != null && onChanged != null) {
+          onChanged!(intValue);
+        }
+      },
     );
   }
 }

@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:testapp/controllers/condition/set_details_controller.dart';
 
-class SetBuildingtypeButtons extends StatefulWidget {
-  const SetBuildingtypeButtons({super.key});
+class SetBuildingtypeButtonsWidget extends StatefulWidget {
+  const SetBuildingtypeButtonsWidget({super.key});
 
   @override
-  _FourButtonsContainerState createState() => _FourButtonsContainerState();
+  _SetBuildingtypeButtonsWidgetState createState() =>
+      _SetBuildingtypeButtonsWidgetState();
 }
 
-class _FourButtonsContainerState extends State<SetBuildingtypeButtons> {
-  // 선택된 버튼을 나타내는 리스트
+class _SetBuildingtypeButtonsWidgetState
+    extends State<SetBuildingtypeButtonsWidget> {
+  final SetDetailsController controller = Get.find<SetDetailsController>();
+
+  final List<String> buildingTypes = ['아파트', '투룸/빌라+', '원룸', '오피스텔'];
+
   List<bool> _selections = [false, false, false, false];
 
   @override
@@ -19,9 +26,9 @@ class _FourButtonsContainerState extends State<SetBuildingtypeButtons> {
           isSelected: _selections,
           onPressed: (int index) {
             setState(() {
-              for (int i = 0; i < _selections.length; i++) {
-                _selections[i] = i == index;
-              }
+              _selections =
+                  List.generate(_selections.length, (i) => i == index);
+              controller.buildingType.value = buildingTypes[index];
             });
           },
           selectedColor: Colors.white,

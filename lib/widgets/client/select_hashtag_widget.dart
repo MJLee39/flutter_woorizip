@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:testapp/controllers/condition/set_details_controller.dart';
 
 class SelectHashtagWidget extends StatefulWidget {
   const SelectHashtagWidget({super.key});
@@ -29,6 +31,8 @@ final buttonLabels = [
 ];
 
 class SelectHashtagWidgetState extends State<SelectHashtagWidget> {
+  final SetDetailsController controller = Get.find<SetDetailsController>();
+
   final List<bool> _selections = List.filled(buttonLabels.length, false);
 
   @override
@@ -47,6 +51,7 @@ class SelectHashtagWidgetState extends State<SelectHashtagWidget> {
             onPressed: () {
               setState(() {
                 _selections[index] = !_selections[index];
+                updateHashtag();
               });
             },
             style: ButtonStyle(
@@ -62,5 +67,18 @@ class SelectHashtagWidgetState extends State<SelectHashtagWidget> {
         },
       ),
     );
+  }
+
+  void updateHashtag() {
+    List<String> selectedHashtags = [];
+    for (int i = 0; i < _selections.length; i++) {
+      if (_selections[i]) {
+        selectedHashtags.add(buttonLabels[i]);
+        print('selectedHashtags: ' + selectedHashtags.toString());
+      }
+    }
+
+    controller.hashtag.value = selectedHashtags.join(' ');
+    print('controller.hashtag.value: ' + controller.hashtag.value);
   }
 }
