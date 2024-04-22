@@ -45,6 +45,9 @@ class _ChatRoomListScreenState extends State<ChatRoomListScreen> {
         .then((value) => {
           setState(() {
             chatRooms = value;
+            for (var chatRoom in chatRooms) {
+              subscribeToChatRoom(chatRoom.id);
+            }
           }
         )
     }).catchError((err) => print(err));
@@ -127,7 +130,13 @@ class _ChatRoomListScreenState extends State<ChatRoomListScreen> {
                             color: Colors.white,
                           ),
                           onPressed: () {
-                            _chatController.exitChatRoom(chatRoom.id);
+                            _chatController.exitChatRoom(chatRoom.id).then((exitMessage) {
+                              if (exitMessage == 'deleted') {
+                                setState(() {
+                                  chatRooms.removeWhere((element) => element.id == chatRoom.id);
+                                });
+                              }
+                            });
                           },
                         ),
                       ],
