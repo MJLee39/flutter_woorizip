@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/gestures.dart'; // RichText 위젯 사용을 위해 추가
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:testapp/controllers/chat_controller.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:stomp_dart_client/stomp.dart';
 import 'package:stomp_dart_client/stomp_config.dart';
@@ -23,6 +24,7 @@ class Chat extends StatefulWidget {
 class ChatState extends State<Chat> {
   final String webSocketUrl = 'https://chat.teamwaf.app/stomp/chat';
   late StompClient _client;
+  final ChatController _chatController = ChatController();
   final TextEditingController _controller = TextEditingController();
   final ScrollController _scrollController = ScrollController();
   List<dynamic> messages = [];
@@ -37,7 +39,11 @@ class ChatState extends State<Chat> {
       ),
     );
     _client.activate();
-    _fetchChatRoom();
+    _chatController.fetchChatRoom(widget.chatRoomId, widget.accountId).then((value) => {
+      setState(() {
+        messages.addAll(value);
+      })
+    });
   }
 
   void onConnectCallback(StompFrame connectFrame) {
@@ -46,31 +52,11 @@ class ChatState extends State<Chat> {
       headers: {},
       callback: (frame) {
         setState(() {
-          messages.insert(0, json.decode(frame.body!));
+          messages.add(json.decode(frame.body!));
           _scrollController.jumpTo(_scrollController.position.minScrollExtent);
         });
       },
     );
-  }
-
-  Future<void> _fetchChatRoom() async {
-    if (!mounted) return;
-
-    final url = Uri.parse("https://chat.teamwaf.app/chat/room/resp?chatRoomId=${widget.chatRoomId}&accountId=${widget.accountId}");
-    final response = await http.get(url);
-
-    if (mounted) {
-      if (response.statusCode == 200) {
-        final jsonResponse = jsonDecode(utf8.decode(response.bodyBytes));
-        final chatMessages = jsonResponse['chatMessagesInRoom'];
-        print(chatMessages);
-        setState(() {
-          messages.addAll(chatMessages);
-        });
-      } else {
-        throw Exception("Failed to fetch chat room");
-      }
-    }
   }
 
   void _sendMessage() {
@@ -90,7 +76,7 @@ class ChatState extends State<Chat> {
   }
 
   void _showItemList() async {
-    final String url = 'http://10.0.2.2/zipListByAgent';
+    final String url = 'http://localhost/zipListByAgent';
     final Map<String, dynamic> requestBody = {'agentId': '명진 부동산88'};
 
     final response = await http.post(
@@ -243,7 +229,7 @@ class ChatState extends State<Chat> {
                 controller: _scrollController,
                 itemBuilder: (context, index) {
                   Map<String, dynamic> item = messages[index];
-                  return _buildMessageWidget(item);
+                  return _buildMessageWidget(messages[messages.length - 1 - index]);
                 },
               ),
             ),
