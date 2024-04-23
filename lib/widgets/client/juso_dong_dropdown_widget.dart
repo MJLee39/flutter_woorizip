@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:testapp/controllers/condition/set_details_controller.dart';
 import 'package:testapp/widgets/client/dropdown_fields_widget.dart';
 
 class JusoDongDropdownWidget extends StatefulWidget {
@@ -9,8 +11,14 @@ class JusoDongDropdownWidget extends StatefulWidget {
 }
 
 class _JusoDongDropdownWidgetState extends State<JusoDongDropdownWidget> {
+  final SetDetailsController controller = Get.find<SetDetailsController>();
+
   @override
   Widget build(BuildContext context) {
+    String initialValue = '아현동';
+
+    controller.location.value += initialValue;
+
     return SizedBox(
         height: 50, // 원하는 높이를 지정합니다.
         child: DropdownFieldsWidget(
@@ -42,9 +50,10 @@ class _JusoDongDropdownWidgetState extends State<JusoDongDropdownWidget> {
             '중동',
             '상암동'
           ],
-          initialValue: '아현동',
+          initialValue: initialValue,
           onChanged: (String newValue) {
-            // 버튼 선택 시 동작 지정
+            controller.location.value.replaceAll('아현동', '');
+            controller.location.value += newValue;
           },
         ));
   }
