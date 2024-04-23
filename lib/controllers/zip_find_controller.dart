@@ -28,7 +28,15 @@ class ZipFindController extends GetxController {
       final response = await http.get(Uri.parse('http://localhost/search?buildingType='+additionalArgument));
       if (response.statusCode == 200) {
         List<dynamic> responseData = jsonDecode(utf8.decode(response.bodyBytes));
+        RxList<Map<String, dynamic>> premiumZip = RxList<Map<String, dynamic>>();
         jsonData.assignAll(responseData.cast<Map<String, dynamic>>());
+        for (var data in jsonData) {
+          if (DateTime.now().isBefore(data['premium'])) {
+            premiumZip.add(data);
+          }
+        }
+        premiumZip.shuffle();
+        jsonData.insertAll(0, premiumZip);
       } else {
         throw Exception('Failed to load data: ${response.statusCode}');
       }

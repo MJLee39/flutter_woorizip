@@ -25,10 +25,9 @@ class ChatController {
         body: jsonEncode({
           'title': '테스트',
           'description': '플러터에서 만든거',
-          'clientId': "dfadsf",
-          'brokerId': agentId
-        }
-      ),
+          'clientId': clientId,
+          'agentId': agentId
+        }),
     );
 
     if (response.statusCode == 200) {
@@ -48,6 +47,20 @@ class ChatController {
       throw Exception('Failed to delete exit chatRoom');
     }
   }
+
+  Future<dynamic> fetchChatRoom(String chatRoomId, String accountId) async {
+    final url = Uri.parse("https://chat.teamwaf.app/chat/room/resp?chatRoomId=$chatRoomId&accountId=$accountId");
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      final jsonResponse = jsonDecode(utf8.decode(response.bodyBytes));
+      final chatMessages = jsonResponse['chatMessagesInRoom'];
+      return chatMessages;
+    } else {
+      throw Exception("Failed to fetch chat room");
+    }
+  }
+
 }
 
 class ChatRoomResponseDTO {

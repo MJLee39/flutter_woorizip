@@ -46,6 +46,7 @@ class ConditionReadAllScreen extends GetView<ConditionReadAllController> {
             // call read all
             //const Row(ReadAllWidget()),
 
+
             // 검색 버튼이나 다른 위젯을 추가하세요.
             Row(
               children: [
