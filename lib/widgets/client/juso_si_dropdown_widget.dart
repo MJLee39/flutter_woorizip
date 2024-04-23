@@ -17,7 +17,7 @@ class _JusoSiDropdownWidgetState extends State<JusoSiDropdownWidget> {
   Widget build(BuildContext context) {
     String initialValue = '서울특별시';
 
-    controller.location.value = initialValue;
+    controller.si.value = initialValue;
 
     return SizedBox(
       height: 50,
@@ -33,7 +33,7 @@ class _JusoSiDropdownWidgetState extends State<JusoSiDropdownWidget> {
         ],
         initialValue: initialValue,
         onChanged: (String newValue) {
-          controller.location.value = newValue;
+          controller.si.value = newValue;
         },
       ),
     );

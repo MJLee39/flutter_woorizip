@@ -17,10 +17,10 @@ class _JusoDongDropdownWidgetState extends State<JusoDongDropdownWidget> {
   Widget build(BuildContext context) {
     String initialValue = '아현동';
 
-    controller.location.value += initialValue;
+    controller.dong.value = initialValue;
 
     return SizedBox(
-        height: 50, // 원하는 높이를 지정합니다.
+        height: 50,
         child: DropdownFieldsWidget(
           options: const [
             '아현동',
@@ -52,8 +52,7 @@ class _JusoDongDropdownWidgetState extends State<JusoDongDropdownWidget> {
           ],
           initialValue: initialValue,
           onChanged: (String newValue) {
-            controller.location.value.replaceAll('아현동', '');
-            controller.location.value += newValue;
+            controller.dong.value = newValue;
           },
         ));
   }
