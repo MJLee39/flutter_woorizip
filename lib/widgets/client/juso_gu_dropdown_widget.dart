@@ -17,7 +17,7 @@ class _JusoGuDropdownWidgetState extends State<JusoGuDropdownWidget> {
   Widget build(BuildContext context) {
     String initialValue = '강남구';
 
-    controller.location.value += initialValue;
+    controller.gu.value = initialValue;
 
     return SizedBox(
         height: 50, // 원하는 높이를 지정합니다.
@@ -51,8 +51,7 @@ class _JusoGuDropdownWidgetState extends State<JusoGuDropdownWidget> {
           ],
           initialValue: initialValue,
           onChanged: (String newValue) {
-            controller.location.value.replaceAll('강남구', '');
-            controller.location.value += newValue;
+            controller.gu.value = newValue;
           },
         ));
   }

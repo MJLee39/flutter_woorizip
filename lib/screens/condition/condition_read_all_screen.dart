@@ -16,17 +16,24 @@ class ConditionReadAllScreen extends GetView<ConditionReadAllController> {
     final Map<String, dynamic>? arguments =
         ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
 
-    // 전달받은 arguments 확인
+    // 이전 페이지에서 받은 데이터 타입을 전부 String으로 변환
     if (arguments != null) {
-      print('Received arguments:');
-      print('Location: ${arguments['location']}');
-      print('BuildingType: ${arguments['buildingType']}');
-      print('Fee: ${arguments['fee']}');
-      print('MoveInDate: ${arguments['moveInDate']}');
-      print('Hashtag: ${arguments['hashtag']}');
-    } else {
-      print('No arguments received');
+      final Map<String, String> argumentsAsString = {};
+      arguments.forEach((key, value) {
+        if (value is DateTime) {
+          argumentsAsString[key] = value.toIso8601String();
+        } else if (value is int) {
+          argumentsAsString[key] = value.toString();
+        } else {
+          argumentsAsString[key] = value.toString();
+        }
+      });
+
+      debugPrint('Arguments as String Map: $argumentsAsString');
     }
+
+    final ConditionReadAllController controller =
+        Get.put(ConditionReadAllController());
 
     return Scaffold(
       appBar: const AppBarWidget(),
@@ -44,7 +51,7 @@ class ConditionReadAllScreen extends GetView<ConditionReadAllController> {
             const SizedBox(height: 20),
 
             // call read all
-            const Row(ReadAllWidget()),
+            // ReadAllWidget(),
 
             // 검색 버튼이나 다른 위젯을 추가하세요.
             Row(
