@@ -48,7 +48,7 @@ class _OtherLoginSmallButtonWidgetState
                     color: _isHoveringNaver ? Colors.grey[200] : Colors.grey[100],
                   ),
                   child: SvgPicture.asset(
-                    'images/icon_naver.svg',
+                    'assets/images/icon_naver.svg',
                     width: 30,
                     height: 30,
                   ),
@@ -84,7 +84,7 @@ class _OtherLoginSmallButtonWidgetState
                         _isHoveringGoogle ? Colors.grey[200] : Colors.grey[100],
                   ),
                   child: SvgPicture.asset(
-                    'images/icon_google.svg',
+                    'assets/images/icon_google.svg',
                     width: 30,
                     height: 30,
                   ),

@@ -8,6 +8,7 @@ import 'package:testapp/screens/add_condition_screen.dart';
 import 'package:testapp/screens/home_screen.dart';
 import 'package:testapp/screens/login_screen.dart';
 import 'package:testapp/screens/read_all_condition_screen.dart';
+import 'package:testapp/screens/result_summary_screen.dart';
 import 'package:testapp/screens/see_more_screen.dart';
 import 'package:testapp/screens/set_hashtag_screen.dart';
 import 'package:testapp/screens/set_details_screen.dart';
@@ -51,7 +52,16 @@ class AppPages {
     _getPageWithMiddleware(
       name: '/addressSearch',
       page: () => AddressSearchScreen(),
+      middlewares: [],
     ),
+
+    _getPageWithMiddleware(
+      name: '/result',
+      page: () => const ResultSummaryScreen(),
+      middlewares: [],
+    ),
+
+    
     _getPageWithMiddleware(
       name: '/addCondition',
       page: () => const AddConditionScreen(),
