@@ -9,6 +9,7 @@ import 'package:testapp/screens/condition/condition_update_screen.dart';
 // import 'package:testapp/screens/condition_update_screen.dart';
 import 'package:testapp/screens/home_screen.dart';
 import 'package:testapp/screens/login_screen.dart';
+import 'package:testapp/screens/result_summary_screen.dart';
 import 'package:testapp/screens/condition/condition_read_all_screen.dart';
 import 'package:testapp/screens/see_more_screen.dart';
 import 'package:testapp/screens/condition/set_hashtag_screen.dart';
@@ -52,7 +53,16 @@ class AppPages {
     _getPageWithMiddleware(
       name: '/addressSearch',
       page: () => AddressSearchScreen(),
+      middlewares: [],
     ),
+
+    _getPageWithMiddleware(
+      name: '/result',
+      page: () => const ResultSummaryScreen(),
+      middlewares: [],
+    ),
+
+    
     _getPageWithMiddleware(
       name: '/chatRoomList',
       page: () => ChatRoomList(
