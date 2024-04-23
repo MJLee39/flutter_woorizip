@@ -80,41 +80,101 @@ class ZipFindScreen extends StatelessWidget {
             itemCount: _controller.jsonData.length,
             itemBuilder: (BuildContext context, int index) {
               final item = _controller.jsonData[index];
-              return GestureDetector(
-                onTap: () {
-                  Get.to(DetailScreen(itemID: item['id']), transition: Transition.noTransition);
-                },
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        flex: 2,
-                        child: Image.network('https://test.teamwaf.app/attachment/'+item['attachments'],
-                            fit: BoxFit.cover),
-                      ),
-                      Expanded(
-                        flex: 3,
-                        child: Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text("월세 "+item['deposit'].toString()+"/"+item['fee'].toString(),
-                                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0)),
-                              const SizedBox(height: 8.0),
-                              Text((item['m2']*0.3025).toStringAsFixed(2).toString()+"평 | "+item['buildingFloor'].toString()+"층/"+item['totalFloor'].toString()+"층 | "+ item['direction']),
-                              Text(item['location']+" | "+item['buildingType']),
-                              const SizedBox(height: 8.0),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
+              print("!!!!!!!!!!!!!!!!!!!!!!! item: "+item.toString());
+              // jsonData의 0번째 값이 {'placeholder': 'premiumZip이 비어있습니다.'}이 아니면서 index가 0인 경우에 네모 박스를 그립니다.
+              if (index == 0 && item['placeholder'] == null) {
+                return Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.blueAccent), // 네모 박스 스타일 설정
+                    borderRadius: BorderRadius.circular(10), // 네모 박스의 모서리를 둥글게 설정
                   ),
-                ),
-              );
+                  child: GestureDetector(
+                    onTap: () {
+                      Get.to(DetailScreen(itemID: item['id']), transition: Transition.noTransition);
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0), // 여기에서 패딩 조정
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            flex: 2,
+                            child: Image.network('https://test.teamwaf.app/attachment/'+item['attachments'],
+                                fit: BoxFit.cover),
+                          ),
+                          Expanded(
+                            flex: 3,
+                            child: Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text("월세 "+item['deposit'].toString()+"/"+item['fee'].toString(),
+                                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0)),
+                                  const SizedBox(height: 8.0),
+                                  Text((item['m2']*0.3025).toStringAsFixed(2).toString()+"평 | "+item['buildingFloor'].toString()+"층/"+item['totalFloor'].toString()+"층 | "+ item['direction']),
+                                  Text(item['location']+" | "+item['buildingType']),
+                                  const SizedBox(height: 8.0),
+                                ],
+                              ),
+                            ),
+                          ),
+                          // 광고 추가
+                          Text(
+                            '광고',
+                            style: TextStyle(
+                              color: Colors.grey,
+                              fontStyle: FontStyle.italic,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                );
+              }else{
+                //premium 없음
+                if(index > 0){
+                  return GestureDetector(
+                    onTap: () {
+                      Get.to(DetailScreen(itemID: item['id']), transition: Transition.noTransition);
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            flex: 2,
+                            child: Image.network('https://test.teamwaf.app/attachment/'+item['attachments'],
+                                fit: BoxFit.cover),
+                          ),
+                          Expanded(
+                            flex: 3,
+                            child: Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text("월세 "+item['deposit'].toString()+"/"+item['fee'].toString(),
+                                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0)),
+                                  const SizedBox(height: 8.0),
+                                  Text((item['m2']*0.3025).toStringAsFixed(2).toString()+"평 | "+item['buildingFloor'].toString()+"층/"+item['totalFloor'].toString()+"층 | "+ item['direction']),
+                                  Text(item['location']+" | "+item['buildingType']),
+                                  const SizedBox(height: 8.0),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                }else {
+                  // 첫 번째 아이템이 premiumZip이 비어있는 경우, 아무것도 표시하지 않습니다.
+                  return SizedBox.shrink();
+                }
+              }
             },
           );
         }

@@ -49,7 +49,7 @@ class _SearchTypeSelectorState extends State<SearchTypeSelector> {
         children: [
           Row(
             children: [
-              Text('건물 유형: '),
+              Text('유형: '),
               Expanded(
                 child: buildBuildingTypeButton('아파트', context),
               ),
@@ -60,7 +60,7 @@ class _SearchTypeSelectorState extends State<SearchTypeSelector> {
                 child: buildBuildingTypeButton('원룸', context),
               ),
               Expanded(
-                child: buildBuildingTypeButton('투룸', context),
+                child: buildBuildingTypeButton('투룸+', context),
               ),
             ],
           ),
@@ -126,7 +126,7 @@ class _SearchTypeSelectorState extends State<SearchTypeSelector> {
     final selectedFeeType = widget.feeController.selectedFeeType;
     final selectedDeposit = widget.depositController.selectedDepositType;
 
-    final url = Uri.parse('http://localhost/search?location=$selectedLocation&buildingType=$selectedBuildingTypes&fee=$selectedFeeType&deposit=$selectedDeposit');
+    final url = Uri.parse('http://10.0.2.2/search?location=$selectedLocation&buildingType=$selectedBuildingTypes&fee=$selectedFeeType&deposit=$selectedDeposit');
 
     final response = await http.get(url);
 
@@ -155,7 +155,11 @@ class _SearchTypeSelectorState extends State<SearchTypeSelector> {
         });
       },
       child: Text(buttonText,
-        style: TextStyle(color: Colors.white),),
+        style: TextStyle(color: Colors.white,
+          fontSize: 10,
+          fontWeight: FontWeight.bold,// Adjusted font size
+        ),
+      ),
       style: ButtonStyle(
         backgroundColor: MaterialStateProperty.all(buttonColor),
         // ... 기존 스타일 속성 유지
@@ -181,7 +185,9 @@ class _SearchTypeSelectorState extends State<SearchTypeSelector> {
         });
       },
       child: Text(buttonText,
-        style: TextStyle(color: Colors.white),),
+        style: TextStyle(color: Colors.white,
+          fontSize: 11,
+        ),),
       style: ButtonStyle(
         backgroundColor: MaterialStateProperty.all(buttonColor),
       ),
@@ -206,7 +212,8 @@ class _SearchTypeSelectorState extends State<SearchTypeSelector> {
         });
       },
       child: Text(buttonText,
-          style: TextStyle(color: Colors.white)),
+          style: TextStyle(color: Colors.white,
+            fontSize: 14,)),
       style: ButtonStyle(
         backgroundColor: MaterialStateProperty.all(buttonColor),
         // ... 기존 스타일 속성 유지
