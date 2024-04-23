@@ -241,7 +241,7 @@ class _DetailScreenState extends State<DetailScreen> {
                 children: <Widget>[
                     ElevatedButton(
                       onPressed: () {
-                        final agentId = zipData["agentId"];
+                        final agentId = "qassadsadsa";
                         const clientId = "qweqwewqeewq";
 
                         _chatController.createChatRoom(clientId, agentId).then((chatRoomInfo) {

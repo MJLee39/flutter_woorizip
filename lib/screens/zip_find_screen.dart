@@ -3,21 +3,24 @@ import 'package:testapp/widgets/bottom_navigation_widget.dart';
 import 'package:testapp/screens/zip_detail_screen.dart';
 import 'package:get/get.dart';
 import 'package:testapp/controllers/zip_find_controller.dart';
+import 'package:testapp/controllers/search_condition/building_type_controller.dart';
+import 'package:testapp/screens/search_type_selector.dart';
+import 'package:testapp/controllers/search_condition/deposit_type_controller.dart';
+import 'package:testapp/controllers/search_condition/fee_type_controller.dart';
 
 class ZipFindScreen extends StatelessWidget {
   final ZipFindController _controller = Get.put(ZipFindController());
+  final BuildingTypeController buildingTypeController = Get.put(BuildingTypeController());
+
+  // 필터 설정에 사용될 TextEditingController 선언
+  final TextEditingController locationController = TextEditingController();
+  final DepositController depositController = Get.put(DepositController());
+  final FeeTypeController feeController = Get.put(FeeTypeController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const TextField(
-          decoration: InputDecoration(
-            hintText: '상암동',
-            prefixIcon: Icon(Icons.search),
-            border: InputBorder.none,
-          ),
-        ),
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(42.0),
           child: Padding(
@@ -37,32 +40,21 @@ class ZipFindScreen extends StatelessWidget {
                   ),
                   onPressed: () {
                     // Handle filter
+                    showModalBottomSheet(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return SearchTypeSelector(
+                          buildingTypeController: buildingTypeController,
+                          locationController: locationController,
+                          depositController: depositController,
+                          feeController: feeController
+                        );
+                      },
+                    );
                   },
                   child: const Icon(
-                    Icons.filter_alt,
+                    Icons.tune,
                     color: Colors.black,
-                  ),
-                ),
-                const SizedBox(width: 16.0),
-                TextButton(
-                  style: TextButton.styleFrom(
-                    backgroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(3),
-                      side: BorderSide(
-                        color: Colors.grey[300]!,
-                        width: 1.0,
-                      ),
-                    ),
-                  ),
-                  onPressed: () {
-                    // Handle filter
-                  },
-                  child: const Text(
-                    '오피스텔',
-                    style: TextStyle(
-                      color: Colors.black,
-                    ),
                   ),
                 ),
               ],
@@ -128,6 +120,24 @@ class ZipFindScreen extends StatelessWidget {
         }
       }),
       bottomNavigationBar: BottomNavigationWidget(),
+    );
+  }
+
+  Widget buildBuildingTypeButton(String buttonText, bool isSelected) {
+    return GetBuilder<BuildingTypeController>(
+      builder: (controller) {
+        final buttonColor = controller.buttonColors[buttonText] ?? Colors.grey;
+        return ElevatedButton(
+          onPressed: () {
+            controller.toggleSelection(buttonText);
+          },
+          child: Text(buttonText),
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(buttonColor),
+            // ... 기존 스타일 속성 유지
+          ),
+        );
+      },
     );
   }
 }

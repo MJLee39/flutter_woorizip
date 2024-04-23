@@ -5,228 +5,224 @@ import 'package:testapp/screens/zip_detail_screen.dart'; // DetailScreen.dart를
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 import 'package:flutter/services.dart'; // ClipboardData 가져오기
+import 'package:testapp/controllers/search_condition/building_type_controller.dart';
+import 'package:testapp/screens/search_type_selector.dart';
+import 'package:testapp/controllers/search_condition/deposit_type_controller.dart';
+import 'package:testapp/controllers/search_condition/fee_type_controller.dart';
+import 'package:testapp/widgets/app_bar_widget.dart';
+import 'package:testapp/widgets/text_header_widget.dart';
+import 'package:testapp/widgets/page_normal_padding_widget.dart';
 
 class ZipListAgentScreen extends StatefulWidget {
   const ZipListAgentScreen({Key? key}) : super(key: key);
+
 
   @override
   State<ZipListAgentScreen> createState() => _ZipListAgentScreenState();
 }
 
 class _ZipListAgentScreenState extends State<ZipListAgentScreen> {
-  //late List<Map<String, dynamic>> jsonData = [];
-  //late String additionalArgument; // 여기에 agent id
+  late List<Map<String, dynamic>> jsonData = [];
+  late String additionalArgument; // 여기에 agent id
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   additionalArgument = Get.arguments;
-  //   fetchData();
-  // }
+  final BuildingTypeController buildingTypeController = Get.put(BuildingTypeController());
 
-  // Future<void> fetchData() async {
-  //   try {
-  //     final response = await http.post(Uri.parse('http://localhost/zipListByAgent'));
-  //     //final response = await http.post(Uri.parse('http://localhost/zipShowYes'));
-  //     if (response.statusCode == 200) {
-  //       List<dynamic> responseData = jsonDecode(utf8.decode(response.bodyBytes));
-  //       print(responseData);
-  //       setState(() {
-  //         jsonData = responseData.cast<Map<String, dynamic>>();
-  //       });
-  //     } else {
-  //       throw Exception('Failed to load data: ${response.statusCode}');
-  //     }
-  //   } catch (e) {
-  //     print('Error fetching data: $e');
-  //   }
-  // }
+  // 필터 설정에 사용될 TextEditingController 선언
+  final TextEditingController locationController = TextEditingController();
+  final DepositController depositController = Get.put(DepositController());
+  final FeeTypeController feeController = Get.put(FeeTypeController());
 
-  final List<Map<String, dynamic>> jsonData = [
-    {
-      'id' : '067cae69-ad7a-4a46-aa2f-685c4cc83c08',
-      'attachments': 'af0a4ad6-c546-45c5-b527-32ac565b7f2d',
-      'm2': 33,
-      'buildingType': '오피스텔',
-      'location': '서울시 마포구 상암동',
-      'buildingFloor': 15,
-      'totalFloor': 30,
-      'direction': '남동향',
-      'deposit': 2000,
-      'fee': 200
-    },
-    {
-      "id": "1bd238b4-5498-41c9-b010-a8e37b2ea899",
-      "attachments": "c780fa1d-bbf9-4027-9856-470340d442fe",
-      "direction": "남서향",
-      "totalFloor": 8,
-      "buildingFloor": 2,
-      "buildingType": "오피스텔",
-      "deposit": 5000,
-      "fee": 20,
-      "m2": 30.0,
-      "location": "서울시 마포구 상암동"
+
+  @override
+  void initState() {
+    super.initState();
+    //additionalArgument = Get.arguments;
+    additionalArgument = "명진 부동산88";
+    fetchData();
+  }
+
+  Future<void> fetchData() async {
+    try {
+      final response = await http.post(
+        Uri.parse('http://localhost/zipListByAgent'),
+        body: jsonEncode({'agentId': additionalArgument}),
+        headers: {'Content-Type': 'application/json'},
+      );
+      if (response.statusCode == 200) {
+        List<dynamic> responseData = jsonDecode(utf8.decode(response.bodyBytes));
+        print(responseData);
+        setState(() {
+          jsonData = responseData.cast<Map<String, dynamic>>();
+        });
+      } else {
+        throw Exception('Failed to load data: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error fetching data: $e');
     }
-    // 더미 데이터 추가...
-  ];
+  }
 
-  void _copyDetailScreenUrl(String itemId) {
-    final detailScreenUrl = '$itemId'; // 실제 URL로 대체하세요
-    Clipboard.setData(ClipboardData(text: detailScreenUrl)); // URL을 클립보드에 복사
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('상세 화면 URL이 복사되었습니다'), // 사용자에게 피드백 표시
-      ),
+  void _deleteItem(String itemId) async {
+    final url = 'http://10.0.2.2/delete/$itemId';
+
+    try {
+      final response = await http.delete(Uri.parse(url));
+      if (response.statusCode == 200) {
+        setState(() {
+          jsonData.removeWhere((item) => item['id'] == itemId);
+        });
+        // Item successfully deleted, you might want to update your UI accordingly
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('삭제되었습니다.'),
+          ),
+          // Refresh the data
+
+        );
+      } else {
+        throw Exception('Failed to delete item: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error deleting item: $e');
+      // Handle error
+    }
+  }
+
+  void _showDeleteConfirmationDialog(String itemId) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('아이템 삭제'),
+          content: Text('진짜 삭제하시겠습니까?'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // 다이얼로그를 닫습니다.
+              },
+              child: Text('아니요'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // 다이얼로그를 닫습니다.
+                _deleteItem(itemId); // 아이템을 삭제합니다.
+              },
+              child: Text('예'),
+            ),
+          ],
+        );
+      },
     );
   }
+
+
 
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const TextField(
+      appBar: AppBarWidget(),
+      body: PageNormalPaddingWidget(
+      child:Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+          const TextHeaderWidget(text: "내가 올린 매물"),
+          Expanded(
+            child: ListView.builder(
+                padding: const EdgeInsets.all(16.0),
 
-          decoration: InputDecoration(
-            // enabledBorder: OutlineInputBorder(
-            //   borderRadius: BorderRadius.all(Radius.circular(4.0)),
-            //   borderSide: BorderSide(color: Colors.black, width: 1.0),
-            // ),
-            hintText: '상암동',
-            prefixIcon: Icon(Icons.search),
-            border: InputBorder.none,
-          ),
-        ),
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(42.0),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 8.0),
-            child: Row(
-              children: [
-                TextButton(
-                  style: TextButton.styleFrom(
-                    backgroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(3),
-                      side: BorderSide(
-                        color: Colors.grey[300]!,
-                        width: 1.0,
-                      ),
-                    ),
-                  ),
-                  onPressed: () {
-                    // Handle filter
-                  },
-                  child: const Icon(
-                    Icons.filter_alt,
-                    color: Colors.black,
-                  ),
-                ),
-                const SizedBox(width: 16.0),
-                TextButton(
-                  style: TextButton.styleFrom(
-                    backgroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(3),
-                      side: BorderSide(
-                        color: Colors.grey[300]!,
-                        width: 1.0,
-                      ),
-                    ),
-                  ),
-                  onPressed: () {
-                    // Handle filter
-                  },
-                  child: const Text(
-                    '오피스텔',
-                    style: TextStyle(
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
-              ],
-            ),
+                itemCount: jsonData.length,
+                itemBuilder: (BuildContext context, int index) {
+                  final item = jsonData[index];
 
-          ),
-        ),
-      ),
-      body: ListView.builder(
-        padding: const EdgeInsets.all(16.0),
-        itemCount: jsonData.length,
-        itemBuilder: (BuildContext context, int index) {
-          final item = jsonData[index];
-
-          return GestureDetector(
-            onTap: () {
-              Get.to(DetailScreen(itemID: item['id']), transition: Transition.noTransition);
-            },
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    flex: 2,
-                    child: Image.network(
-                      'https://test.teamwaf.app/attachment/' + item['attachments'],
-                      fit: BoxFit.cover,
-                      width: 100, // 이미지의 가로 길이를 조절합니다.
-                    ),
-                  ),
-                  Expanded(
-                    flex: 3,
+                  return GestureDetector(
+                    onTap: () {
+                      Get.to(DetailScreen(itemID: item['id']), transition: Transition.noTransition);
+                    },
                     child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                "월세 " + item['deposit'].toString() + "/" + item['fee'].toString(),
-                                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
-                              ),
-                            ],
+                          Expanded(
+                            flex: 2,
+                            child: Image.network(
+                              'https://test.teamwaf.app/attachment/' + item['attachments'],
+                              fit: BoxFit.cover,
+                              width: 100, // 이미지의 가로 길이를 조절합니다.
+                            ),
                           ),
-                          const SizedBox(height: 8.0),
-                          Text((item['m2'] * 0.3025).toStringAsFixed(2).toString() + "평|" +
-                              item['buildingFloor'].toString() + "층/" + item['totalFloor'].toString() +
-                              "층|" + item['direction']),
-                          Text(item['location'] + "|" + item['buildingType']),
-                          Row(
-                            children: [
-                              IconButton(
-                                icon: Icon(Icons.edit),
-                                onPressed: () {
-                                  // Handle edit action
-                                },
+                          Expanded(
+                            flex: 3,
+                            child: Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        "월세 " + item['deposit'].toString() + "/" + item['fee'].toString(),
+                                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 8.0),
+                                  Text((item['m2'] * 0.3025).toStringAsFixed(2).toString() + "평|" +
+                                      item['buildingFloor'].toString() + "층/" + item['totalFloor'].toString() +
+                                      "층|" + item['direction']),
+                                  Text(item['location'] + "|" + item['buildingType']),
+                                  Row(
+                                    children: [
+                                      IconButton(
+                                        icon: Icon(Icons.edit),
+                                        onPressed: () {
+                                          // Handle edit action
+                                        },
+                                      ),
+                                      IconButton(
+                                        icon: Icon(Icons.delete),
+                                        onPressed: () {
+                                          // Handle delete action
+                                          _showDeleteConfirmationDialog(item['id']);
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                ],
                               ),
-                              IconButton(
-                                icon: Icon(Icons.delete),
-                                onPressed: () {
-                                  // Handle delete action
-                                },
-                              ),
-                              IconButton(
-                                icon: Icon(Icons.content_copy), // 복사 버튼 아이콘
-                                onPressed: () {
-                                  _copyDetailScreenUrl(item['id']); // URL을 복사하는 함수 호출
-                                },
-                              ),
-                            ],
+                            ),
                           ),
                         ],
                       ),
                     ),
-                  ),
-                ],
+                  );
+                },
               ),
             ),
-          );
-        },
+          ],
+        ),
       ),
       bottomNavigationBar: BottomNavigationWidget(),
+    );
+  }
+
+  Widget buildBuildingTypeButton(String buttonText, bool isSelected) {
+    return GetBuilder<BuildingTypeController>(
+      builder: (controller) {
+        final buttonColor = controller.buttonColors[buttonText] ?? Colors.grey;
+        return ElevatedButton(
+          onPressed: () {
+            controller.toggleSelection(buttonText);
+          },
+          child: Text(buttonText),
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(buttonColor),
+            // ... 기존 스타일 속성 유지
+          ),
+        );
+      },
     );
   }
 }
