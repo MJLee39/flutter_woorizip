@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:eventflux/eventflux.dart';
 import 'package:testapp/controllers/chat_controller.dart';
+import 'package:testapp/widgets/bottom_navigation_widget.dart';
 
 import 'chat.dart';
 
@@ -19,6 +20,7 @@ class ChatRoomList extends StatelessWidget {
           title: Text('Chat Room List'),
         ),
         body: ChatRoomListScreen(accountId: accountId),
+        bottomNavigationBar: BottomNavigationWidget(),
       ),
     );
   }

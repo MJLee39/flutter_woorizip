@@ -19,10 +19,16 @@ class ChatController {
   Future<Map<String, dynamic>> createChatRoom(String clientId, String agentId) async {
     final response = await http.post(
         Uri.parse('https://chat.teamwaf.app/chat/create'),
-        body: {
-          'clientId': clientId,
-          'agentId': agentId
+        headers: {
+          'content-type': 'application/json'
+        },
+        body: jsonEncode({
+          'title': '테스트',
+          'description': '플러터에서 만든거',
+          'clientId': "dfadsf",
+          'brokerId': agentId
         }
+      ),
     );
 
     if (response.statusCode == 200) {

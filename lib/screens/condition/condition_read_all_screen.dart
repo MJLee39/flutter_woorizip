@@ -44,7 +44,7 @@ class ConditionReadAllScreen extends GetView<ConditionReadAllController> {
             const SizedBox(height: 20),
 
             // call read all
-            const Row(ReadAllWidget()),
+            //const Row(ReadAllWidget()),
 
             // 검색 버튼이나 다른 위젯을 추가하세요.
             Row(
