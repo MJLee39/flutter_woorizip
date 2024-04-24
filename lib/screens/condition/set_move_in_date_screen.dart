@@ -12,11 +12,11 @@ class SetMoveInDateScreen extends GetView<SetDetailsController> {
 
   @override
   Widget build(BuildContext context) {
-    print('location: ' + controller.location.value);
-    print('buildingType: ' + controller.buildingType.value);
-    print(controller.fee);
-    print(controller.moveInDate);
-    print('hashtag: ' + controller.hashtag.value);
+    debugPrint('Location: ${controller.location.value}');
+    debugPrint('Building Type: ${controller.buildingType.value}');
+    debugPrint('Fee: ${controller.fee}');
+    debugPrint('Move-In Date: ${controller.moveInDate}');
+    debugPrint('Hashtag: ${controller.hashtag.value}');
 
     return Scaffold(
       appBar: const AppBarWidget(),
@@ -27,19 +27,23 @@ class SetMoveInDateScreen extends GetView<SetDetailsController> {
             const SizedBox(
               height: 10,
             ),
+
+            // 달력의 날짜 선택 시 선택된 날짜를 moveInDate에 저장
             const CalendarWidget(),
+
             // 화면이동 버튼
             Row(
               children: [
                 TextButton(
                     onPressed: () {
-                      Map<String, dynamic> arguments = {
-                        'location': controller.location.value,
-                        'buildingType': controller.buildingType.value,
-                        'fee': controller.fee,
-                        'moveInDate': controller.moveInDate,
-                        'hashtag': controller.hashtag.value,
-                      };
+                      // Map<String, dynamic> arguments = {
+                      //   'accountId': controller.accountId.value,
+                      //   'location': controller.location.value,
+                      //   'buildingType': controller.buildingType.value,
+                      //   'fee': controller.fee,
+                      //   'moveInDate': controller.moveInDate,
+                      //   'hashtag': controller.hashtag.value,
+                      // };
 
                       Get.toNamed('/sethashtag');
                     },

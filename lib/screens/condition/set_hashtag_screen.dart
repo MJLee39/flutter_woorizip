@@ -12,11 +12,11 @@ class SetHashtagScreen extends GetView<SetDetailsController> {
 
   @override
   Widget build(BuildContext context) {
-    print('location: ' + controller.location.value);
-    print('buildingType: ' + controller.buildingType.value);
-    print(controller.fee);
-    print(controller.moveInDate);
-    print('hashtag: ' + controller.hashtag.value);
+    debugPrint('Location: ${controller.location.value}');
+    debugPrint('Building Type: ${controller.buildingType.value}');
+    debugPrint('Fee: ${controller.fee}');
+    debugPrint('Move-In Date: ${controller.moveInDate}');
+    debugPrint('Hashtag: ${controller.hashtag.value}');
 
     return Scaffold(
       appBar: const AppBarWidget(),
@@ -36,21 +36,19 @@ class SetHashtagScreen extends GetView<SetDetailsController> {
               children: [
                 TextButton(
                     onPressed: () {
-                      Map<String, dynamic> arguments = {
-                        'location': controller.location.value,
-                        'buildingType': controller.buildingType.value,
-                        'fee': controller.fee,
-                        'moveInDate': controller.moveInDate,
-                        'hashtag': controller.hashtag.value,
-                      };
+                      // Map<String, dynamic> arguments = {
+                      //   'accountId': controller.accountId.value,
+                      //   'location': controller.location.value,
+                      //   'buildingType': controller.buildingType.value,
+                      //   'fee': controller.fee,
+                      //   'moveInDate': controller.moveInDate,
+                      //   'hashtag': controller.hashtag.value,
+                      // };
+                      // Get.lazyPut(() => SetDetailsController());
 
-                      print(controller.location.value);
-                      print(controller.buildingType.value);
-                      print(controller.fee);
-                      print(controller.moveInDate);
-                      print(controller.hashtag.value);
+                      controller.fetchData();
 
-                      Get.toNamed('/conditionreadall', arguments: arguments);
+                      // Get.toNamed('/conditionreadall', arguments: arguments);
                     },
                     child: const Text('확인')),
               ],
