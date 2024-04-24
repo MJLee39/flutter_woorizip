@@ -48,7 +48,7 @@ class SetDetailsScreen extends GetView<SetDetailsController> {
             ),
 
             const SizedBox(height: 40),
-            
+
             //set building type
             const TextHeaderWidget(text: '원하는 건물 유형을 알려주세요'),
 
@@ -66,6 +66,15 @@ class SetDetailsScreen extends GetView<SetDetailsController> {
               ),
             ),
             const SizedBox(height: 20),
+
+            //set building type
+            const TextHeaderWidget(text: '건물 유형을 알려주세요'),
+
+            const SizedBox(height: 20),
+
+            const Row(children: [SetBuildingtypeButtonsWidget()]),
+
+            const SizedBox(height: 40),
 
             const TextHeaderWidget(text: '희망 가격대를 알려주세요'),
 

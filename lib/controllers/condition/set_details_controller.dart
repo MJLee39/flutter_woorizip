@@ -29,7 +29,7 @@ class SetDetailsController extends GetxController {
 
       String input = jsonEncode({
         'location': location.value,
-        'accountId': accountId.value,
+        'accountId': "accountId01",
         'buildingType': buildingType.value,
         'fee': fee,
         'moveInDate': moveInDate.toIso8601String(),
