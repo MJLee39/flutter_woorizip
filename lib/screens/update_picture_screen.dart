@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:testapp/screens/rental_info_screen.dart';
 
 class UpdatePictureScreen extends StatefulWidget {
   @override
@@ -33,6 +34,11 @@ class _UpdatePictureScreenState extends State<UpdatePictureScreen> {
   void _registerImages() {
     // 이미지 등록 로직 구현
     print('이미지가 등록되었습니다.');
+    // Navigator를 사용하여 새로운 페이지로 이동
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => RentalInfoScreen()),
+    );
   }
 
   @override
