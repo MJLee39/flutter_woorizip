@@ -2,11 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:testapp/controllers/condition/condition_read_all_controller.dart';
 
+import 'package:testapp/controllers/chat_controller.dart';
+
+import 'package:testapp/chat/chat.dart';
+
 class ReadAllWidget extends StatelessWidget {
   ReadAllWidget({super.key});
 
   final ConditionReadAllController controller =
       Get.find<ConditionReadAllController>();
+  final ChatController _chatController = Get.find<ChatController>();
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +66,20 @@ class ReadAllWidget extends StatelessWidget {
                             // set condition
                             IconButton(
                               onPressed: () {
-                                // udpate condition
+                                final agentId = "qassadsadsa";
+                                const clientId = "qweqwewqeewq";
+
+                                _chatController.createChatRoom(clientId, agentId).then((chatRoomInfo) {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => Chat(
+                                        chatRoomId: chatRoomInfo['id'],
+                                        accountId: clientId,
+                                      ),
+                                    ),
+                                  );
+                                });
                               },
                               icon: Icon(Icons.settings),
                             ),

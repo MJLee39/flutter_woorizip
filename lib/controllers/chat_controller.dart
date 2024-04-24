@@ -61,6 +61,25 @@ class ChatController {
     }
   }
 
+  Future<String> sendReport(String senderId, String targetId) async {
+    final url = Uri.parse("https://chat.teamwaf.app/chat/report");
+    final response = await http.post(url,
+      headers: {
+        'content-type': 'application/json'
+      },
+      body: jsonEncode({
+        'senderId': senderId,
+        'targetId': targetId
+      })
+    );
+
+    if (response.statusCode == 200) {
+      return "신고가 성공적으로 접수됐습니다.";
+    } else {
+      throw Exception("Failed to fetch chat room");
+    }
+  }
+
 }
 
 class ChatRoomResponseDTO {

@@ -123,7 +123,15 @@ class _ChatRoomListScreenState extends State<ChatRoomListScreen> {
                             color: Colors.white,
                           ),
                           onPressed: () {
-                            print('Report Button Pressed for Chat Room ID: ${chatRoom.id}');
+                            var targetId;
+                            final userId = widget.accountId;
+                            if (chatRoom.clientId == userId) {
+                              targetId = chatRoom.brokerId;
+                            } else {
+                              targetId = chatRoom.clientId;
+                            }
+                            final result = _chatController.sendReport(widget.accountId, targetId);
+
                           },
                         ),
                         IconButton(
