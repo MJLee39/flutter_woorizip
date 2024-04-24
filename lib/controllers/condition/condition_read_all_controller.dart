@@ -3,16 +3,14 @@ import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 
 class ConditionReadAllController extends GetxController {
-  final RxString accountId = ''.obs;
-  final RxList<Map<String, dynamic>> jsonData = <Map<String, dynamic>>[].obs;
-  final RxBool isLoading = true.obs;
-  final RxString error = ''.obs;
-  late String additionalArgument;
+  late RxList<Map<String, dynamic>> jsonData = <Map<String, dynamic>>[].obs;
+  late RxBool isLoading = true.obs;
+  late RxString error = ''.obs;
+  final String additionalArgument = 'accountId01';
 
   @override
   void onInit() {
     super.onInit();
-    additionalArgument = Get.arguments;
     fetchData();
   }
 
@@ -20,15 +18,18 @@ class ConditionReadAllController extends GetxController {
     isLoading.value = true;
 
     try {
-      // grpc에서 accountId 꺼내기
-      String accountId = 'accountId01';
-      String url = 'http://10.0.2.2/condition/readAll/$accountId';
+      print('in controller try, additionalArgument: $additionalArgument');
+
+      String url =
+          'http://localhost:8093/condition/readAll/$additionalArgument';
 
       final response = await http.get(Uri.parse(url));
+
       if (response.statusCode == 200) {
         List<dynamic> responseData =
             jsonDecode(utf8.decode(response.bodyBytes));
         jsonData.assignAll(responseData.cast<Map<String, dynamic>>());
+        print('in controller try, respose: $responseData');
       } else {
         throw Exception('Failed to load data: ${response.statusCode}');
       }

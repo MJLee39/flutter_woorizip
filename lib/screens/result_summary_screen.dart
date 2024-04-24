@@ -5,21 +5,20 @@ import 'package:testapp/widgets/app_bar_widget.dart';
 import 'package:testapp/widgets/text_header_widget.dart';
 
 class ResultSummaryScreen extends StatelessWidget {
-  final String selectedAddress;
-  final String selectedDong;
-  final String selectedFloor;
-  final String selectedHo;
+  const ResultSummaryScreen({super.key});
 
-  const ResultSummaryScreen({
-    super.key,
-    required this.selectedAddress,
-    required this.selectedDong,
-    required this.selectedFloor,
-    required this.selectedHo,
-  });
+
+
 
   @override
   Widget build(BuildContext context) {
+    final Map<String, dynamic> args = Get.arguments ?? {};
+
+    // Extract data from arguments
+    final String selectedAddress = args['selectedAddress'] ?? '';
+    final String selectedDong = args['selectedDong'] ?? '';
+    final String selectedFloor = args['selectedFloor'] ?? '';
+    final String selectedHo = args['selectedHo'] ?? '';
     return Scaffold(
       appBar: const AppBarWidget(),
       body: Padding(
