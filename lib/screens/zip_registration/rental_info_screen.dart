@@ -4,8 +4,11 @@ import 'package:testapp/controllers/zip_registration_controller.dart';
 import 'package:get/get.dart';
 import 'package:testapp/widgets/text_header_widget.dart';
 import 'package:testapp/widgets/bottom_expend_button_widget.dart';
+import 'package:testapp/controllers/zip_registration_controller.dart';
 
 class RentalInfoScreen extends StatelessWidget {
+
+  final ZipRegistration zipRegistration = Get.find(); // Access the ZipRegistration controller
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +28,7 @@ class RentalInfoScreen extends StatelessWidget {
                 Expanded(
                   child: NumberInputWidget(
                     onChanged: (int? newValue) {
-
+                      zipRegistration.deposit = newValue ?? 0; // Update deposit in ZipRegistration
                     },
                   ),
                 ),
@@ -42,12 +45,21 @@ class RentalInfoScreen extends StatelessWidget {
                 Expanded(
                   child: NumberInputWidget(
                     onChanged: (int? newValue) {
-
+                      zipRegistration.fee = newValue ?? 0; // Update fee in ZipRegistration
                     },
                   ),
                 ),
               ],
             ),
+          ),
+          // 다음 버튼
+          BottomExpendButtonWidget(
+            text: '다음',
+            url: '/detail_registration',
+            arguments: {
+              'deposit': zipRegistration.deposit,
+              'fee': zipRegistration.fee,
+            },
           ),
         ],
       ),

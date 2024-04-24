@@ -3,12 +3,12 @@ import 'package:testapp/chat/chat.dart';
 import 'package:testapp/chat/chatroom_list.dart';
 import 'package:testapp/map/screens/map_screen.dart';
 import 'package:testapp/middleware/auth_guard.dart';
-import 'package:testapp/screens/address_search_screen.dart';
+import 'package:testapp/screens/zip_registration/address_search_screen.dart';
 import 'package:testapp/screens/condition/condition_detail_screen.dart';
 import 'package:testapp/screens/condition/condition_update_screen.dart';
 import 'package:testapp/screens/home_screen.dart';
 import 'package:testapp/screens/login_screen.dart';
-import 'package:testapp/screens/result_summary_screen.dart';
+import 'package:testapp/screens/zip_registration/result_summary_screen.dart';
 import 'package:testapp/screens/home_screen.dart';
 import 'package:testapp/screens/login_screen.dart';
 import 'package:testapp/screens/condition/condition_read_all_screen.dart';
@@ -18,6 +18,8 @@ import 'package:testapp/screens/condition/set_details_screen.dart';
 import 'package:testapp/screens/condition/set_move_in_date_screen.dart';
 import 'package:testapp/screens/zip_find_screen.dart';
 import 'package:testapp/screens/zip_list_agent_screen.dart';
+import 'package:testapp/screens/zip_registration/rental_info_screen.dart';
+import 'package:testapp/screens/zip_registration/zip_detail_registration_screen.dart';
 
 class AppPages {
   static const initial = '/';
@@ -147,6 +149,20 @@ class AppPages {
     _getPageWithMiddleware(
       name: '/updatecondition',
       page: () => ConditionUpdateScreen(),
+      middlewares: [],
+    ),
+
+    //매물 등록에서 보증금 입력 페이지로 이동
+    _getPageWithMiddleware(
+      name: '/depositAndFee',
+      page: () => RentalInfoScreen(),
+      middlewares: [],
+    ),
+
+    //매물 등록에서 상세 정보 입력 페이지로 이동
+    _getPageWithMiddleware(
+      name: '/detail_registration',
+      page: () => ZipDetailRegistrationScreen(),
       middlewares: [],
     ),
   ];
