@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 
 class ZipRegistration extends GetxController {
   late RxString location = ''.obs;
+  late RxString estate = ''.obs;
   late int total_floor = 0;
   late int building_floor = 0;
   late RxString image = ''.obs;
@@ -17,5 +18,13 @@ class ZipRegistration extends GetxController {
   late RxString hashtag = ''.obs;
   late RxString showYes = 'public'.obs;
   late RxString note = ''.obs;
+
+  // Method to set arguments
+  void setArguments(Map<String, dynamic> args) {
+    location.value = args['selectedAddress'];
+    estate.value = args['selectedAddress']+args['selectedDong']+args['selectedFloor']+args['selectedHo'];
+    total_floor = args['totalFloor'];
+    // Set other arguments similarly
+  }
 
 }
