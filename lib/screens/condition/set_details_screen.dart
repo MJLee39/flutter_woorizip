@@ -67,6 +67,15 @@ class SetDetailsScreen extends GetView<SetDetailsController> {
             ),
             const SizedBox(height: 20),
 
+            //set building type
+            const TextHeaderWidget(text: '건물 유형을 알려주세요'),
+
+            const SizedBox(height: 20),
+
+            const Row(children: [SetBuildingtypeButtonsWidget()]),
+
+            const SizedBox(height: 40),
+
             const TextHeaderWidget(text: '희망 가격대를 알려주세요'),
 
             const SizedBox(height: 20),
@@ -105,18 +114,6 @@ class SetDetailsScreen extends GetView<SetDetailsController> {
                         String gu = controller.gu.value;
                         String dong = controller.dong.value;
                         controller.location.value = si + gu + dong;
-
-                        // 필수 조건이 선택된 경우 다음 화면으로 이동
-                        // Map<String, dynamic> arguments = {
-                        //   'accountId': controller.accountId.value,
-                        //   'location': controller.location.value,
-                        //   'buildingType': controller.buildingType.value,
-                        //   'fee': controller.fee,
-                        //   'moveInDate': controller.moveInDate,
-                        //   'hashtag': controller.hashtag.value,
-                        // };
-
-                        // accountId
 
                         Get.toNamed('/setmoveindate');
                       }
