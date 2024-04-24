@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:testapp/controllers/condition/condition_read_all_controller.dart';
-import 'package:testapp/controllers/condition/set_details_controller.dart';
 import 'package:testapp/widgets/app_bar_widget.dart';
 import 'package:testapp/widgets/bottom_navigation_widget.dart';
 import 'package:testapp/widgets/page_normal_padding_widget.dart';
@@ -13,27 +12,18 @@ class ConditionReadAllScreen extends GetView<ConditionReadAllController> {
 
   @override
   Widget build(BuildContext context) {
-    final Map<String, dynamic>? arguments =
-        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+    final Map<String, dynamic>? arguments = Get.arguments;
+    print('in conditionalReadAllScreen, argument: $arguments');
+    // if (arguments != null) {
+    //   final Map<String, String> argumentsAsString = {};
+    //   arguments.forEach((key, value) {
+    //     argumentsAsString[key] = value.toString();
+    //   });
 
-    // 이전 페이지에서 받은 데이터 타입을 전부 String으로 변환
-    if (arguments != null) {
-      final Map<String, String> argumentsAsString = {};
-      arguments.forEach((key, value) {
-        if (value is DateTime) {
-          argumentsAsString[key] = value.toIso8601String();
-        } else if (value is int) {
-          argumentsAsString[key] = value.toString();
-        } else {
-          argumentsAsString[key] = value.toString();
-        }
-      });
+    //   debugPrint('in readAll, Arguments as String Map: $argumentsAsString');
+    // }
 
-      debugPrint('Arguments as String Map: $argumentsAsString');
-    }
-
-    final ConditionReadAllController controller =
-        Get.put(ConditionReadAllController());
+    Get.put(ConditionReadAllController());
 
     return Scaffold(
       appBar: const AppBarWidget(),
@@ -51,7 +41,8 @@ class ConditionReadAllScreen extends GetView<ConditionReadAllController> {
             const SizedBox(height: 20),
 
             // call read all
-            // ReadAllWidget(),
+
+            ReadAllWidget(),
 
             // 검색 버튼이나 다른 위젯을 추가하세요.
             Row(

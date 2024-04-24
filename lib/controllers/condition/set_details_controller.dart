@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 
@@ -36,6 +35,8 @@ class SetDetailsController extends GetxController {
         'moveInDate': moveInDate.toIso8601String(),
         'hashtag': hashtag.value,
       });
+
+      print('in set details controller, input: $input');
 
       final response = await http.post(Uri.parse(url),
           headers: {'content-type': 'application/json'}, body: input);
