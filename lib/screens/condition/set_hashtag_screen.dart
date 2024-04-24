@@ -36,19 +36,11 @@ class SetHashtagScreen extends GetView<SetDetailsController> {
               children: [
                 TextButton(
                     onPressed: () {
-                      // Map<String, dynamic> arguments = {
-                      //   'accountId': controller.accountId.value,
-                      //   'location': controller.location.value,
-                      //   'buildingType': controller.buildingType.value,
-                      //   'fee': controller.fee,
-                      //   'moveInDate': controller.moveInDate,
-                      //   'hashtag': controller.hashtag.value,
-                      // };
-                      // Get.lazyPut(() => SetDetailsController());
-
                       controller.fetchData();
 
-                      // Get.toNamed('/conditionreadall', arguments: arguments);
+                      Get.toNamed(
+                        '/conditionreadall',
+                      );
                     },
                     child: const Text('확인')),
               ],
