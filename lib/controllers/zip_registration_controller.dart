@@ -48,10 +48,9 @@ class ZipRegistration extends GetxController {
     isLoading.value = true;
 
     try {
-      String url = 'http://localhost/insert';
+      String url = 'http://10.0.2.2/insert';
 
       String input = jsonEncode({
-        "id": "34",
         "attachments": attachments,
         "agentId": "명진 부동산1",
         "checkedAt": "2024-04-09T15:00:00",
