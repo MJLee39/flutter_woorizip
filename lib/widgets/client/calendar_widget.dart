@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:testapp/controllers/condition/set_details_controller.dart';
+import 'package:testapp/controllers/condition/condition_controller.dart';
 import 'package:intl/intl.dart';
 
 class CalendarWidget extends StatefulWidget {
@@ -12,7 +12,7 @@ class CalendarWidget extends StatefulWidget {
 }
 
 class _CalendarWidgetState extends State<CalendarWidget> {
-  final SetDetailsController controller = Get.find<SetDetailsController>();
+  final ConditionController controller = Get.find<ConditionController>();
   late DateTime _selectedDate;
 
   @override
@@ -40,7 +40,6 @@ class _CalendarWidgetState extends State<CalendarWidget> {
           setState(() {
             _selectedDate = selectedDate;
           });
-          // 선택된 날짜를 controller.moveInDate에 할당
           controller.moveInDate =
               DateTime(selectedDate.year, selectedDate.month, selectedDate.day);
         });

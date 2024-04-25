@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 class ChatController {
 
   Future<List<ChatRoomResponseDTO>> fetchChatRooms(String accountId) async {
+    print(accountId);
     final url = Uri.parse("https://chat.teamwaf.app/chat/$accountId/room");
     final response = await http.get(url);
 
@@ -26,7 +27,7 @@ class ChatController {
           'title': '테스트',
           'description': '플러터에서 만든거',
           'clientId': clientId,
-          'agentId': agentId
+          'brokerId': agentId
         }),
     );
 
