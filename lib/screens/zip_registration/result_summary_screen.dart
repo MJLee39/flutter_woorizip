@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:testapp/screens/update_picture_screen.dart';
+import 'package:testapp/screens/zip_registration/update_picture_screen.dart';
 import 'package:testapp/widgets/app_bar_widget.dart';
 import 'package:testapp/widgets/text_header_widget.dart';
+import 'package:testapp/controllers/zip_registration_controller.dart';
 
 class ResultSummaryScreen extends StatelessWidget {
   const ResultSummaryScreen({super.key});
@@ -19,6 +20,11 @@ class ResultSummaryScreen extends StatelessWidget {
     final String selectedDong = args['selectedDong'] ?? '';
     final String selectedFloor = args['selectedFloor'] ?? '';
     final String selectedHo = args['selectedHo'] ?? '';
+    final String totalFloor = args['totalFloor'].toString() ?? '';
+
+    final zipRegistration = Get.put(ZipRegistration());
+    zipRegistration.setArguments(Get.arguments);
+
     return Scaffold(
       appBar: const AppBarWidget(),
       body: Padding(

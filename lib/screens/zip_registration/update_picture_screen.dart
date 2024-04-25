@@ -1,7 +1,11 @@
+import 'dart:convert';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:testapp/screens/rental_info_screen.dart';
+import 'package:testapp/screens/zip_registration/rental_info_screen.dart';
+import 'package:testapp/controllers/zip_registration_controller.dart';
+import 'package:get/get.dart';
+import 'package:testapp/widgets/bottom_expend_button_widget.dart';
 
 class UpdatePictureScreen extends StatefulWidget {
   @override
@@ -31,14 +35,21 @@ class _UpdatePictureScreenState extends State<UpdatePictureScreen> {
     });
   }
 
-  void _registerImages() {
+  String  _registerImages() {
+
     // 이미지 등록 로직 구현
+    String attachments = '';
+
+    // 새로운 이미지를 기존 첨부 파일에 추가 -> 이후에 S3로 바꾸기
+    for (Uint8List imageData in _imagesData) {
+      attachments += imageData.toString() + ','; // 이미지 id를 구분자로 사용하여 추가
+    }
+
+    ZipRegistration().attachments.value = attachments; // 업데이트된 값을 저장
+
     print('이미지가 등록되었습니다.');
-    // Navigator를 사용하여 새로운 페이지로 이동
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => RentalInfoScreen()),
-    );
+
+    return attachments;
   }
 
   @override
@@ -79,13 +90,12 @@ class _UpdatePictureScreenState extends State<UpdatePictureScreen> {
             Container(
               padding: const EdgeInsets.all(8),
               alignment: Alignment.center,
-              child: ElevatedButton(
-                onPressed: _registerImages,
-                style: ButtonStyle(
-                  padding: MaterialStateProperty.all(const EdgeInsets.symmetric(horizontal: 40, vertical: 16),
-                  ),
-                ),
-                child: const Text("등록")
+              child: BottomExpendButtonWidget(
+                text: '등록',
+                url: '/depositAndFee',
+                arguments: {
+                  'attachments': _registerImages(),
+                },
               ),
             ),
         ],

@@ -239,6 +239,7 @@ class AddressSearchScreen extends GetView<ApiController> {
                                   'selectedDong': _selectedDong.value,
                                   'selectedFloor': _selectedFloor.value,
                                   'selectedHo': _selectedHo.value,
+                                  'totalFloor': controller.detailData.value[_selectedDong.value]?.length ?? 0,
                                 },
                               ),
                           ],
@@ -259,6 +260,7 @@ class AddressSearchScreen extends GetView<ApiController> {
         ],
       ),
     );
+
   }
 
   void _onSearchTextChanged(String text) {
