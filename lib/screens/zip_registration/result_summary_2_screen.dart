@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:testapp/screens/zip_registration/update_picture_screen.dart';
+import 'package:testapp/screens/zip_registration/update_picture_3_screen.dart';
 import 'package:testapp/widgets/app_bar_widget.dart';
 import 'package:testapp/widgets/text_header_widget.dart';
 import 'package:testapp/controllers/zip_registration_controller.dart';

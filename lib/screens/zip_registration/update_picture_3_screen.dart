@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:testapp/screens/zip_registration/rental_info_screen.dart';
+import 'package:testapp/screens/zip_registration/rental_info_4_screen.dart';
 import 'package:testapp/controllers/zip_registration_controller.dart';
 import 'package:get/get.dart';
 import 'package:testapp/widgets/bottom_expend_button_widget.dart';
