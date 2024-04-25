@@ -5,6 +5,8 @@ import 'package:get/get.dart';
 import 'package:testapp/widgets/text_header_widget.dart';
 import 'package:testapp/widgets/bottom_expend_button_widget.dart';
 import 'package:testapp/controllers/zip_registration_controller.dart';
+import 'package:testapp/widgets/app_bar_widget.dart';
+import 'package:testapp/widgets/page_normal_padding_widget.dart';
 
 class RentalInfoScreen extends StatelessWidget {
 
@@ -13,63 +15,47 @@ class RentalInfoScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const TextHeaderWidget(text: "보증금과 월세를 입력해주세요"),
-      ),
-      body: Column(
-        children: [
-          // 보증금 입력 필드
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
+      appBar: const AppBarWidget(),
+      body: PageNormalPaddingWidget(
+        child: Column(
+          children: [
+            TextHeaderWidget(text: "보증금과 월세를 입력해주세요"),
+            // 보증금 입력 필드
+            Row(
               children: [
-                Text("보증금:"),
-                SizedBox(width: 10,),
                 Expanded(
-                  child: TextFormField(
-                    onChanged: (value) {
-                      // onChanged 이벤트 핸들러
-                    },
-                    decoration: InputDecoration(
-                      hintText: '보증금을 입력하세요',
-                      border: OutlineInputBorder(),
+                  child: TextField(
+                    decoration: const InputDecoration(
+                      labelText: '보증금을 만원 단위로 입력하세요',
                     ),
                   ),
                 ),
               ],
             ),
-          ),
-          // 월세 입력 필드
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
+            // 월세 입력 필드
+            Row(
               children: [
-                Text("월세:"),
-                SizedBox(width: 22,),
                 Expanded(
-                  child: TextFormField(
-                    onChanged: (value) {
-                      // onChanged 이벤트 핸들러
-                    },
-                    decoration: InputDecoration(
-                      hintText: '월세를 입력하세요',
-                      border: OutlineInputBorder(),
+                  child: TextField(
+                    decoration: const InputDecoration(
+                      labelText: '월세를 만원 단위로 입력하세요',
                     ),
                   ),
                 ),
               ],
             ),
-          ),
-          // 다음 버튼
-          BottomExpendButtonWidget(
-            text: '다음',
-            url: '/detail_registration',
-            arguments: {
-              'deposit': zipRegistration.deposit,
-              'fee': zipRegistration.fee,
-            },
-          ),
-        ],
+            SizedBox(height: 40,),
+            // 다음 버튼
+            BottomExpendButtonWidget(
+              text: '다음',
+              url: '/detail_registration',
+              arguments: {
+                'deposit': zipRegistration.deposit,
+                'fee': zipRegistration.fee,
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
