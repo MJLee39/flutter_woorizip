@@ -6,6 +6,8 @@ import 'package:testapp/screens/zip_registration/rental_info_4_screen.dart';
 import 'package:testapp/controllers/zip_registration_controller.dart';
 import 'package:get/get.dart';
 import 'package:testapp/widgets/bottom_expend_button_widget.dart';
+import 'package:testapp/widgets/app_bar_widget.dart';
+import 'package:testapp/widgets/page_normal_padding_widget.dart';
 
 class UpdatePictureScreen extends StatefulWidget {
   @override
@@ -55,50 +57,51 @@ class _UpdatePictureScreenState extends State<UpdatePictureScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("사진 등록"),
-      ),
-      body: Column(
-        children: [
-          Expanded(
-            child: _imagesData.isEmpty
-                ? Center(child: Text("사진이 선택되지 않았습니다.\n최소 두장의 사진을 선택해주세요."))
-                : ListView.builder(
-                    itemCount: _imagesData.length,
-                    itemBuilder: (context, index) {
-                      return Stack(
-                        children: [
-                          SizedBox(
-                            height: 300,
-                            width: double.infinity,
-                            child: Image.memory(_imagesData[index], fit: BoxFit.cover),
-                          ),
-                          Positioned(
-                            right: 4,
-                            top: 4,
-                            child: IconButton(
-                              icon: const Icon(Icons.delete, color: Colors.red),
-                              onPressed: () => _deleteImage(index),
+      appBar: const AppBarWidget(),
+      body:  PageNormalPaddingWidget(
+      child:
+        Column(
+          children: [
+            Expanded(
+              child: _imagesData.isEmpty
+                  ? Center(child: Text("사진이 선택되지 않았습니다.\n최소 두장의 사진을 선택해주세요."))
+                  : ListView.builder(
+                      itemCount: _imagesData.length,
+                      itemBuilder: (context, index) {
+                        return Stack(
+                          children: [
+                            SizedBox(
+                              height: 300,
+                              width: double.infinity,
+                              child: Image.memory(_imagesData[index], fit: BoxFit.cover),
                             ),
-                          ),
-                        ],
-                      );
-                    },
-                  ),
-          ),
-          if (_imagesData.length > 1)
-            Container(
-              padding: const EdgeInsets.all(8),
-              alignment: Alignment.center,
-              child: BottomExpendButtonWidget(
-                text: '등록',
-                url: '/depositAndFee',
-                arguments: {
-                  'attachments': _registerImages(),
-                },
-              ),
+                            Positioned(
+                              right: 4,
+                              top: 4,
+                              child: IconButton(
+                                icon: const Icon(Icons.delete, color: Colors.red),
+                                onPressed: () => _deleteImage(index),
+                              ),
+                            ),
+                          ],
+                        );
+                      },
+                    ),
             ),
-        ],
+            if (_imagesData.length > 1)
+              Container(
+                padding: const EdgeInsets.all(8),
+                alignment: Alignment.center,
+                child: BottomExpendButtonWidget(
+                  text: '등록',
+                  url: '/depositAndFee',
+                  arguments: {
+                    'attachments': _registerImages(),
+                  },
+                ),
+              ),
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _pickImages,

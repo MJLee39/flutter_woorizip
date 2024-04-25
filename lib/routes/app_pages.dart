@@ -22,6 +22,7 @@ import 'package:testapp/screens/zip_registration/rental_info_4_screen.dart';
 import 'package:testapp/screens/zip_registration/zip_detail_registration_5_screen.dart';
 import 'package:testapp/screens/zip_registration/zip_detail_registration_next_6_screen.dart';
 import 'package:testapp/screens/zip_registration/zip_hashtag_7_screen.dart';
+import 'package:testapp/screens/zip_registration/zip_detail_registration_5_5_screen.dart';
 
 class AppPages {
   static const initial = '/';
@@ -179,6 +180,13 @@ class AppPages {
     _getPageWithMiddleware(
       name: '/zip_hashtag',
       page: () => ZipHashtagScreen(),
+      middlewares: [],
+    ),
+
+    //매물 등록에서 상세 입력2
+    _getPageWithMiddleware(
+      name: '/detail_registration5_5',
+      page: () => ZipDetailRegistration55Screen(),
       middlewares: [],
     ),
   ];
