@@ -26,10 +26,14 @@ class RentalInfoScreen extends StatelessWidget {
                 Text("보증금:"),
                 SizedBox(width: 10,),
                 Expanded(
-                  child: NumberInputWidget(
-                    onChanged: (int? newValue) {
-                      zipRegistration.deposit = newValue ?? 0; // Update deposit in ZipRegistration
+                  child: TextFormField(
+                    onChanged: (value) {
+                      // onChanged 이벤트 핸들러
                     },
+                    decoration: InputDecoration(
+                      hintText: '보증금을 입력하세요',
+                      border: OutlineInputBorder(),
+                    ),
                   ),
                 ),
               ],
@@ -43,10 +47,14 @@ class RentalInfoScreen extends StatelessWidget {
                 Text("월세:"),
                 SizedBox(width: 22,),
                 Expanded(
-                  child: NumberInputWidget(
-                    onChanged: (int? newValue) {
-                      zipRegistration.fee = newValue ?? 0; // Update fee in ZipRegistration
+                  child: TextFormField(
+                    onChanged: (value) {
+                      // onChanged 이벤트 핸들러
                     },
+                    decoration: InputDecoration(
+                      hintText: '월세를 입력하세요',
+                      border: OutlineInputBorder(),
+                    ),
                   ),
                 ),
               ],

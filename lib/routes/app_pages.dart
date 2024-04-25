@@ -20,6 +20,8 @@ import 'package:testapp/screens/zip_find_screen.dart';
 import 'package:testapp/screens/zip_list_agent_screen.dart';
 import 'package:testapp/screens/zip_registration/rental_info_screen.dart';
 import 'package:testapp/screens/zip_registration/zip_detail_registration_screen.dart';
+import 'package:testapp/screens/zip_registration/zip_detail_registration_next_screen.dart';
+import 'package:testapp/screens/zip_registration/zip_hashtag_screen.dart';
 
 class AppPages {
   static const initial = '/';
@@ -163,6 +165,20 @@ class AppPages {
     _getPageWithMiddleware(
       name: '/detail_registration',
       page: () => ZipDetailRegistrationScreen(),
+      middlewares: [],
+    ),
+
+    //매물 등록에서 상세 정보 입력 다음 페이지로 이동
+    _getPageWithMiddleware(
+      name: '/detail_registration2',
+      page: () => ZipDetailRegistrationNextScreen(),
+      middlewares: [],
+    ),
+
+    //매물 등록에서 옵션 입력
+    _getPageWithMiddleware(
+      name: '/zip_hashtag',
+      page: () => ZipHashtagScreen(),
       middlewares: [],
     ),
   ];
