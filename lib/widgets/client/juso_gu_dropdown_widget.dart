@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:testapp/controllers/condition/set_details_controller.dart';
+import 'package:testapp/controllers/condition/condition_controller.dart';
 import 'package:testapp/widgets/client/dropdown_fields_widget.dart';
 
 class JusoGuDropdownWidget extends StatefulWidget {
@@ -11,16 +11,16 @@ class JusoGuDropdownWidget extends StatefulWidget {
 }
 
 class _JusoGuDropdownWidgetState extends State<JusoGuDropdownWidget> {
-  final SetDetailsController controller = Get.find<SetDetailsController>();
+  final ConditionController controller = Get.find<ConditionController>();
 
   @override
   Widget build(BuildContext context) {
     String initialValue = '강남구';
 
-    controller.gu.value = initialValue;
+    controller.gu = initialValue;
 
     return SizedBox(
-        height: 50, // 원하는 높이를 지정합니다.
+        height: 50,
         child: DropdownFieldsWidget(
           options: const [
             '강남구',
@@ -51,8 +51,10 @@ class _JusoGuDropdownWidgetState extends State<JusoGuDropdownWidget> {
           ],
           initialValue: initialValue,
           onChanged: (String newValue) {
-            controller.gu.value = newValue;
+            controller.gu = newValue;
           },
         ));
+
+
   }
 }

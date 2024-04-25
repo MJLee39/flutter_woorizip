@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:testapp/controllers/condition/set_details_controller.dart';
+import 'package:testapp/controllers/condition/condition_controller.dart';
 import 'package:testapp/widgets/client/dropdown_fields_widget.dart';
 
 class JusoDongDropdownWidget extends StatefulWidget {
@@ -11,13 +11,13 @@ class JusoDongDropdownWidget extends StatefulWidget {
 }
 
 class _JusoDongDropdownWidgetState extends State<JusoDongDropdownWidget> {
-  final SetDetailsController controller = Get.find<SetDetailsController>();
+  final ConditionController controller = Get.find<ConditionController>();
 
   @override
   Widget build(BuildContext context) {
     String initialValue = '아현동';
 
-    controller.dong.value = initialValue;
+    controller.dong = initialValue;
 
     return SizedBox(
         height: 50,
@@ -52,7 +52,7 @@ class _JusoDongDropdownWidgetState extends State<JusoDongDropdownWidget> {
           ],
           initialValue: initialValue,
           onChanged: (String newValue) {
-            controller.dong.value = newValue;
+            controller.dong = newValue;
           },
         ));
   }

@@ -138,15 +138,6 @@ class AppPages {
     ),
 
     /*
-    client condition detail
-     */
-    _getPageWithMiddleware(
-      name: '/setconditiondetail',
-      page: () => const ConditionDetailScreen(),
-      middlewares: [],
-    ),
-
-    /*
     client condition update
      */
     _getPageWithMiddleware(

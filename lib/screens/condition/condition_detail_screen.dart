@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:testapp/controllers/condition/condition_controller.dart';
 import 'package:testapp/controllers/condition/condition_detail_controller.dart';
 import 'package:testapp/widgets/app_bar_widget.dart';
 import 'package:testapp/widgets/bottom_navigation_widget.dart';
 import 'package:testapp/widgets/page_normal_padding_widget.dart';
 import 'package:testapp/widgets/text_header_widget.dart';
 
-class ConditionDetailScreen extends GetView<ConditionDetailController> {
+class ConditionDetailScreen extends GetView<ConditionController> {
   const ConditionDetailScreen({super.key});
 
   @override
