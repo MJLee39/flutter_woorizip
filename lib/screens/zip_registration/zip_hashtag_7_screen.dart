@@ -16,17 +16,16 @@ class ZipHashtagScreen extends GetView<ZipRegistration> {
     final ZipRegistration zipRegistration = Get.put(ZipRegistration());
 
     return Scaffold(
-      appBar: AppBar(
-        title: const TextHeaderWidget(text: "매물의 옵션 정보를 입력해주세요"),
-      ),
+      appBar: const AppBarWidget(),
       body: PageNormalPaddingWidget(
         child: SingleChildScrollView(
           child: Column(
             children: [
-              const SizedBox(height: 10),
+              TextHeaderWidget(text: "매물의 옵션 정보를 입력해주세요"),
+              const SizedBox(height: 30),
               // select hashtag
               SelectHashtagWidget(controller: zipRegistration), // 컨트롤러 전달
-              const SizedBox(height: 20),
+              const SizedBox(height: 40),
               // 화면이동 버튼
               BottomExpendButtonWidget(
                 text: '등록',
