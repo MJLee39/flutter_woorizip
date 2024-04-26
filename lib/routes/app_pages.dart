@@ -4,14 +4,11 @@ import 'package:testapp/chat/chatroom_list.dart';
 import 'package:testapp/map/screens/map_screen.dart';
 import 'package:testapp/middleware/auth_guard.dart';
 import 'package:testapp/screens/zip_registration/address_search_1_screen.dart';
-import 'package:testapp/screens/condition/condition_detail_screen.dart';
 import 'package:testapp/screens/condition/condition_update_screen.dart';
 import 'package:testapp/screens/home_screen.dart';
 import 'package:testapp/screens/login_screen.dart';
 import 'package:testapp/screens/zip_registration/result_summary_2_screen.dart';
-import 'package:testapp/screens/home_screen.dart';
-import 'package:testapp/screens/login_screen.dart';
-import 'package:testapp/screens/condition/condition_read_all_screen.dart';
+import 'package:testapp/screens/condition/condition_read_one_screen.dart';
 import 'package:testapp/screens/see_more_screen.dart';
 import 'package:testapp/screens/condition/set_hashtag_screen.dart';
 import 'package:testapp/screens/condition/set_details_screen.dart';
@@ -132,8 +129,8 @@ class AppPages {
     client condition read all
      */
     _getPageWithMiddleware(
-      name: '/conditionreadall',
-      page: () => ConditionReadAllScreen(),
+      name: '/conditionreadone',
+      page: () => const ConditionReadOneScreen(),
       middlewares: [],
     ),
 

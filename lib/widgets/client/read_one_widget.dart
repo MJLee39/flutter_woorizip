@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:testapp/controllers/condition/condition_controller.dart';
-import 'package:testapp/controllers/condition/condition_delete_controller.dart';
-import 'package:testapp/controllers/condition/condition_read_all_controller.dart';
-
 import 'package:testapp/controllers/chat_controller.dart';
-
 import 'package:testapp/chat/chat.dart';
 
-class ReadAllWidget extends StatelessWidget {
-  ReadAllWidget({super.key});
+class ReadOneWidget extends StatelessWidget {
+  ReadOneWidget({super.key});
 
   final ConditionController conditionController = Get.find<ConditionController>();
   final ChatController _chatController = ChatController();
@@ -111,11 +107,15 @@ class ReadAllWidget extends StatelessWidget {
                                       TextButton(
                                         onPressed: () {
                                           conditionController.id = condition['id'];
-                                          // conditionController.accountId = condition['accoundId'];
+                                          // conditionController.accountId = condition['accountId'];
                                           conditionController.deleteCondition();
+                                          Get.back(); // 작업 후 다이얼로그 닫기
+                                          conditionController.readAllCondition(); // 페이지 새로고침
                                         },
                                         child: const Text('확인'),
                                       ),
+
+
                                     ],
                                   ),
                                   barrierDismissible: true,

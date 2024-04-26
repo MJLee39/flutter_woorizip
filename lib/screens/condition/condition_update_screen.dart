@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:testapp/controllers/condition/condition_controller.dart';
-import 'package:testapp/controllers/condition/condition_update_controller.dart';
 import 'package:testapp/widgets/app_bar_widget.dart';
 import 'package:testapp/widgets/bottom_navigation_widget.dart';
 import 'package:testapp/widgets/page_normal_padding_widget.dart';
@@ -102,10 +101,13 @@ class ConditionUpdateScreen extends GetView<ConditionController> {
                     controller.accountId = "accountId01";
                     controller.updateCondition();
 
-                    Get.toNamed('/conditionreadall');
+                    controller.readAllCondition();
+
+                    Get.toNamed('/conditionreadone');
                   },
                   child: const Text('수정'),
                 ),
+
               ],
             ),
           ],
