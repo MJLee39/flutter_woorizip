@@ -107,7 +107,6 @@ class ConditionUpdateScreen extends GetView<ConditionController> {
                   },
                   child: const Text('수정'),
                 ),
-
               ],
             ),
           ],

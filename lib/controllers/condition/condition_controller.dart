@@ -23,6 +23,7 @@ class ConditionController extends GetxController {
   //     'http://10.0.2.16:8093/condition/readAll/$additionalArgument';
 
   /*
+<<<<<<< Updated upstream
   is registered
    */
   Future<bool> isRegistered() async {
@@ -57,6 +58,8 @@ class ConditionController extends GetxController {
   }
 
   /*
+=======
+>>>>>>> Stashed changes
   save
    */
   Future<void> saveCondition() async {

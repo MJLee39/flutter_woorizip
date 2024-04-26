@@ -37,6 +37,7 @@ class SetHashtagScreen extends GetView<ConditionController> {
                 TextButton(
                   onPressed: () {
                     controller.saveCondition();
+
                     Get.toNamed('/conditionreadone');
                   },
                   style: ButtonStyle(
