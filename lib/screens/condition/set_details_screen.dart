@@ -43,6 +43,7 @@ class SetDetailsScreen extends GetView<ConditionController> {
                 Expanded(
                   child: JusoDongDropdownWidget(),
                 ),
+
                 // ElevatedButton(
                 //   onPressed: () {
                 //     print(controller.si + " " + controller.gu + " " + controller.dong);

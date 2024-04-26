@@ -72,7 +72,7 @@ class SeeMoreScreen extends StatelessWidget {
             GestureDetector(
               onTap: () {
                 // '/my_conditions' 경로로 이동
-                Get.toNamed('/conditionreadall');
+                Get.toNamed('/conditionreadone');
               },
               child: Container(
                 padding: EdgeInsets.all(10),

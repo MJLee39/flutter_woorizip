@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:testapp/controllers/condition/condition_controller.dart';
-import 'package:testapp/controllers/condition/condition_detail_controller.dart';
 import 'package:testapp/widgets/app_bar_widget.dart';
 import 'package:testapp/widgets/bottom_navigation_widget.dart';
 import 'package:testapp/widgets/page_normal_padding_widget.dart';

@@ -26,8 +26,10 @@ class SetHashtagScreen extends GetView<ConditionController> {
             const SizedBox(height: 20),
             const TextHeaderWidget(text: '원하는 옵션을 알려주세요'),
             const SizedBox(height: 40),
+
             // select hashtag
             const SelectHashtagWidget(),
+
             // 화면이동 버튼
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
@@ -35,7 +37,8 @@ class SetHashtagScreen extends GetView<ConditionController> {
                 TextButton(
                   onPressed: () {
                     controller.saveCondition();
-                    Get.toNamed('/conditionreadall');
+
+                    Get.toNamed('/conditionreadone');
                   },
                   style: ButtonStyle(
                     foregroundColor: MaterialStateProperty.all<Color>(Colors.indigo),
