@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:flutter/gestures.dart'; // RichText 위젯 사용을 위해 추가
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:testapp/controllers/chat_controller.dart';
@@ -9,7 +8,6 @@ import 'package:stomp_dart_client/stomp_config.dart';
 import 'package:stomp_dart_client/stomp_frame.dart';
 import 'package:get/get.dart';
 import 'package:testapp/screens/zip_detail_screen.dart';
-import 'package:flutter_font_icons/flutter_font_icons.dart';
 
 class Chat extends StatefulWidget {
   final String chatRoomId;

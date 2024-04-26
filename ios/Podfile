@@ -1,5 +1,13 @@
 # Uncomment this line to define a global platform for your project
+<<<<<<< HEAD
+platform :ios, '12.0'
+
+pod 'KakaoSDKCommon'  # 필수 요소를 담은 공통 모듈
+pod 'KakaoSDKAuth'  # 사용자 인증
+pod 'KakaoSDKUser'  # 카카오 로그인, 사용자 관리
+=======
 # platform :ios, '12.0'
+>>>>>>> 9f9c849c3f195e0d1b7553fa5d6b43e116d58d7b
 
 # CocoaPods analytics sends network stats synchronously affecting flutter build latency.
 ENV['COCOAPODS_DISABLE_STATS'] = 'true'

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:testapp/services/auth_service.dart';
 import 'package:testapp/widgets/app_bar_widget.dart';
 import 'package:testapp/widgets/page_normal_padding_widget.dart';
 import 'package:testapp/widgets/text_header_widget.dart';
@@ -7,8 +8,10 @@ import 'package:testapp/utils/app_colors.dart';
 import 'package:testapp/widgets/bottom_navigation_widget.dart';
 
 class SeeMoreScreen extends StatelessWidget {
+  final _authService = Get.find<AuthService>();
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBarWidget(),
       body: PageNormalPaddingWidget(
@@ -52,6 +55,7 @@ class SeeMoreScreen extends StatelessWidget {
                       ),
                       TextButton(
                         onPressed: () {
+                          _authService.logout();
                           // 로그아웃 기능 구현
                         },
                         child: Text(
