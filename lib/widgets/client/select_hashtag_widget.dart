@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:testapp/controllers/condition/condition_controller.dart';
 
 class SelectHashtagWidget extends StatefulWidget {
   const SelectHashtagWidget({super.key});
@@ -29,6 +31,8 @@ final buttonLabels = [
 ];
 
 class SelectHashtagWidgetState extends State<SelectHashtagWidget> {
+  final ConditionController controller = Get.find<ConditionController>();
+
   final List<bool> _selections = List.filled(buttonLabels.length, false);
 
   @override
@@ -36,10 +40,10 @@ class SelectHashtagWidgetState extends State<SelectHashtagWidget> {
     return Expanded(
       child: GridView.builder(
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3,
-          childAspectRatio: 3,
+          crossAxisCount: 2,
+          childAspectRatio: 4,
           mainAxisSpacing: 8.0,
-          crossAxisSpacing: 8.0,
+          crossAxisSpacing: 16.0,
         ),
         itemCount: buttonLabels.length,
         itemBuilder: (context, index) {
@@ -47,6 +51,7 @@ class SelectHashtagWidgetState extends State<SelectHashtagWidget> {
             onPressed: () {
               setState(() {
                 _selections[index] = !_selections[index];
+                updateHashtag();
               });
             },
             style: ButtonStyle(
@@ -62,5 +67,18 @@ class SelectHashtagWidgetState extends State<SelectHashtagWidget> {
         },
       ),
     );
+  }
+
+  void updateHashtag() {
+    List<String> selectedHashtags = [];
+    for (int i = 0; i < _selections.length; i++) {
+      if (_selections[i]) {
+        selectedHashtags.add(buttonLabels[i]);
+        debugPrint('selectedHashtags: $selectedHashtags');
+      }
+    }
+
+    controller.hashtag = selectedHashtags.join(' ');
+    debugPrint('controller.hashtag.value: ${controller.hashtag}');
   }
 }

@@ -3,18 +3,26 @@ import 'package:testapp/chat/chat.dart';
 import 'package:testapp/chat/chatroom_list.dart';
 import 'package:testapp/map/screens/map_screen.dart';
 import 'package:testapp/middleware/auth_guard.dart';
-import 'package:testapp/screens/address_search_screen.dart';
-import 'package:testapp/screens/add_condition_screen.dart';
+import 'package:testapp/screens/zip_registration/address_search_1_screen.dart';
+import 'package:testapp/screens/condition/condition_detail_screen.dart';
+import 'package:testapp/screens/condition/condition_update_screen.dart';
 import 'package:testapp/screens/home_screen.dart';
 import 'package:testapp/screens/login_screen.dart';
-import 'package:testapp/screens/read_all_condition_screen.dart';
+import 'package:testapp/screens/zip_registration/result_summary_2_screen.dart';
+import 'package:testapp/screens/home_screen.dart';
+import 'package:testapp/screens/login_screen.dart';
+import 'package:testapp/screens/condition/condition_read_all_screen.dart';
 import 'package:testapp/screens/see_more_screen.dart';
-import 'package:testapp/screens/set_hashtag_screen.dart';
-import 'package:testapp/screens/set_details_screen.dart';
-import 'package:testapp/screens/set_move_in_date_screen.dart';
+import 'package:testapp/screens/condition/set_hashtag_screen.dart';
+import 'package:testapp/screens/condition/set_details_screen.dart';
+import 'package:testapp/screens/condition/set_move_in_date_screen.dart';
 import 'package:testapp/screens/zip_find_screen.dart';
 import 'package:testapp/screens/zip_list_agent_screen.dart';
-
+import 'package:testapp/screens/zip_registration/rental_info_4_screen.dart';
+import 'package:testapp/screens/zip_registration/zip_detail_registration_5_screen.dart';
+import 'package:testapp/screens/zip_registration/zip_detail_registration_next_6_screen.dart';
+import 'package:testapp/screens/zip_registration/zip_hashtag_7_screen.dart';
+import 'package:testapp/screens/zip_registration/zip_detail_registration_5_5_screen.dart';
 
 class AppPages {
   static const initial = '/';
@@ -51,15 +59,11 @@ class AppPages {
     _getPageWithMiddleware(
       name: '/addressSearch',
       page: () => AddressSearchScreen(),
-    ),
-    _getPageWithMiddleware(
-      name: '/addCondition',
-      page: () => const AddConditionScreen(),
       middlewares: [],
     ),
     _getPageWithMiddleware(
-      name: '/readAllCondition',
-      page: () => const ReadAllConditionScreen(),
+      name: '/result',
+      page: () => const ResultSummaryScreen(),
       middlewares: [],
     ),
     _getPageWithMiddleware(
@@ -96,6 +100,7 @@ class AppPages {
       },
       middlewares: [],
     ),
+
     /*
     client set location, building, fee
      */
@@ -120,6 +125,59 @@ class AppPages {
     _getPageWithMiddleware(
       name: '/sethashtag',
       page: () => const SetHashtagScreen(),
+      middlewares: [],
+    ),
+
+    /*
+    client condition read all
+     */
+    _getPageWithMiddleware(
+      name: '/conditionreadall',
+      page: () => ConditionReadAllScreen(),
+      middlewares: [],
+    ),
+
+    /*
+    client condition update
+     */
+    _getPageWithMiddleware(
+      name: '/updatecondition',
+      page: () => ConditionUpdateScreen(),
+      middlewares: [],
+    ),
+
+    //매물 등록에서 보증금 입력 페이지로 이동
+    _getPageWithMiddleware(
+      name: '/depositAndFee',
+      page: () => RentalInfoScreen(),
+      middlewares: [],
+    ),
+
+    //매물 등록에서 상세 정보 입력 페이지로 이동
+    _getPageWithMiddleware(
+      name: '/detail_registration',
+      page: () => ZipDetailRegistrationScreen(),
+      middlewares: [],
+    ),
+
+    //매물 등록에서 상세 정보 입력 다음 페이지로 이동
+    _getPageWithMiddleware(
+      name: '/detail_registration2',
+      page: () => ZipDetailRegistrationNextScreen(),
+      middlewares: [],
+    ),
+
+    //매물 등록에서 옵션 입력
+    _getPageWithMiddleware(
+      name: '/zip_hashtag',
+      page: () => ZipHashtagScreen(),
+      middlewares: [],
+    ),
+
+    //매물 등록에서 상세 입력2
+    _getPageWithMiddleware(
+      name: '/detail_registration5_5',
+      page: () => ZipDetailRegistration55Screen(),
       middlewares: [],
     ),
   ];

@@ -9,6 +9,19 @@ class ApiController extends GetxController {
       Rx<Map<String, Map<String, List<String>>>>({});
     RxList<String> dongList = <String>[].obs;
 
+
+ @override
+  void onInit() {
+    super.onInit();
+        _resetAddress();
+      }
+
+  
+
+  void _resetAddress() {
+    addressList.clear();
+  }
+
   Future<void> fetchDataFromApi(String keyword) async {
     isLoading.value = true;
     String apiUrl =

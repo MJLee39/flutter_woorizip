@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:eventflux/eventflux.dart';
 import 'package:testapp/controllers/chat_controller.dart';
+import 'package:testapp/widgets/bottom_navigation_widget.dart';
 
 import 'chat.dart';
 
@@ -19,6 +20,7 @@ class ChatRoomList extends StatelessWidget {
           title: Text('Chat Room List'),
         ),
         body: ChatRoomListScreen(accountId: accountId),
+        bottomNavigationBar: BottomNavigationWidget(),
       ),
     );
   }
@@ -45,6 +47,9 @@ class _ChatRoomListScreenState extends State<ChatRoomListScreen> {
         .then((value) => {
           setState(() {
             chatRooms = value;
+            for (var chatRoom in chatRooms) {
+              subscribeToChatRoom(chatRoom.id);
+            }
           }
         )
     }).catchError((err) => print(err));
@@ -118,7 +123,15 @@ class _ChatRoomListScreenState extends State<ChatRoomListScreen> {
                             color: Colors.white,
                           ),
                           onPressed: () {
-                            print('Report Button Pressed for Chat Room ID: ${chatRoom.id}');
+                            var targetId;
+                            final userId = widget.accountId;
+                            if (chatRoom.clientId == userId) {
+                              targetId = chatRoom.brokerId;
+                            } else {
+                              targetId = chatRoom.clientId;
+                            }
+                            final result = _chatController.sendReport(widget.accountId, targetId);
+
                           },
                         ),
                         IconButton(
@@ -127,7 +140,13 @@ class _ChatRoomListScreenState extends State<ChatRoomListScreen> {
                             color: Colors.white,
                           ),
                           onPressed: () {
-                            _chatController.exitChatRoom(chatRoom.id);
+                            _chatController.exitChatRoom(chatRoom.id).then((exitMessage) {
+                              if (exitMessage == 'deleted') {
+                                setState(() {
+                                  chatRooms.removeWhere((element) => element.id == chatRoom.id);
+                                });
+                              }
+                            });
                           },
                         ),
                       ],

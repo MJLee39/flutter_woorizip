@@ -21,12 +21,14 @@ class SeeMoreScreen extends StatelessWidget {
             SizedBox(height: 10),
             Row(
               children: [
-                Expanded( // Expanded로 감싸기 시작
+                Expanded(
+                  // Expanded로 감싸기 시작
                   child: Container(
                     alignment: Alignment.center,
                     padding: EdgeInsets.all(20),
                     decoration: BoxDecoration(
-                      border: Border.all(color: AppColors.mainColorTest, width: 2),
+                      border:
+                          Border.all(color: AppColors.mainColorTest, width: 2),
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Image.asset(
@@ -36,7 +38,8 @@ class SeeMoreScreen extends StatelessWidget {
                     ),
                   ),
                 ), // Expanded로 감싸기 끝
-                Expanded( // Expanded로 감싸기 시작
+                Expanded(
+                  // Expanded로 감싸기 시작
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -46,7 +49,8 @@ class SeeMoreScreen extends StatelessWidget {
                         },
                         child: Text(
                           '닉네임 변경하기',
-                          style: TextStyle(color: AppColors.mainColorTest, fontSize: 20),
+                          style: TextStyle(
+                              color: AppColors.mainColorTest, fontSize: 20),
                         ),
                       ),
                       TextButton(
@@ -68,7 +72,7 @@ class SeeMoreScreen extends StatelessWidget {
             GestureDetector(
               onTap: () {
                 // '/my_conditions' 경로로 이동
-                Get.toNamed('/my_conditions');
+                Get.toNamed('/conditionreadall');
               },
               child: Container(
                 padding: EdgeInsets.all(10),
@@ -76,7 +80,7 @@ class SeeMoreScreen extends StatelessWidget {
                   border: Border.all(color: AppColors.mainColorTest),
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: Row(
+                child: const Row(
                   children: <Widget>[
                     Icon(
                       Icons.home_work_outlined,
@@ -87,9 +91,7 @@ class SeeMoreScreen extends StatelessWidget {
                     Text(
                       '내가 쓴 조건 관리',
                       style: TextStyle(
-                        fontSize: 25,
-                        color: AppColors.mainColorTest
-                      ),
+                          fontSize: 25, color: AppColors.mainColorTest),
                     ),
                   ],
                 ),
@@ -118,9 +120,7 @@ class SeeMoreScreen extends StatelessWidget {
                     Text(
                       '내가 올린 매물 관리',
                       style: TextStyle(
-                        fontSize: 25,
-                        color: AppColors.mainColorTest
-                      ),
+                          fontSize: 25, color: AppColors.mainColorTest),
                     ),
                   ],
                 ),

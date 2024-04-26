@@ -33,7 +33,7 @@ class KakaoLoginButtonWidget extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.only(left: 10.0),
               child: SvgPicture.asset(
-                'images/icon_kakao.svg',
+                'assets/images/icon_kakao.svg',
                 width: 30,
                 height: 30,
               )
