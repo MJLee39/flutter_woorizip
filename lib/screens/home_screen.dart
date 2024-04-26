@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:testapp/screens/address_search_screen.dart';
+import 'package:testapp/services/auth_service.dart';
 import 'package:testapp/utils/app_colors.dart';
 import 'package:testapp/widgets/app_bar_widget.dart';
 import 'package:testapp/widgets/bottom_navigation_widget.dart';
@@ -36,7 +37,7 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                child: Row(
+                child: const Row(
                   children: [
                     Expanded(
                       child: Padding(

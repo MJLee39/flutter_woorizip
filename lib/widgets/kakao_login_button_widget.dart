@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:testapp/controllers/kakao_login_controller.dart';
 import 'package:testapp/utils/app_colors.dart';
 
 class KakaoLoginButtonWidget extends StatelessWidget {
@@ -8,9 +9,10 @@ class KakaoLoginButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Get.put(KakaoLoginController());
     return TextButton(
       onPressed: () {
-        Get.toNamed('/');
+        Get.find<KakaoLoginController>().loginWithKakao();
       },
       style: TextButton.styleFrom(
         backgroundColor: AppColors.kakaoColor,
