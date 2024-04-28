@@ -3,6 +3,7 @@ import 'package:testapp/chat/chat.dart';
 import 'package:testapp/chat/chatroom_list.dart';
 import 'package:testapp/map/screens/map_screen.dart';
 import 'package:testapp/middleware/auth_guard.dart';
+import 'package:testapp/screens/admin_screen.dart';
 import 'package:testapp/screens/zip_registration/address_search_1_screen.dart';
 import 'package:testapp/screens/condition/condition_update_screen.dart';
 import 'package:testapp/screens/home_screen.dart';
@@ -175,6 +176,12 @@ class AppPages {
     _getPageWithMiddleware(
       name: '/detail_registration5_5',
       page: () => ZipDetailRegistration55Screen(),
+      middlewares: [],
+    ),
+
+    _getPageWithMiddleware(
+      name: '/test',
+      page: () => AdminScreen(),
       middlewares: [],
     ),
   ];

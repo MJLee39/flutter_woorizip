@@ -119,7 +119,18 @@ class HomeScreen extends StatelessWidget {
                       imagePath: 'assets/images/icon_officetel.png',
                       urlPath: '/conditionreadone')
                 ],
-              )
+              ),
+              const Row(
+                children: [
+                  SizedBox(
+                    height: 10,
+                  ),
+                  HalfButtonWidget(
+                      text: 'test',
+                      imagePath: 'assets/images/icon_officetel.png',
+                      urlPath: '/test')
+                ],
+              ),
             ],
           ),
         ),
