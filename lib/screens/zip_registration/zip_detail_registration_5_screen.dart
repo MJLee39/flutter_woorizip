@@ -10,10 +10,18 @@ import 'package:testapp/widgets/zip/direction_zip_buttons_widget.dart';
 import 'package:testapp/widgets/app_bar_widget.dart';
 
 class ZipDetailRegistrationScreen extends StatelessWidget {
-  final zipRegistration = Get.put(ZipRegistration());
+  final ZipRegistration controller = Get.find<ZipRegistration>();
 
   @override
   Widget build(BuildContext context) {
+    debugPrint('5-location: ${controller.location}');
+    debugPrint('5-estate: ${controller.estate}');
+    debugPrint('5-attechement: ${controller.attachments}');
+    debugPrint('5-total floor: ${controller.total_floor}');
+    debugPrint('5-deposit: ${controller.deposit}');
+    debugPrint('5-fee: ${controller.fee}');
+    debugPrint('5-maintenance_fee: ${controller.maintenance_fee}');
+
     return Scaffold(
       appBar: const AppBarWidget(),
       body: PageNormalPaddingWidget(

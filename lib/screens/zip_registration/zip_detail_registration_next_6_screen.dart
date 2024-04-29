@@ -9,10 +9,24 @@ import 'package:testapp/widgets/zip/select_hashtag_widget.dart';
 import 'package:testapp/widgets/app_bar_widget.dart';
 
 class ZipDetailRegistrationNextScreen extends StatelessWidget {
-  final zipRegistration = Get.put(ZipRegistration());
+  final ZipRegistration controller = Get.find<ZipRegistration>();
 
   @override
   Widget build(BuildContext context) {
+    debugPrint('6-location: ${controller.location}');
+    debugPrint('6-estate: ${controller.estate}');
+    debugPrint('6-attechement: ${controller.attachments}');
+    debugPrint('6-total floor: ${controller.total_floor}');
+    debugPrint('6-deposit: ${controller.deposit}');
+    debugPrint('6-fee: ${controller.fee}');
+    debugPrint('6-maintenance_fee: ${controller.maintenance_fee}');
+    debugPrint('6-buildingType: ${controller.buildingType}');
+    debugPrint('6-direction: ${controller.direction}');
+    debugPrint('6-moveInDate: ${controller.moveInDate}');
+    debugPrint('6-room: ${controller.room}');
+    debugPrint('6-toilet: ${controller.toilet}');
+    debugPrint('6-m2: ${controller.m2}');
+
     return Scaffold(
       appBar: const AppBarWidget(),
       body: PageNormalPaddingWidget(
@@ -35,6 +49,9 @@ class ZipDetailRegistrationNextScreen extends StatelessWidget {
                             decoration: const InputDecoration(
                               labelText: '메모',
                             ),
+                            onChanged: (value) {
+                              controller.note = value;
+                            },
                           ),
                         ),
                       ],
@@ -46,12 +63,12 @@ class ZipDetailRegistrationNextScreen extends StatelessWidget {
                         Expanded(
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: zipRegistration.showYes.value == 'public' ? Colors.blue : Colors.grey, // 공개 상태일 때 파란색, 아닐 때 회색
+                              backgroundColor: controller.showYes.value == 'public' ? Colors.blue : Colors.grey, // 공개 상태일 때 파란색, 아닐 때 회색
                               textStyle: TextStyle(color: Colors.black, fontSize: 20),
                             ),
                             onPressed: () {
                               // 선택된 값이 공개로 설정됨
-                              zipRegistration.showYes.value = 'public';
+                              controller.showYes.value = 'public';
                             },
                             child: Text('공개'),
                           ),
@@ -60,12 +77,12 @@ class ZipDetailRegistrationNextScreen extends StatelessWidget {
                         Expanded(
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: zipRegistration.showYes.value == 'private' ? Colors.blue : Colors.grey, // 비공개 상태일 때 파란색, 아닐 때 회색
+                              backgroundColor: controller.showYes.value == 'private' ? Colors.blue : Colors.grey, // 비공개 상태일 때 파란색, 아닐 때 회색
                               textStyle: TextStyle(color: Colors.black, fontSize: 20),
                             ),
                             onPressed: () {
                               // 선택된 값이 비공개로 설정됨
-                              zipRegistration.showYes.value = 'private';
+                              controller.showYes.value = 'private';
                             },
                             child: Text('비공개'),
                           ),
