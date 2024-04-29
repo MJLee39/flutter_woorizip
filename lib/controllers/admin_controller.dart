@@ -8,6 +8,7 @@ class AdminController extends GetxController {
   final RxString error = ''.obs;
   final RxList<AccountInfo> accountList = <AccountInfo>[].obs;
   final RxList<AccountAndReport> accountAndReportList = <AccountAndReport>[].obs;
+  final RxList<String> accountIdList = <String>[].obs;
   RxString searchKeyword = ''.obs;
 
   @override
@@ -27,7 +28,27 @@ class AdminController extends GetxController {
       AccountInfo('2', 'User2', 'Facebook', 'facebook456', "USER"),
       AccountInfo('3', 'User3', 'Twitter', 'twitter789', "AGENT"),
       AccountInfo('4', 'User4', 'GitHub', 'github101112', "USER"),
+      AccountInfo('1', 'User1', 'Google', 'google123', "AGENT"),
+      AccountInfo('2', 'User2', 'Facebook', 'facebook456', "USER"),
+      AccountInfo('3', 'User3', 'Twitter', 'twitter789', "AGENT"),
+      AccountInfo('4', 'User4', 'GitHub', 'github101112', "USER"),
+      AccountInfo('1', 'User1', 'Google', 'google123', "AGENT"),
+      AccountInfo('2', 'User2', 'Facebook', 'facebook456', "USER"),
+      AccountInfo('3', 'User3', 'Twitter', 'twitter789', "AGENT"),
+      AccountInfo('4', 'User4', 'GitHub', 'github101112', "USER"),
+      AccountInfo('1', 'User1', 'Google', 'google123', "AGENT"),
+      AccountInfo('2', 'User2', 'Facebook', 'facebook456', "USER"),
+      AccountInfo('3', 'User3', 'Twitter', 'twitter789', "AGENT"),
+      AccountInfo('4', 'User4', 'GitHub', 'github101112', "USER"),
+      AccountInfo('1', 'User1', 'Google', 'google123', "AGENT"),
+      AccountInfo('2', 'User2', 'Facebook', 'facebook456', "USER"),
+      AccountInfo('3', 'User3', 'Twitter', 'twitter789', "AGENT"),
+      AccountInfo('4', 'User4', 'GitHub', 'github101112', "USER"),
     });
+
+    accountIdList.assignAll(accountList.map((accountInfo) => accountInfo.accountId).toList());
+    fetchAllReportCount();
+
     // const url = "http://localhost:8080";
     //
     // try {
@@ -35,7 +56,12 @@ class AdminController extends GetxController {
     //
     //   if (response.statusCode == 200) {
     //     List<dynamic> jsonData = jsonDecode(utf8.decode(response.bodyBytes));
-    //     accountList.assignAll(jsonData.map((data) => AccountInfo.fromJson(data)).toList());
+    //
+    //     accountList.assignAll(jsonData.map((data) {
+    //       accountIdList.add(data['accountId']);
+    //       return AccountInfo.fromJson(data);
+    //     }).toList());
+    //
     //     fetchAllReportCount();
     //   } else {
     //     throw Exception('Failed to load data: ${response.statusCode}');
@@ -46,10 +72,17 @@ class AdminController extends GetxController {
   }
 
   Future<void> fetchAllReportCount() async {
-    const url = "http://localhost:8080/report";
+    const url = "https://chat.teamwaf.app/report/all/size";
 
     try {
-      final response = await http.get(Uri.parse(url));
+      final response = await http.post(Uri.parse(url),
+        headers: {
+          'content-type': 'application/json'
+        },
+        body: jsonEncode({
+          'allAccountId': accountIdList.toList()
+        })
+      );
 
       if (response.statusCode == 200) {
         List<dynamic> jsonData = jsonDecode(utf8.decode(response.bodyBytes));
@@ -66,15 +99,13 @@ class AdminController extends GetxController {
   void updateAccountReports() {
     for (var accountAndReport in accountAndReportList) {
       var accountInfo = accountList.firstWhere((account) => account.accountId == accountAndReport.accountId);
-      if (accountInfo != null) {
-        accountInfo.updateReport(accountAndReport.report);
-      }
+      accountInfo.updateReport(accountAndReport.reportSize);
     }
     update();
   }
 
   Future<void> blockAccount(String accountId) async {
-    const url = "http://localhost:8080/block";
+    const url = "http://localhost:8080";
 
     try {
       final response = await http.post(
@@ -206,14 +237,15 @@ class AccountInfo {
 
 class AccountAndReport {
   final String accountId;
-  final int report;
+  final int reportSize;
 
-  AccountAndReport(this.accountId, this.report);
+  AccountAndReport(this.accountId, this.reportSize);
 
   factory AccountAndReport.fromJson(Map<String, dynamic> json) {
     return AccountAndReport(
       json['accountId'],
-      json['report'],
+      json['reportSize'],
     );
   }
+
 }

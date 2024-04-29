@@ -107,7 +107,7 @@ class ChatState extends State<Chat> {
                   title: Text(item['direction']),
                   subtitle: Text(item['buildingType']),
                   onTap: () {
-                    _handleMessageTap(item['id']);
+                    _handleMessageTap(item['id'], item['attachments']);
                     Navigator.of(context).pop(); // BottomSheet 닫기
                   },
                 );
@@ -119,7 +119,7 @@ class ChatState extends State<Chat> {
     );
   }
 
-  void _handleMessageTap(String? id) {
+  void _handleMessageTap(String? id, String? attachment) {
     if (id != null) {
       _controller.text = '%%room%%'+id+'%%room%%';
       _sendMessage(); // 메시지 전송 함수 호출
@@ -128,7 +128,7 @@ class ChatState extends State<Chat> {
 
   Widget _buildMessageWidget(Map<String, dynamic> message) {
     final String originalText = message['message'] ?? "안녕하세요.";
-    final String text = originalText.replaceAll('%%room%%', ''); // "%%room%%"을 제거한 텍스트
+    final String roomId = originalText.replaceAll('%%room%%', ''); // "%%room%%"을 제거한 텍스트
     final String nickname = message['nickname'] ?? "익명"; // 닉네임
     final bool isMyMessage = message['accountId'] == widget.accountId;
     final bool containsWoorizip = originalText.toLowerCase().contains('%%room%%');
@@ -136,10 +136,10 @@ class ChatState extends State<Chat> {
     if (containsWoorizip) {
       return GestureDetector(
         onTap: () {
-          Get.to(DetailScreen(itemID: text), transition: Transition.noTransition);
+          Get.to(DetailScreen(itemID: roomId), transition: Transition.noTransition);
         },
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: isMyMessage ? CrossAxisAlignment.end : CrossAxisAlignment.start,
           children: [
             Text(
               nickname, // 닉네임 표시
@@ -165,6 +165,7 @@ class ChatState extends State<Chat> {
                     ),
                   ),
                 ),
+                Image.asset('assets/images/room1.jpg')
               ],
             ),
           ],
@@ -192,7 +193,7 @@ class ChatState extends State<Chat> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  text,
+                  roomId,
                   style: TextStyle(
                     color: Colors.white,
                   ),

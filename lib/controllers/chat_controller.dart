@@ -63,7 +63,7 @@ class ChatController {
   }
 
   Future<String> sendReport(String senderId, String targetId) async {
-    final url = Uri.parse("https://chat.teamwaf.app/chat/report");
+    final url = Uri.parse("https://chat.teamwaf.app/report");
     final response = await http.post(url,
       headers: {
         'content-type': 'application/json'

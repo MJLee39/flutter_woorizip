@@ -66,8 +66,6 @@ class _ChatRoomListScreenState extends State<ChatRoomListScreen> {
             var updatedChatRoomId = eventData['chatRoomId'];
             var message = eventData['message'] ?? "안녕하세요.";
 
-            print('제발제발제발 : ${data.data}');
-
             setState(() {
               final index = chatRooms.indexWhere((room) => room.id == updatedChatRoomId);
               if (index != -1) {
@@ -131,7 +129,7 @@ class _ChatRoomListScreenState extends State<ChatRoomListScreen> {
                               targetId = chatRoom.clientId;
                             }
                             final result = _chatController.sendReport(widget.accountId, targetId);
-
+                            print(result);
                           },
                         ),
                         IconButton(
