@@ -15,7 +15,7 @@ class ConditionController extends GetxController {
   late DateTime moveInDate = DateTime.now();
   late String hashtag = '';
   late RxList<Map<String, dynamic>> jsonData = <Map<String, dynamic>>[].obs;
-  final RxBool isLoading = false.obs;
+  final RxBool isLoading = true.obs;
   final RxString error = ''.obs;
   final String additionalArgument = 'accountId01';
 
@@ -23,6 +23,43 @@ class ConditionController extends GetxController {
   //     'http://10.0.2.16:8093/condition/readAll/$additionalArgument';
 
   /*
+<<<<<<< Updated upstream
+  is registered
+   */
+  Future<bool> isRegistered() async {
+    isLoading.value = true;
+
+    try {
+      print('** in registered --------------');
+      print('** accountId: $accountId');
+
+      String url = 'http://localhost:8093/condition/readAll/$accountId';
+
+      final response = await http.get(Uri.parse(url));
+
+      if (response.statusCode == 200) {
+        List<dynamic> responseData = jsonDecode(utf8.decode(response.bodyBytes));
+        jsonData.assignAll(responseData.cast<Map<String, dynamic>>());
+
+        bool isRegistered = jsonData.isNotEmpty;
+
+        print('** response: OK. isRegistered: {$isRegistered}');
+        return isRegistered;
+      } else {
+        print('Failed to load data: ${response.statusCode}');
+        return false;
+      }
+    } catch (e) {
+      error.value = 'Error fetching data: $e';
+      return false;
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  /*
+=======
+>>>>>>> Stashed changes
   save
    */
   Future<void> saveCondition() async {
@@ -69,16 +106,9 @@ class ConditionController extends GetxController {
     }
   }
 
-
   /*
   readAll
    */
-  @override
-  void onInit() {
-    super.onInit();
-    readAllCondition();
-  }
-
   Future<void> readAllCondition() async {
     isLoading.value = true;
 

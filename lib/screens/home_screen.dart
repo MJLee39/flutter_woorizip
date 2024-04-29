@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:testapp/screens/zip_registration/address_search_1_screen.dart';
 import 'package:testapp/utils/app_colors.dart';
 import 'package:testapp/widgets/app_bar_widget.dart';
 import 'package:testapp/widgets/bottom_navigation_widget.dart';
@@ -36,7 +35,7 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                child: Row(
+                child: const Row(
                   children: [
                     Expanded(
                       child: Padding(
@@ -116,9 +115,9 @@ class HomeScreen extends StatelessWidget {
                     height: 10,
                   ),
                   HalfButtonWidget(
-                      text: 'test',
+                      text: '매물 등록 후 조건 조회 페이지',
                       imagePath: 'assets/images/icon_officetel.png',
-                      urlPath: '/setdetails')
+                      urlPath: '/conditionreadone')
                 ],
               )
             ],
