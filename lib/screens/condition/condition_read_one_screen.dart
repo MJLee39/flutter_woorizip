@@ -34,7 +34,6 @@ class _ConditionReadOneScreenState extends State<ConditionReadOneScreen> {
             const SizedBox(height: 20),
             const TextHeaderWidget(text: '등록된 조건이에요'),
             const SizedBox(height: 20),
-
             FutureBuilder<bool>(
               future: _controller.isRegistered(),
               builder: (context, snapshot) {
@@ -73,7 +72,8 @@ class _ConditionReadOneScreenState extends State<ConditionReadOneScreen> {
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.indigo,
                             textStyle: const TextStyle(fontSize: 16),
-                            padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 32, vertical: 16),
                           ),
                           child: const Text(
                             '조건 등록하러 갈래요',
@@ -85,7 +85,6 @@ class _ConditionReadOneScreenState extends State<ConditionReadOneScreen> {
                       ],
                     );
                   } // if
-
                 }
               },
             ),

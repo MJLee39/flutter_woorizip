@@ -38,7 +38,8 @@ class ConditionController extends GetxController {
       final response = await http.get(Uri.parse(url));
 
       if (response.statusCode == 200) {
-        List<dynamic> responseData = jsonDecode(utf8.decode(response.bodyBytes));
+        List<dynamic> responseData =
+            jsonDecode(utf8.decode(response.bodyBytes));
         jsonData.assignAll(responseData.cast<Map<String, dynamic>>());
 
         bool isRegistered = jsonData.isNotEmpty;
@@ -58,8 +59,6 @@ class ConditionController extends GetxController {
   }
 
   /*
-=======
->>>>>>> Stashed changes
   save
    */
   Future<void> saveCondition() async {
@@ -98,7 +97,6 @@ class ConditionController extends GetxController {
       } else {
         throw Exception('Failed to load data: ${response.statusCode}');
       }
-
     } catch (e) {
       error.value = 'Error fetching data: $e';
     } finally {
@@ -116,14 +114,13 @@ class ConditionController extends GetxController {
       print('** in readAll --------------');
       print('** accountId: $accountId');
 
-      String url =
-          'http://localhost:8093/condition/readAll/$accountId';
+      String url = 'http://localhost:8093/condition/readAll/$accountId';
 
       final response = await http.get(Uri.parse(url));
 
       if (response.statusCode == 200) {
         List<dynamic> responseData =
-        jsonDecode(utf8.decode(response.bodyBytes));
+            jsonDecode(utf8.decode(response.bodyBytes));
         jsonData.assignAll(responseData.cast<Map<String, dynamic>>());
         print('** in controller try, respose: OK');
       } else {
@@ -143,8 +140,7 @@ class ConditionController extends GetxController {
     isLoading.value = true;
 
     try {
-      String url =
-          'http://localhost:8093/condition/update';
+      String url = 'http://localhost:8093/condition/update';
 
       print('** in Update --------------');
 
@@ -160,15 +156,12 @@ class ConditionController extends GetxController {
 
       print("** parsing check -> input: $input");
 
-      final response = await http.post(
-          Uri.parse(url),
-          headers: {'content-type': 'application/json'},
-          body: input
-      );
+      final response = await http.post(Uri.parse(url),
+          headers: {'content-type': 'application/json'}, body: input);
 
       if (response.statusCode == 200) {
         List<dynamic> responseData =
-        jsonDecode(utf8.decode(response.bodyBytes));
+            jsonDecode(utf8.decode(response.bodyBytes));
         jsonData.assignAll(responseData.cast<Map<String, dynamic>>());
         print('** in update controller try, respose: OK');
       } else {
@@ -190,8 +183,7 @@ class ConditionController extends GetxController {
     try {
       print('** in Delete --------------');
 
-      String url =
-          'http://localhost:8093/condition/delete/$id';
+      String url = 'http://localhost:8093/condition/delete/$id';
       // String url =
       //     'http://10.0.2.16:8093/condition/readAll/$additionalArgument';
 
@@ -203,9 +195,9 @@ class ConditionController extends GetxController {
       );
 
       if (response.statusCode == 200) {
-        List<dynamic> responseData =
-        jsonDecode(utf8.decode(response.bodyBytes));
-        jsonData.assignAll(responseData.cast<Map<String, dynamic>>());
+        // List<dynamic> responseData =
+        //     jsonDecode(utf8.decode(response.bodyBytes));
+        // jsonData.assignAll(responseData.cast<Map<String, dynamic>>());
         print('** in delete controller try, respose: OK');
       } else {
         throw Exception('Failed to load data: ${response.statusCode}');
