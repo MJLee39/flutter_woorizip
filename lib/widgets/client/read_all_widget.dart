@@ -77,7 +77,7 @@ class ReadAllWidget extends StatelessWidget {
                             // update condition
                             IconButton(
                               onPressed: () {
-                                Get.toNamed('/updatecondition',
+                                Get.toNamed('/setdetails',
                                     arguments: {
                                       'id':condition['id'],
                                       'accoountId':condition['acoundId'],

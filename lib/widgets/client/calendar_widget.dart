@@ -26,8 +26,8 @@ class _CalendarWidgetState extends State<CalendarWidget> {
     return TableCalendar(
         selectedDayPredicate: (date) => isSameDay(_selectedDate, date),
         focusedDay: _selectedDate,
-        firstDay: DateTime(2020),
-        lastDay: DateTime(2030),
+        firstDay: DateTime.now(),
+        lastDay: DateTime(2100),
         headerStyle: const HeaderStyle(
           titleCentered: true,
           formatButtonVisible: false,

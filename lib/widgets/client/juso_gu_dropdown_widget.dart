@@ -15,6 +15,8 @@ class _JusoGuDropdownWidgetState extends State<JusoGuDropdownWidget> {
 
   @override
   Widget build(BuildContext context) {
+    String si = controller.si;
+
     String initialValue = '강남구';
 
     controller.gu = initialValue;
