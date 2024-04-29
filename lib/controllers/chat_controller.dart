@@ -24,10 +24,8 @@ class ChatController {
           'content-type': 'application/json'
         },
         body: jsonEncode({
-          'title': '테스트',
-          'description': '플러터에서 만든거',
           'clientId': clientId,
-          'brokerId': agentId
+          'agentId': agentId
         }),
     );
 

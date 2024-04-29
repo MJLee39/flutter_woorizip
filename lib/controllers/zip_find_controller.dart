@@ -25,7 +25,7 @@ class ZipFindController extends GetxController {
     isLoading.value = true; // 로딩 상태 시작
 
     try {
-      final response = await http.get(Uri.parse('http://localhost/search?buildingType='+additionalArgument));
+      final response = await http.get(Uri.parse('http://10.0.2.2/search?buildingType='+additionalArgument));
       if (response.statusCode == 200) {
         List<dynamic> responseData = jsonDecode(utf8.decode(response.bodyBytes));
         RxList<Map<String, dynamic>> premiumZip = RxList<Map<String, dynamic>>();
