@@ -44,7 +44,7 @@ class _DirectionZipButtonsWidgetState
             for (int i = 0; i < _selections.length; i++) {
               _selections[i] = i == index;
             }
-            controller.direction.value = directions[index];
+            controller.direction = directions[index];
           });
         },
         selectedColor: Colors.white,

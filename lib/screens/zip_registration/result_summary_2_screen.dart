@@ -8,9 +8,6 @@ import 'package:testapp/controllers/zip_registration_controller.dart';
 class ResultSummaryScreen extends StatelessWidget {
   const ResultSummaryScreen({super.key});
 
-
-
-
   @override
   Widget build(BuildContext context) {
     final Map<String, dynamic> args = Get.arguments ?? {};
@@ -20,7 +17,6 @@ class ResultSummaryScreen extends StatelessWidget {
     final String selectedDong = args['selectedDong'] ?? '';
     final String selectedFloor = args['selectedFloor'] ?? '';
     final String selectedHo = args['selectedHo'] ?? '';
-    final String totalFloor = args['totalFloor'].toString() ?? '';
 
     final zipRegistration = Get.put(ZipRegistration());
     zipRegistration.setArguments(Get.arguments);

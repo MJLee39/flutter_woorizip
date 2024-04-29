@@ -17,6 +17,8 @@ class UpdatePictureScreen extends StatefulWidget {
 class _UpdatePictureScreenState extends State<UpdatePictureScreen> {
   List<Uint8List> _imagesData = [];
 
+  final ZipRegistration controller = Get.find<ZipRegistration>();
+
   Future<void> _pickImages() async {
     final ImagePicker _picker = ImagePicker();
     final List<XFile>? images = await _picker.pickMultiImage();
@@ -44,10 +46,10 @@ class _UpdatePictureScreenState extends State<UpdatePictureScreen> {
 
     // 새로운 이미지를 기존 첨부 파일에 추가 -> 이후에 S3로 바꾸기
     for (Uint8List imageData in _imagesData) {
-      attachments += imageData.toString() + ','; // 이미지 id를 구분자로 사용하여 추가
+      attachments += imageData.toString(); // 이미지 id를 구분자로 사용하여 추가
     }
 
-    ZipRegistration().attachments.value = attachments; // 업데이트된 값을 저장
+    controller.attachments = 'IMAGE URL'; // 업데이트된 값을 저장
 
     print('이미지가 등록되었습니다.');
 
@@ -56,6 +58,11 @@ class _UpdatePictureScreenState extends State<UpdatePictureScreen> {
 
   @override
   Widget build(BuildContext context) {
+    debugPrint('3-location: ${controller.location}');
+    debugPrint('3-estate: ${controller.estate}');
+    debugPrint('3-total floor: ${controller.total_floor}');
+    debugPrint('3-building floor: ${controller.building_floor}');
+
     return Scaffold(
       appBar: const AppBarWidget(),
       body:  PageNormalPaddingWidget(
