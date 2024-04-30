@@ -3,9 +3,9 @@ import 'package:testapp/chat/chat.dart';
 import 'package:testapp/chat/chatroom_list.dart';
 import 'package:testapp/map/screens/map_screen.dart';
 import 'package:testapp/middleware/auth_guard.dart';
+import 'package:testapp/screens/admin_screen.dart';
 import 'package:testapp/screens/condition/condition_read_all_screen.dart';
 import 'package:testapp/screens/zip_registration/address_search_1_screen.dart';
-import 'package:testapp/screens/condition/condition_update_screen.dart';
 import 'package:testapp/screens/home_screen.dart';
 import 'package:testapp/screens/login_screen.dart';
 import 'package:testapp/screens/zip_registration/result_summary_2_screen.dart';
@@ -70,7 +70,7 @@ class AppPages {
     ),
     _getPageWithMiddleware(
       name: '/chatRoomList',
-      page: () => ChatRoomList(
+      page: () => ChatRoomListScreen(
         accountId: 'qassadsadsa',
       ),
       middlewares: [],
@@ -204,5 +204,11 @@ class AppPages {
       page: () => UpdateZipPictureScreen(),
       middlewares: [],
     ),
+
+    _getPageWithMiddleware(
+      name: '/admin',
+      page: () => AdminScreen(),
+      middlewares: []
+    )
   ];
 }

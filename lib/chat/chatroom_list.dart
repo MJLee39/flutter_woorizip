@@ -1,30 +1,12 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:eventflux/eventflux.dart';
 import 'package:testapp/controllers/chat_controller.dart';
+import 'package:testapp/widgets/app_bar_widget.dart';
 import 'package:testapp/widgets/bottom_navigation_widget.dart';
-
+import 'package:testapp/widgets/page_normal_padding_widget.dart';
+import 'package:testapp/widgets/text_header_widget.dart';
 import 'chat.dart';
-
-class ChatRoomList extends StatelessWidget {
-  final String accountId;
-
-  const ChatRoomList({super.key, required this.accountId});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Chat Room List'),
-        ),
-        body: ChatRoomListScreen(accountId: accountId),
-        bottomNavigationBar: BottomNavigationWidget(),
-      ),
-    );
-  }
-}
 
 class ChatRoomListScreen extends StatefulWidget {
   final String accountId;
@@ -66,8 +48,6 @@ class _ChatRoomListScreenState extends State<ChatRoomListScreen> {
             var updatedChatRoomId = eventData['chatRoomId'];
             var message = eventData['message'] ?? "안녕하세요.";
 
-            print('제발제발제발 : ${data.data}');
-
             setState(() {
               final index = chatRooms.indexWhere((room) => room.id == updatedChatRoomId);
               if (index != -1) {
@@ -89,86 +69,96 @@ class _ChatRoomListScreenState extends State<ChatRoomListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(20.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Expanded(
-            child: ListView.builder(
-              itemCount: chatRooms.length,
-              itemBuilder: (context, index) {
-                final chatRoom = chatRooms[index];
-                // Inside the ListView.builder's itemBuilder method
-                return Card(
-                  margin: EdgeInsets.symmetric(vertical: 8.0),
-                  color: Color(0xFF224488),
-                  elevation: 4.0, // Add elevation for a raised effect
-                  child: ListTile(
-                    title: Text(chatRoom.nickname, style: TextStyle(color: Colors.white),),
-                    subtitle: Text(
-                      chatRoom.recentMessage,
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    leading: CircleAvatar(
-                      backgroundColor: Colors.white,
-                      child: Text(chatRoom.nickname[0], style: TextStyle(color: Color(0xFF224488)),),
-                    ),
-                    trailing: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        IconButton(
-                          icon: Icon(
-                            Icons.warning,
-                            color: Colors.white,
-                          ),
-                          onPressed: () {
-                            var targetId;
-                            final userId = widget.accountId;
-                            if (chatRoom.clientId == userId) {
-                              targetId = chatRoom.brokerId;
-                            } else {
-                              targetId = chatRoom.clientId;
-                            }
-                            final result = _chatController.sendReport(widget.accountId, targetId);
-
-                          },
+    return Scaffold(
+      appBar: AppBarWidget(),
+      body: PageNormalPaddingWidget(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            TextHeaderWidget(text: "채팅방 목록",),
+            Expanded(
+              child: ListView.builder(
+                itemCount: chatRooms.length,
+                itemBuilder: (context, index) {
+                  final chatRoom = chatRooms[index];
+                  return Card(
+                    margin: EdgeInsets.symmetric(vertical: 8.0),
+                    color: Color(0xFF224488),
+                    elevation: 4.0,
+                    child: ListTile(
+                      title: Text(
+                        chatRoom.nickname,
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      subtitle: Text(
+                        chatRoom.recentMessage,
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      leading: CircleAvatar(
+                        backgroundColor: Colors.white,
+                        child: Text(
+                          chatRoom.nickname[0],
+                          style: TextStyle(color: Color(0xFF224488)),
                         ),
-                        IconButton(
-                          icon: Icon(
-                            Icons.exit_to_app,
-                            color: Colors.white,
-                          ),
-                          onPressed: () {
-                            _chatController.exitChatRoom(chatRoom.id).then((exitMessage) {
-                              if (exitMessage == 'deleted') {
-                                setState(() {
-                                  chatRooms.removeWhere((element) => element.id == chatRoom.id);
-                                });
+                      ),
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          IconButton(
+                            icon: Icon(
+                              Icons.warning,
+                              color: Colors.white,
+                            ),
+                            onPressed: () {
+                              var targetId;
+                              final userId = widget.accountId;
+                              if (chatRoom.clientId == userId) {
+                                targetId = chatRoom.agentId;
+                              } else {
+                                targetId = chatRoom.clientId;
                               }
-                            });
-                          },
-                        ),
-                      ],
-                    ),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Chat(
-                            chatRoomId: chatRoom.id,
-                            accountId: widget.accountId,
+                              final result = _chatController.sendReport(widget.accountId, targetId);
+                              print(result);
+                            },
                           ),
-                        ),
-                      );
-                    },
-                  ),
-                );
-              },
+                          IconButton(
+                            icon: Icon(
+                              Icons.exit_to_app,
+                              color: Colors.white,
+                            ),
+                            onPressed: () {
+                              _chatController.exitChatRoom(chatRoom.id).then((exitMessage) {
+                                if (exitMessage == 'deleted') {
+                                  setState(() {
+                                    chatRooms.removeWhere((element) => element.id == chatRoom.id);
+                                  });
+                                }
+                              });
+                            },
+                          ),
+                        ],
+                      ),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Chat(
+                              chatRoomId: chatRoom.id,
+                              accountId: widget.accountId,
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  );
+                },
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
+      bottomNavigationBar: const BottomNavigationWidget(),
     );
   }
+
 }
