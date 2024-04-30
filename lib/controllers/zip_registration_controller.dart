@@ -154,4 +154,74 @@ class ZipRegistration extends GetxController {
       isLoading.value = false;
     }
   }
+
+  Future<void> updateZip(String id) async {
+    isLoading.value = true;
+
+    try {
+      print('** in update --------------');
+
+      String url = 'http://localhost/update';
+
+      print("controller attachments: "+attachments);
+      print("controller direction: "+direction);
+      print("controller checkedAt: "+checked_at.toIso8601String());
+      print("controller total_floor: "+total_floor.toString());
+      print("controller building_floor: "+building_floor.toString());
+      print("controller buildingType: "+buildingType);
+      print("controller deposit: "+deposit.toString());
+      print("controller fee: "+fee.toString());
+      print("controller available: "+available.toIso8601String());
+      print("controller m2: "+m2.toString());
+      print("controller location: "+location);
+      print("controller showYes: "+showYes.toString());
+      print("controller note: "+note);
+      print("controller room: "+room.toString());
+      print("controller toilet: "+toilet.toString());
+      print("controller maintenance_fee: "+maintenance_fee.toString());
+      print("controller premium: "+DateTime.now().toIso8601String());
+      print("controller hashtag: "+hashtag);
+
+      String update = jsonEncode({
+        "id": id,
+        "attachments": 'add',
+        "agentId": "명진 부동산88",
+        "checkedAt": checked_at.toIso8601String(),
+        "estateId": estate.toString(),
+        "direction": direction.toString(),
+        "totalFloor": total_floor.toString(),
+        "buildingFloor": building_floor.toString(),
+        "buildingType": buildingType.toString(),
+        "deposit": deposit.toString(),
+        "fee": fee.toString(),
+        "available": available.toIso8601String(),
+        "hashtag": hashtag.toString(),
+        "m2": m2.toString(),
+        "location": location.toString(),
+        "showYes": showYes.toString(),
+        "note": note.toString(),
+        "room": room.toString(),
+        "toilet": toilet.toString(),
+        "maintenanceFee": maintenance_fee.toString(),
+        "premium": DateTime.now().toIso8601String()
+      });
+
+      print('** update: $update');
+
+      final response = await http.put(Uri.parse(url),
+          headers: {'content-type': 'application/json'}, body: update);
+      if (response.statusCode == 200) {
+        print("수정 성공!!!!!!!!!!!!!!!!");
+        List<dynamic> responseData =
+        jsonDecode(utf8.decode(response.bodyBytes));
+        jsonData.assignAll(responseData.cast<Map<String, dynamic>>());
+      } else {
+        throw Exception('Failed to load data: ${response.statusCode}');
+      }
+    } catch (e) {
+      error.value = 'Error fetching data: $e';
+    } finally {
+      isLoading.value = false;
+    }
+  }
 }
