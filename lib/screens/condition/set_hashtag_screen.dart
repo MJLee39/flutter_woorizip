@@ -4,6 +4,7 @@ import 'package:testapp/controllers/condition/condition_controller.dart';
 import 'package:testapp/widgets/app_bar_widget.dart';
 import 'package:testapp/widgets/bottom_navigation_widget.dart';
 import 'package:testapp/widgets/client/select_hashtag_widget.dart';
+import 'package:testapp/widgets/client/user_write_widget.dart';
 import 'package:testapp/widgets/page_normal_padding_widget.dart';
 import 'package:testapp/widgets/text_header_widget.dart';
 
@@ -29,6 +30,10 @@ class SetHashtagScreen extends GetView<ConditionController> {
 
             // select hashtag
             const SelectHashtagWidget(),
+
+            const SizedBox(height: 40),
+
+            // const UserWriteWidget(),
 
             // 화면이동 버튼
             Row(

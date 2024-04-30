@@ -109,8 +109,8 @@ class ReadOneWidget extends StatelessWidget {
                                           conditionController.id = condition['id'];
                                           // conditionController.accountId = condition['accountId'];
                                           conditionController.deleteCondition();
-                                          Get.back(); // 작업 후 다이얼로그 닫기
-                                          conditionController.readAllCondition(); // 페이지 새로고침
+                                          Get.back();
+                                          conditionController.readAllCondition();
                                         },
                                         child: const Text('확인'),
                                       ),

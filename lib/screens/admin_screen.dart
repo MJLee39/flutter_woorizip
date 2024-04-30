@@ -15,18 +15,6 @@ class AdminScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: TextField(
-                decoration: InputDecoration(
-                  labelText: '검색',
-                  prefixIcon: Icon(Icons.search),
-                ),
-                onChanged: (value) {
-                  Get.find<AdminController>().search(value);
-                },
-              ),
-            ),
             GetBuilder<AdminController>(
               builder: (controller) {
                 var filteredList = controller.accountList.where((account) =>
@@ -36,115 +24,121 @@ class AdminScreen extends StatelessWidget {
                         controller.searchKeyword.value.toLowerCase()) ||
                     account.provider.toLowerCase().contains(
                         controller.searchKeyword.value.toLowerCase()) ||
+                    account.role.toLowerCase().contains(
+                        controller.searchKeyword.value.toLowerCase()) ||
                     account.providerId.toLowerCase().contains(
                         controller.searchKeyword.value.toLowerCase()));
 
-                return ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: filteredList.length,
-                  itemBuilder: (context, index) {
-                    var account = filteredList.elementAt(index);
-                    return Card(
-                      child: ListTile(
-                        contentPadding: EdgeInsets.symmetric(horizontal: 16.0),
-                        title: Text('Account ID: ${account.accountId}'),
-                        subtitle: Row(
+                return SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: Row(
                           children: [
                             Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    'Nickname',
-                                  ),
-                                  Text(
-                                    '${account.nickname}',
-                                  ),
-                                ],
+                              child: TextField(
+                                decoration: InputDecoration(
+                                  labelText: '검색',
+                                  prefixIcon: Icon(Icons.search),
+                                ),
+                                onChanged: (value) {
+                                  Get.find<AdminController>().search(value);
+                                },
                               ),
                             ),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    'Provider',
-                                  ),
-                                  Text(
-                                    '${account.provider}',
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    'ProviderId',
-                                  ),
-                                  Text(
-                                    '${account.providerId}',
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    'Role',
-                                  ),
-                                  Text(
-                                    '${account.role}',
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    'Report',
-                                  ),
-                                  Text(
-                                    '${account.report}',
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                        trailing: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            IconButton(
+                            SizedBox(width: 20), // Add spacing between the text field and the button
+                            ElevatedButton(
                               onPressed: () {
-                                // Add your report-related logic here
-                                controller.blockAccount(account.accountId);
+                                Get.find<AdminController>().sortAccountListByReport();
                               },
-                              icon: Icon(Icons.block),
-                            ),
-                            IconButton(
-                              onPressed: () {
-                                // Add your photo-related logic here
-                                print('Photo button pressed');
-                              },
-                              icon: Icon(Icons.photo),
+                              child: Text('신고 순으로 정렬'),
                             ),
                           ],
                         ),
                       ),
-                    );
-                  },
+                      GetBuilder<AdminController>(
+                        builder: (controller) {
+                          var filteredList = controller.accountList.where((account) =>
+                          account.accountId.toLowerCase().contains(
+                              controller.searchKeyword.value.toLowerCase()) ||
+                              account.nickname.toLowerCase().contains(
+                                  controller.searchKeyword.value.toLowerCase()) ||
+                              account.provider.toLowerCase().contains(
+                                  controller.searchKeyword.value.toLowerCase()) ||
+                              account.role.toLowerCase().contains(
+                                  controller.searchKeyword.value.toLowerCase()) ||
+                              account.providerId.toLowerCase().contains(
+                                  controller.searchKeyword.value.toLowerCase()));
+
+                          return DataTable(
+                            columns: [
+                              DataColumn(label: Text('Account ID')),
+                              DataColumn(label: Text('Nickname')),
+                              DataColumn(label: Text('Provider')),
+                              DataColumn(label: Text('Provider ID')),
+                              DataColumn(label: Text('Role')),
+                              DataColumn(label: Text('Report')),
+                              DataColumn(label: Text('Actions')),
+                            ],
+                            rows: filteredList.map((account) {
+                              return DataRow(cells: [
+                                DataCell(Text(account.accountId)),
+                                DataCell(Text(account.nickname)),
+                                DataCell(Text(account.provider)),
+                                DataCell(Text(account.providerId)),
+                                DataCell(Text(account.role)),
+                                DataCell(Text(account.report.toString())), // Convert int to String
+                                DataCell(Row(
+                                  children: [
+                                    IconButton(
+                                      onPressed: () {
+                                        // Add your report-related logic here
+                                        controller.blockAccount(account.accountId);
+                                      },
+                                      icon: Icon(Icons.block, color: Color(0xFF224488)),
+                                    ),
+                                    if (account.role == "AGENT" || account.role == "NOVICE")
+                                    IconButton(
+                                      onPressed: () {
+                                        // Add your photo-related logic here
+                                        controller.fetchCertification(account.accountId);
+                                      },
+                                      icon: Icon(Icons.photo, color: Color(0xFF224488)),
+                                    ),
+                                  ],
+                                )),
+                              ]);
+                            }).toList(),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
                 );
               },
             ),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildDataItem(String label, dynamic value) {
+    return Row(
+      children: [
+        Icon(Icons.label, color: Color(0xFF224488), size: 16), // Add icon to label
+        SizedBox(width: 8), // Add spacing between icon and text
+        Text(
+          '$label:',
+          style: TextStyle(color: Color(0xFF224488)),
+        ),
+        SizedBox(width: 8), // Add spacing between label and value
+        Text(
+          value.toString(), // Convert int to String
+          style: TextStyle(color: Color(0xFF224488)),
+        ),
+      ],
     );
   }
 }

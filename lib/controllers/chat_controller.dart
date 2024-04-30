@@ -5,8 +5,7 @@ import 'package:http/http.dart' as http;
 class ChatController {
 
   Future<List<ChatRoomResponseDTO>> fetchChatRooms(String accountId) async {
-    print(accountId);
-    final url = Uri.parse("https://chat.teamwaf.app/chat/$accountId/room");
+    final url = Uri.parse("https://chat.teamwaf.app/chat/find/$accountId/room");
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
@@ -24,10 +23,8 @@ class ChatController {
           'content-type': 'application/json'
         },
         body: jsonEncode({
-          'title': '테스트',
-          'description': '플러터에서 만든거',
           'clientId': clientId,
-          'brokerId': agentId
+          'agentId': agentId
         }),
     );
 
@@ -49,8 +46,9 @@ class ChatController {
     }
   }
 
-  Future<dynamic> fetchChatRoom(String chatRoomId, String accountId) async {
-    final url = Uri.parse("https://chat.teamwaf.app/chat/room/resp?chatRoomId=$chatRoomId&accountId=$accountId");
+  Future<dynamic> fetchChatRoom(String chatRoomId) async {
+    print(chatRoomId);
+    final url = Uri.parse("https://chat.teamwaf.app/chat/room?chatRoomId=$chatRoomId");
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
@@ -85,28 +83,25 @@ class ChatController {
 
 class ChatRoomResponseDTO {
   final String id;
-  final List<String> participantIds;
   final String nickname;
   final String clientId;
-  final String brokerId;
+  final String agentId;
   String recentMessage;
 
   ChatRoomResponseDTO({
     required this.id,
-    required this.participantIds,
     required this.nickname,
     required this.clientId,
-    required this.brokerId,
+    required this.agentId,
     required this.recentMessage,
   });
 
   factory ChatRoomResponseDTO.fromJson(Map<String, dynamic> json) {
     return ChatRoomResponseDTO(
       id: json['id'],
-      participantIds: List<String>.from(json['participantIds']),
       nickname: json['nickname'],
       clientId: json['clientId'],
-      brokerId: json['brokerId'],
+      agentId: json['agentId'],
       recentMessage: json['recentMessage'] ?? "",
     );
   }

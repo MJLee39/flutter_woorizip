@@ -26,41 +26,30 @@ class _SetBuildingtypeButtonsWidgetState
           isSelected: _selections,
           onPressed: (int index) {
             setState(() {
-              _selections = List.generate(_selections.length, (i) => i == index);
-              controller.buildingType = buildingTypes[index];
+              _selections[index] = !_selections[index];
+
+              List<String> selectedBuildingTypes = [];
+              for (int i = 0; i < 4; i++) {
+                if (_selections[i]) {
+                  selectedBuildingTypes.add(buildingTypes[i]);
+                }
+              }
+
+              controller.buildingType = selectedBuildingTypes.join(', ');
             });
           },
           selectedColor: Colors.white,
           fillColor: Colors.indigo,
-          children: const [
-            SizedBox(
+          children: buildingTypes.map((type) {
+            return SizedBox(
               width: 80,
               child: Center(
-                child: Text('아파트'),
+                child: Text(type),
               ),
-            ),
-            SizedBox(
-              width: 80,
-              child: Center(
-                child: Text('투룸/빌라+'),
-              ),
-            ),
-            SizedBox(
-              width: 80,
-              child: Center(
-                child: Text('원룸'),
-              ),
-            ),
-            SizedBox(
-              width: 80,
-              child: Center(
-                child: Text('오피스텔'),
-              ),
-            ),
-          ],
+            );
+          }).toList(),
         ),
       ],
     );
-
   }
 }

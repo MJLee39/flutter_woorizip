@@ -41,10 +41,11 @@ class _ZipListAgentScreenState extends State<ZipListAgentScreen> {
     fetchData();
   }
 
+
   Future<void> fetchData() async {
     try {
       final response = await http.post(
-        Uri.parse('http://10.0.2.2/zipListByAgent'),
+        Uri.parse('http://localhost/zipListByAgent'),
         body: jsonEncode({'agentId': additionalArgument}),
         headers: {'Content-Type': 'application/json'},
       );

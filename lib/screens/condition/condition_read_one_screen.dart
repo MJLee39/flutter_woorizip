@@ -60,7 +60,7 @@ class _ConditionReadOneScreenState extends State<ConditionReadOneScreen> {
                       children: <Widget>[
                         const SizedBox(height: 200),
                         const Text(
-                          '등록된 조건이 없구먼?',
+                          '등록된 조건이 없어요',
                           style: TextStyle(
                             fontSize: 20,
                           ),
@@ -76,7 +76,7 @@ class _ConditionReadOneScreenState extends State<ConditionReadOneScreen> {
                             padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
                           ),
                           child: const Text(
-                            '조건 등록하러 갈텨?',
+                            '조건 등록하러 갈래요',
                             style: TextStyle(
                               color: Colors.white,
                             ),

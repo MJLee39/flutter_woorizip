@@ -165,52 +165,77 @@ class AdminController extends GetxController {
     }
   }
 
+  void sortAccountListByReport() {
+    accountList.sort();
+    update();
+  }
+
   Future<void> fetchCertification(String accountId) async {
-    const url = "http://localhost:8080/block";
-
-    try {
-      final response = await http.post(
-          Uri.parse(url),
-          headers: {
-            'content-type': 'application/json'
-          },
-          body: {
-            'accountId': accountId
-          }
-      );
-
-      if (response.statusCode == 200) {
-        Get.dialog(
-          AlertDialog(
-            title: Text('Success'),
-            content: Image.network('https://example.com/image.png'),
-            actions: [
-              TextButton(
-                onPressed: () => Get.back(),
-                child: Text('승인'),
-              ),
-              TextButton(
-                onPressed: () => Get.back(),
-                child: Text('거절'),
-              ),
-              TextButton(
-                onPressed: () => Get.back(),
-                child: Text('확인'),
-              ),
-            ],
-          ),
-        );
-      } else {
-        throw Exception('Failed to load data: ${response.statusCode}');
-      }
-    } catch (e) {
-      error.value = 'Error fetching data: $e';
-    }
+    Get.dialog(
+        AlertDialog(
+          title: Text('Certification'),
+          content: Image.asset('../assets/images/room1.jpg'),
+          actions: [
+            TextButton(
+              onPressed: () => Get.back(),
+              child: Text('승인'),
+            ),
+            TextButton(
+              onPressed: () => Get.back(),
+              child: Text('거절'),
+            ),
+            TextButton(
+              onPressed: () => Get.back(),
+              child: Text('확인'),
+            ),
+          ],
+        ),
+    );
+    // const url = "http://localhost:8080/certification";
+    //
+    // try {
+    //   final response = await http.post(
+    //       Uri.parse(url),
+    //       headers: {
+    //         'content-type': 'application/json'
+    //       },
+    //       body: {
+    //         'accountId': accountId
+    //       }
+    //   );
+    //
+    //   if (response.statusCode == 200) {
+    //     Get.dialog(
+    //       AlertDialog(
+    //         title: Text('Success'),
+    //         content: Image.network('https://example.com/image.png'),
+    //         actions: [
+    //           TextButton(
+    //             onPressed: () => Get.back(),
+    //             child: Text('승인'),
+    //           ),
+    //           TextButton(
+    //             onPressed: () => Get.back(),
+    //             child: Text('거절'),
+    //           ),
+    //           TextButton(
+    //             onPressed: () => Get.back(),
+    //             child: Text('확인'),
+    //           ),
+    //         ],
+    //       ),
+    //     );
+    //   } else {
+    //     throw Exception('Failed to load data: ${response.statusCode}');
+    //   }
+    // } catch (e) {
+    //   error.value = 'Error fetching data: $e';
+    // }
   }
 
 }
 
-class AccountInfo {
+class AccountInfo implements Comparable<AccountInfo> {
   final String accountId;
   final String nickname;
   final String provider;
@@ -233,9 +258,16 @@ class AccountInfo {
   void updateReport(int report) {
     this.report = report;
   }
+
+  @override
+  int compareTo(AccountInfo other) {
+    return other.report - this.report;
+  }
+
 }
 
 class AccountAndReport {
+
   final String accountId;
   final int reportSize;
 
