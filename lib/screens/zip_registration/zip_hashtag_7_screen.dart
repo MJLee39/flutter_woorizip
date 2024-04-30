@@ -6,7 +6,7 @@ import 'package:testapp/widgets/bottom_navigation_widget.dart';
 import 'package:testapp/widgets/zip/select_hashtag_widget.dart';
 import 'package:testapp/widgets/page_normal_padding_widget.dart';
 import 'package:testapp/widgets/text_header_widget.dart';
-import 'package:testapp/widgets/rigister_buttons_widget.dart';
+import 'package:testapp/widgets/zip/rigister_buttons_widget.dart';
 
 class ZipHashtagScreen extends GetView<ZipRegistration> {
   const ZipHashtagScreen({Key? key});
