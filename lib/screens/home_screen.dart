@@ -128,7 +128,7 @@ class HomeScreen extends StatelessWidget {
                   HalfButtonWidget(
                       text: '관리자 페이지',
                       imagePath: 'assets/images/icon_officetel.png',
-                      urlPath: '/test')
+                      urlPath: '/admin')
                 ],
               ),
             ],

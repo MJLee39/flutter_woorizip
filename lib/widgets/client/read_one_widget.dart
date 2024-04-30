@@ -3,11 +3,13 @@ import 'package:get/get.dart';
 import 'package:testapp/controllers/condition/condition_controller.dart';
 import 'package:testapp/controllers/chat_controller.dart';
 import 'package:testapp/chat/chat.dart';
+import 'package:testapp/widgets/client/delete_condition_widget.dart';
 
 class ReadOneWidget extends StatelessWidget {
   ReadOneWidget({super.key});
 
-  final ConditionController conditionController = Get.find<ConditionController>();
+  final ConditionController conditionController =
+      Get.find<ConditionController>();
   final ChatController _chatController = ChatController();
 
   @override
@@ -23,8 +25,6 @@ class ReadOneWidget extends StatelessWidget {
         );
       } else {
         print('** v3 - spread content');
-        // conditionController.readAllCondition();
-
         return Expanded(
           child: ListView.builder(
             itemCount: conditionController.jsonData.length,
@@ -53,13 +53,15 @@ class ReadOneWidget extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            // chat
+                            // 채팅 기능
                             IconButton(
                               onPressed: () {
                                 final agentId = "qassadsadsa";
                                 const clientId = "qweqwewqeewq";
 
-                                _chatController.createChatRoom(clientId, agentId).then((chatRoomInfo) {
+                                _chatController
+                                    .createChatRoom(clientId, agentId)
+                                    .then((chatRoomInfo) {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
@@ -74,51 +76,43 @@ class ReadOneWidget extends StatelessWidget {
                               icon: Icon(Icons.chat),
                             ),
 
-                            // update condition
+                            // 조건 수정
                             IconButton(
                               onPressed: () {
-                                Get.toNamed('/updatecondition',
-                                    arguments: {
-                                      'id':condition['id'],
-                                      'accoountId':condition['acoundId'],
-                                      'location':condition['location'],
-                                      'buildingType':condition['buildingType'],
-                                      'fee':condition['fee'],
-                                      'moveInDate':condition['moveInDate'],
-                                      'hashtag':condition['hashtag'],
-                                    });
+                                Get.toNamed('/setdetails', arguments: {
+                                  'id': condition['id'],
+                                  'accoountId': condition['accountId'],
+                                  'location': condition['location'],
+                                  'buildingType': condition['buildingType'],
+                                  'fee': condition['fee'],
+                                  'moveInDate': condition['moveInDate'],
+                                  'hashtag': condition['hashtag'],
+                                });
                               },
                               icon: const Icon(Icons.settings),
                             ),
 
-                            // delete condition
+                            // 조건 삭제
                             IconButton(
                               onPressed: () {
-                                Get.dialog(
-                                  AlertDialog(
-                                    content: const Text('삭제할까요?'),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () {
-                                          Get.back();
-                                        },
-                                        child: const Text('취소'),
-                                      ),
-                                      TextButton(
-                                        onPressed: () {
-                                          conditionController.id = condition['id'];
-                                          // conditionController.accountId = condition['accountId'];
-                                          conditionController.deleteCondition();
-                                          Get.back();
-                                          conditionController.readAllCondition();
-                                        },
-                                        child: const Text('확인'),
-                                      ),
-
-
-                                    ],
-                                  ),
-                                  barrierDismissible: true,
+                                showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return DeleteConditionWidget(
+                                      conditionController: conditionController,
+                                      condition: condition,
+                                      onDeleteSuccess: () {
+                                        // 조건 삭제 후 페이지 다시 로드
+                                        conditionController
+                                            .readAllCondition()
+                                            .then((_) {
+                                          // 페이지 리프레시
+                                          // 필요한 경우 setState() 사용
+                                          // setState(() {});
+                                        });
+                                      },
+                                    );
+                                  },
                                 );
                               },
                               icon: const Icon(Icons.cancel),

@@ -8,13 +8,14 @@ import 'package:get/get.dart';
 import 'package:testapp/widgets/bottom_expend_button_widget.dart';
 import 'package:testapp/widgets/app_bar_widget.dart';
 import 'package:testapp/widgets/page_normal_padding_widget.dart';
+import 'package:testapp/screens/zip_update/update_zip_screen.dart';
 
-class UpdatePictureScreen extends StatefulWidget {
+class UpdateZipPictureScreen extends StatefulWidget {
   @override
-  _UpdatePictureScreenState createState() => _UpdatePictureScreenState();
+  _UpdateZipPictureScreenState createState() => _UpdateZipPictureScreenState();
 }
 
-class _UpdatePictureScreenState extends State<UpdatePictureScreen> {
+class _UpdateZipPictureScreenState extends State<UpdateZipPictureScreen> {
   List<Uint8List> _imagesData = [];
 
   final ZipRegistration controller = Get.find<ZipRegistration>();
@@ -24,7 +25,7 @@ class _UpdatePictureScreenState extends State<UpdatePictureScreen> {
     final List<XFile>? images = await _picker.pickMultiImage();
 
     if (images != null) {
-      for (XFile image in images) { 
+      for (XFile image in images) {
         final Uint8List imageData = await image.readAsBytes();
         setState(() {
           _imagesData.add(imageData);
@@ -51,13 +52,16 @@ class _UpdatePictureScreenState extends State<UpdatePictureScreen> {
 
     controller.attachments = 'IMAGE URL'; // 업데이트된 값을 저장
 
-    print('이미지가 등록되었습니다.');
-
     return attachments;
   }
 
   @override
   Widget build(BuildContext context) {
+    final Map<String, dynamic> args = Get.arguments ?? {};
+
+    // Extract data from arguments
+    final String id = args['id'];
+
     debugPrint('3-location: ${controller.location}');
     debugPrint('3-estate: ${controller.estate}');
     debugPrint('3-total floor: ${controller.total_floor}');
@@ -66,45 +70,47 @@ class _UpdatePictureScreenState extends State<UpdatePictureScreen> {
     return Scaffold(
       appBar: const AppBarWidget(),
       body:  PageNormalPaddingWidget(
-      child:
+        child:
         Column(
           children: [
             Expanded(
               child: _imagesData.isEmpty
                   ? Center(child: Text("사진이 선택되지 않았습니다.\n최소 두장의 사진을 선택해주세요."))
                   : ListView.builder(
-                      itemCount: _imagesData.length,
-                      itemBuilder: (context, index) {
-                        return Stack(
-                          children: [
-                            SizedBox(
-                              height: 300,
-                              width: double.infinity,
-                              child: Image.memory(_imagesData[index], fit: BoxFit.cover),
-                            ),
-                            Positioned(
-                              right: 4,
-                              top: 4,
-                              child: IconButton(
-                                icon: const Icon(Icons.delete, color: Colors.red),
-                                onPressed: () => _deleteImage(index),
-                              ),
-                            ),
-                          ],
-                        );
-                      },
-                    ),
+                itemCount: _imagesData.length,
+                itemBuilder: (context, index) {
+                  return Stack(
+                    children: [
+                      SizedBox(
+                        height: 300,
+                        width: double.infinity,
+                        child: Image.memory(_imagesData[index], fit: BoxFit.cover),
+                      ),
+                      Positioned(
+                        right: 4,
+                        top: 4,
+                        child: IconButton(
+                          icon: const Icon(Icons.delete, color: Colors.red),
+                          onPressed: () => _deleteImage(index),
+                        ),
+                      ),
+                    ],
+                  );
+                },
+              ),
             ),
             if (_imagesData.length > 1)
               Container(
                 padding: const EdgeInsets.all(8),
                 alignment: Alignment.center,
-                child: BottomExpendButtonWidget(
-                  text: '등록',
-                  url: '/depositAndFee',
-                  arguments: {
-                    'attachments': _registerImages(),
+                child: ElevatedButton(
+                  onPressed: () {
+                    // Navigate to UpdatePictureScreen when the button is pressed
+                    Get.to(() => UpdateAddressScreen(itemId: id), arguments: {
+                      'attachments': _registerImages(),
+                    });
                   },
+                  child: const Text("수정"),
                 ),
               ),
           ],

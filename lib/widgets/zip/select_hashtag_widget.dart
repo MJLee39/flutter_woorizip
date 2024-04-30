@@ -3,9 +3,8 @@ import 'package:testapp/controllers/zip_registration_controller.dart';
 import 'package:get/get.dart';
 
 class SelectHashtagWidget extends StatefulWidget {
-  final ZipRegistration controller; // controller를 필수 매개변수로 만듭니다.
 
-  const SelectHashtagWidget({Key? key, required this.controller}) : super(key: key);
+  const SelectHashtagWidget({Key? key});
 
   @override
   State<SelectHashtagWidget> createState() => SelectHashtagWidgetState();
@@ -34,6 +33,8 @@ final buttonLabels = [
 
 class SelectHashtagWidgetState extends State<SelectHashtagWidget> {
   late List<bool> _selections;
+
+  final ZipRegistration controller = Get.find<ZipRegistration>();
 
   @override
   void initState() {
@@ -85,7 +86,7 @@ class SelectHashtagWidgetState extends State<SelectHashtagWidget> {
       }
     }
 
-    widget.controller.hashtag.value = selectedHashtags.join(' ');
-    print('controller.hashtag.value: ' + widget.controller.hashtag.value);
+    controller.hashtag = selectedHashtags.join(' ');
+    print('!!!!!!!!!!!!!!!!!controller.hashtag.value: ' + controller.hashtag);
   }
 }

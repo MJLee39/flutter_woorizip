@@ -21,6 +21,10 @@ import 'package:testapp/screens/zip_registration/zip_detail_registration_5_scree
 import 'package:testapp/screens/zip_registration/zip_detail_registration_next_6_screen.dart';
 import 'package:testapp/screens/zip_registration/zip_hashtag_7_screen.dart';
 import 'package:testapp/screens/zip_registration/zip_detail_registration_5_5_screen.dart';
+import 'package:testapp/screens/zip_update/update_zip_address_result_screen.dart';
+import 'package:testapp/screens/zip_update/update_zip_picture_screen.dart';
+
+import '../screens/zip_update/update_zip_address_screen.dart';
 
 class AppPages {
   static const initial = '/';
@@ -85,6 +89,7 @@ class AppPages {
       page: () => SeeMoreScreen(),
       middlewares: [],
     ),
+    //중개사의 내 매물 리스트 보기
     _getPageWithMiddleware(
       name: '/my_listings',
       page: () => const ZipListAgentScreen(),
@@ -172,17 +177,38 @@ class AppPages {
       middlewares: [],
     ),
 
-    //매물 등록에서 상세 입력2
+    //매물 등록에서 상세 입력 2
     _getPageWithMiddleware(
       name: '/detail_registration5_5',
       page: () => ZipDetailRegistration55Screen(),
       middlewares: [],
     ),
 
+    //매물 수정에서 주소 검색
     _getPageWithMiddleware(
-      name: '/test',
-      page: () => AdminScreen(),
+      name: '/update_zip_address',
+      page: () => UpdateZipAddressScreen(),
       middlewares: [],
     ),
+
+    //매물 수정에서 주소 결과
+    _getPageWithMiddleware(
+      name: '/update_zip_address_result',
+      page: () => UpdateZipAddressResultScreen(),
+      middlewares: [],
+    ),
+
+    //매물 수정에서 사진 변경
+    _getPageWithMiddleware(
+      name: '/update_zip_picture_screen',
+      page: () => UpdateZipPictureScreen(),
+      middlewares: [],
+    ),
+
+    _getPageWithMiddleware(
+      name: '/admin',
+      page: () => AdminScreen(),
+      middlewares: []
+    )
   ];
 }
