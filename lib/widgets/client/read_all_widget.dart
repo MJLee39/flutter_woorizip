@@ -23,7 +23,6 @@ class ReadAllWidget extends StatelessWidget {
         );
       } else {
         print('** v3 - spread content');
-        // conditionController.readAllCondition();
 
         return Expanded(
           child: ListView.builder(
@@ -72,52 +71,6 @@ class ReadAllWidget extends StatelessWidget {
                                 });
                               },
                               icon: Icon(Icons.chat),
-                            ),
-
-                            // update condition
-                            IconButton(
-                              onPressed: () {
-                                Get.toNamed('/setdetails',
-                                    arguments: {
-                                      'id':condition['id'],
-                                      'accoountId':condition['acoundId'],
-                                      'location':condition['location'],
-                                      'buildingType':condition['buildingType'],
-                                      'fee':condition['fee'],
-                                      'moveInDate':condition['moveInDate'],
-                                      'hashtag':condition['hashtag'],
-                                    });
-                              },
-                              icon: const Icon(Icons.settings),
-                            ),
-
-                            // delete condition
-                            IconButton(
-                              onPressed: () {
-                                Get.dialog(
-                                  AlertDialog(
-                                    content: const Text('삭제할까요?'),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () {
-                                          Get.back();
-                                        },
-                                        child: const Text('취소'),
-                                      ),
-                                      TextButton(
-                                        onPressed: () {
-                                          conditionController.id = condition['id'];
-                                          // conditionController.accountId = condition['accoundId'];
-                                          conditionController.deleteCondition();
-                                        },
-                                        child: const Text('확인'),
-                                      ),
-                                    ],
-                                  ),
-                                  barrierDismissible: true,
-                                );
-                              },
-                              icon: const Icon(Icons.cancel),
                             ),
                           ],
                         ),

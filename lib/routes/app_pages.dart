@@ -140,7 +140,7 @@ class AppPages {
      */
     _getPageWithMiddleware(
       name: '/conditionreadall',
-      page: () => const ConditionReadAllScreen(),
+      page: () => ConditionReadAllScreen(),
       middlewares: [],
     ),
 
