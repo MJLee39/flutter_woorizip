@@ -4,9 +4,7 @@ import 'package:testapp/widgets/bottom_navigation_widget.dart';
 import 'package:testapp/screens/zip_detail_screen.dart'; // DetailScreen.dart를 import합니다.
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
-import 'package:flutter/services.dart'; // ClipboardData 가져오기
 import 'package:testapp/controllers/search_condition/building_type_controller.dart';
-import 'package:testapp/screens/search_type_selector.dart';
 import 'package:testapp/controllers/search_condition/deposit_type_controller.dart';
 import 'package:testapp/controllers/search_condition/fee_type_controller.dart';
 import 'package:testapp/widgets/app_bar_widget.dart';
@@ -73,7 +71,7 @@ class _ZipListAgentScreenState extends State<ZipListAgentScreen> {
         });
         // Item successfully deleted, you might want to update your UI accordingly
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
+          const SnackBar(
             content: Text('삭제되었습니다.'),
           ),
           // Refresh the data
