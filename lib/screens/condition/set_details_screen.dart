@@ -28,7 +28,6 @@ class SetDetailsScreen extends GetView<ConditionController> {
       body: PageNormalPaddingWidget(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
-
           children: [
             const SizedBox(height: 20),
             const TextHeaderWidget(text: '원하는 지역을 알려주세요'),
@@ -49,8 +48,10 @@ class SetDetailsScreen extends GetView<ConditionController> {
                 TextButton(
                   onPressed: () {
                     if (locationArray.length < 3) {
-                      String newLocation = '${controller.si} ${controller.gu} ${controller.dong}';
-                      print('new location: ${controller.si} ${controller.gu} ${controller.dong}');
+                      String newLocation =
+                          '${controller.si} ${controller.gu} ${controller.dong}';
+                      print(
+                          'new location: ${controller.si} ${controller.gu} ${controller.dong}');
                       locationArray.add(newLocation);
                     } else {
                       showDialog(
@@ -99,7 +100,6 @@ class SetDetailsScreen extends GetView<ConditionController> {
                             ),
                           ),
                         ),
-
                         IconButton(
                           icon: const Icon(Icons.delete, color: Colors.grey),
                           onPressed: () {
@@ -112,7 +112,6 @@ class SetDetailsScreen extends GetView<ConditionController> {
                 );
               }),
             ),
-
 
             const SizedBox(height: 80),
 
@@ -141,7 +140,8 @@ class SetDetailsScreen extends GetView<ConditionController> {
                 TextButton(
                   onPressed: () {
                     // 지역과 건물 유형이 선택되지 않은 경우 알림 창 표시
-                    if (locationArray.isEmpty || controller.buildingType == '') {
+                    if (locationArray.isEmpty ||
+                        controller.buildingType == '') {
                       showDialog(
                         context: context,
                         builder: (BuildContext context) {
@@ -160,7 +160,6 @@ class SetDetailsScreen extends GetView<ConditionController> {
                       );
                     } else {
                       controller.location = locationArray.join(', ');
-
                       Get.toNamed('/setmoveindate');
                     }
                   },

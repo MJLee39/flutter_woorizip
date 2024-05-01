@@ -127,7 +127,7 @@ class AppPages {
      */
     _getPageWithMiddleware(
       name: '/sethashtag',
-      page: () => const SetHashtagScreen(),
+      page: () => SetHashtagScreen(),
       middlewares: [],
     ),
 
@@ -157,6 +157,9 @@ class AppPages {
     ),
 
     //매물 등록에서 상세 정보 입력 페이지로 이동
+    /*
+    client condition update
+     */
     _getPageWithMiddleware(
       name: '/detail_registration',
       page: () => ZipDetailRegistrationScreen(),
@@ -206,9 +209,6 @@ class AppPages {
     ),
 
     _getPageWithMiddleware(
-      name: '/admin',
-      page: () => AdminScreen(),
-      middlewares: []
-    )
+        name: '/admin', page: () => AdminScreen(), middlewares: [])
   ];
 }

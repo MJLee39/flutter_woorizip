@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:testapp/controllers/condition/condition_controller.dart';
 import 'package:testapp/widgets/app_bar_widget.dart';
 import 'package:testapp/widgets/bottom_navigation_widget.dart';
-import 'package:testapp/widgets/client/filter_widget.dart';
+import 'package:testapp/screens/condition/filter_modal.dart';
 import 'package:testapp/widgets/page_normal_padding_widget.dart';
 import 'package:testapp/widgets/text_header_widget.dart';
 import 'package:testapp/widgets/client/read_all_widget.dart';
@@ -31,9 +31,7 @@ class ConditionReadAllScreen extends GetView<ConditionController> {
             const SizedBox(height: 20),
 
             // 조건 필터
-            const FilterWidget(),
-
-            const SizedBox(height: 20),
+            const FilterModal(),
 
             const SizedBox(height: 20),
 

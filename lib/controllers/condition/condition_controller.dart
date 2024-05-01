@@ -23,7 +23,6 @@ class ConditionController extends GetxController {
   //     'http://10.0.2.16:8093/condition/readAll/$additionalArgument';
 
   /*
-<<<<<<< Updated upstream
   is registered
    */
   Future<bool> isRegistered() async {
@@ -130,7 +129,7 @@ class ConditionController extends GetxController {
         jsonData.assignAll(responseData.cast<Map<String, dynamic>>());
         print('** in ReadOne controller try, respose: OK');
       } else if (response.statusCode == 204) {
-        // no contnent: 요청이 성공. 현재 페이지에서 벗어나지 않아도 됨
+        // no contnent: 요청 성공. 현재 페이지에서 벗어나지 않아도 됨
       } else {
         throw Exception('Failed to load data: ${response.statusCode}');
       }

@@ -42,6 +42,7 @@ class _CalendarWidgetState extends State<CalendarWidget> {
           });
           controller.moveInDate =
               DateTime(selectedDate.year, selectedDate.month, selectedDate.day);
-        });
+        }
+      );
   }
 }
