@@ -44,7 +44,6 @@ class SetHashtagScreen extends GetView<ConditionController> {
                   onPressed: () {
                     controller.saveCondition();
                     Navigator.pushNamed(context, '/conditionreadone');
-                    //Get.toNamed('/conditionreadone');
                   },
                   style: ButtonStyle(
                     foregroundColor:

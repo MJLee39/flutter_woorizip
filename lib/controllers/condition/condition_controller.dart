@@ -140,6 +140,7 @@ class ConditionController extends GetxController {
 
     try {
       print('** in ReadOne --------------');
+      print("내 조건 있음 - 조회하자!!!!!!!!!");
 
       String accountId = jsonEncode({
         'accountId': "accountId01",
