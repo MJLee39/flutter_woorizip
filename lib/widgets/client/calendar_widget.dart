@@ -5,7 +5,8 @@ import 'package:testapp/controllers/condition/condition_controller.dart';
 import 'package:intl/intl.dart';
 
 class CalendarWidget extends StatefulWidget {
-  const CalendarWidget({super.key});
+  final Function(String)? onChanged;
+  const CalendarWidget({super.key, this.onChanged});
 
   @override
   _CalendarWidgetState createState() => _CalendarWidgetState();
@@ -37,6 +38,11 @@ class _CalendarWidgetState extends State<CalendarWidget> {
           ),
         ),
         onDaySelected: (selectedDate, focusedDate) {
+
+          if (widget.onChanged != null) {
+            widget.onChanged!(selectedDate as String);
+          }
+
           setState(() {
             _selectedDate = selectedDate;
           });

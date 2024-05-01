@@ -4,7 +4,8 @@ import 'package:testapp/controllers/condition/condition_controller.dart';
 import 'package:testapp/widgets/client/dropdown_fields_widget.dart';
 
 class JusoGuDropdownWidget extends StatefulWidget {
-  const JusoGuDropdownWidget({super.key});
+  final Function(String)? onChanged;
+  const JusoGuDropdownWidget({super.key, this.onChanged});
 
   @override
   State<JusoGuDropdownWidget> createState() => _JusoGuDropdownWidgetState();
@@ -54,6 +55,9 @@ class _JusoGuDropdownWidgetState extends State<JusoGuDropdownWidget> {
           initialValue: initialValue,
           onChanged: (String newValue) {
             controller.gu = newValue;
+            if (widget.onChanged != null) {
+              widget.onChanged!(newValue);
+            }
           },
         ));
   }

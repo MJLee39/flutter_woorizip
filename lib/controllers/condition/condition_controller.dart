@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 
 class ConditionController extends GetxController {
   late String id = '';
-  late String accountId = 'accountId01';
+  late String accountId = 'accountId03';
   late String si = '';
   late String gu = '';
   late String dong = '';
@@ -22,6 +22,19 @@ class ConditionController extends GetxController {
   // String url =
   //     'http://10.0.2.16:8093/condition/readAll/$additionalArgument';
 
+
+  Future<String> fetchData(String url) async {
+    http.Response response = await http.get(Uri.parse(url));
+    if (response.statusCode == 200) {
+      // 성공적으로 데이터를 가져왔을 때
+      print("성공적으로 데이터 가져옴");
+      return response.body;
+    } else {
+      // 데이터 가져오기에 실패했을 때
+      throw Exception('Failed to load data');
+    }
+  }
+
   /*
   is registered
    */
@@ -34,14 +47,29 @@ class ConditionController extends GetxController {
 
       String url = 'http://localhost:8093/condition/isregistered/$accountId';
 
+      print("CHECK_V1");
       final response = await http.get(Uri.parse(url));
 
-      if (response.statusCode == 200) {
-        List<dynamic> responseData =
-            jsonDecode(utf8.decode(response.bodyBytes));
-        jsonData.assignAll(responseData.cast<Map<String, dynamic>>());
+      fetchData(url)
+          .then((data) {
+        // 데이터를 가져와서 사용합니다.
+        print('가져온 데이터: '+data);
+      })
+          .catchError((error) {
+        // 에러가 발생했을 때 처리합니다.
+        print(error);
+      });
 
-        bool isRegistered = jsonData.isNotEmpty;
+      if (response.statusCode == 200) {
+        print("CHECK");
+        // List<dynamic> responseData =
+        //     jsonDecode(utf8.decode(response.bodyBytes));
+        //jsonData.assignAll(responseData.cast<Map<String, dynamic>>());
+
+        final responseBoolean = response.body;
+        print("BOOLEAN!!!!!!!!!!! $responseBoolean");
+
+        bool isRegistered = true;
 
         print('** response: OK. isRegistered: {$isRegistered}');
         return isRegistered;
