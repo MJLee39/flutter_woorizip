@@ -13,14 +13,13 @@ class JusoSiDropdownWidget extends StatefulWidget {
 class _JusoSiDropdownWidgetState extends State<JusoSiDropdownWidget> {
   final ConditionController controller = Get.find<ConditionController>();
 
-
-
   @override
   Widget build(BuildContext context) {
-    controller.si = '서울특별시';
+    String initialValue = '서울특별시';
 
     return SizedBox(
       height: 50,
+      width: 100,
       child: DropdownFieldsWidget(
         options: const [
           '서울특별시',
@@ -41,7 +40,7 @@ class _JusoSiDropdownWidgetState extends State<JusoSiDropdownWidget> {
           '경상남도',
           '제주도',
         ],
-        initialValue: '서울특별시',
+        initialValue: initialValue,
         onChanged: (String newValue) {
           print('** newValue: $newValue');
           controller.si = newValue;

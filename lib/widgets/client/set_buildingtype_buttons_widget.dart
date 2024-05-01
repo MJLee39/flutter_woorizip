@@ -15,7 +15,6 @@ class _SetBuildingtypeButtonsWidgetState
   final ConditionController controller = Get.find<ConditionController>();
 
   final List<String> buildingTypes = ['아파트', '투룸/빌라+', '원룸', '오피스텔'];
-
   List<bool> _selections = [false, false, false, false];
 
   @override
@@ -29,7 +28,8 @@ class _SetBuildingtypeButtonsWidgetState
               _selections[index] = !_selections[index];
 
               List<String> selectedBuildingTypes = [];
-              for (int i = 0; i < 4; i++) {
+
+              for (int i = 0; i < _selections.length; i++) {
                 if (_selections[i]) {
                   selectedBuildingTypes.add(buildingTypes[i]);
                 }
@@ -40,14 +40,32 @@ class _SetBuildingtypeButtonsWidgetState
           },
           selectedColor: Colors.white,
           fillColor: Colors.indigo,
-          children: buildingTypes.map((type) {
-            return SizedBox(
+          children: const [
+            SizedBox(
               width: 80,
               child: Center(
-                child: Text(type),
+                child: Text('아파트'),
               ),
-            );
-          }).toList(),
+            ),
+            SizedBox(
+              width: 80,
+              child: Center(
+                child: Text('투룸/빌라+'),
+              ),
+            ),
+            SizedBox(
+              width: 80,
+              child: Center(
+                child: Text('원룸'),
+              ),
+            ),
+            SizedBox(
+              width: 80,
+              child: Center(
+                child: Text('오피스텔'),
+              ),
+            ),
+          ],
         ),
       ],
     );

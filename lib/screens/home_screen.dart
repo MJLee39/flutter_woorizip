@@ -115,9 +115,9 @@ class HomeScreen extends StatelessWidget {
                     height: 10,
                   ),
                   HalfButtonWidget(
-                      text: '매물 등록 후 조건 조회 페이지',
+                      text: '공인중개사 조건 조회 페이지',
                       imagePath: 'assets/images/icon_officetel.png',
-                      urlPath: '/conditionreadone')
+                      urlPath: '/conditionreadall')
                 ],
               ),
               const Row(
