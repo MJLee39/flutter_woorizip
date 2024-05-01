@@ -8,8 +8,6 @@ import 'package:testapp/widgets/client/juso_si_dropdown_widget.dart';
 import 'package:testapp/widgets/client/select_hashtag_widget.dart';
 import 'package:testapp/widgets/client/set_fee_widget.dart';
 
-import '../../widgets/client/set_buildingtype_buttons_widget.dart';
-
 class FilterModal extends StatefulWidget {
   const FilterModal({super.key});
 
@@ -31,18 +29,11 @@ class _FilterWidgetState extends State<FilterModal> {
   String _selectedHashtag = '';
   String _prevHashtag = '';
 
-
-  bool _showAddress = false;
-  bool _showBuildingType = false;
-  bool _showFee = false;
-  bool _showMoveInDate = false;
-  bool _showOptions = false;
-
-  bool _showAddressWidget = false;
+  bool _showLocationWidget = false;
   bool _showBuildingTypeWidget = false;
   bool _showFeeWidget = false;
   bool _showMoveInDateWidget = false;
-  bool _showOptionsWidget = false;
+  bool _showHahstagWidget = false;
 
   @override
   Widget build(BuildContext context) {
@@ -62,27 +53,30 @@ class _FilterWidgetState extends State<FilterModal> {
           onPressed: () {
             showModalBottomSheet(
               context: context,
-              isScrollControlled: true, // 모달 높이를 스크롤로 제어
+              isScrollControlled: true,
               builder: (BuildContext context) {
-                // 모달의 높이를 제한하기 위해 컨테이너를 사용
                 return Container(
-                  height: MediaQuery.of(context).size.height * 0.8, // 모달 높이 제한 (전체 화면 높이의 80%)
+                  height: MediaQuery.of(context).size.height * 0.8,
                   child: SingleChildScrollView(
                     child: Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: Column(
-                        mainAxisSize: MainAxisSize.min, // 자식 위젯에 따라 높이 조정
+                        mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          // Row: 위젯의 가로 배치를 위한 컨테이너
                           Row(
+                            // 모달 상단 버튼
+                            // 버튼을 누르면, 위젯 표시용 불리언 값이 변경
                             children: [
                               Expanded(
                                 child: ElevatedButton(
                                   onPressed: () {
                                     setState(() {
-                                      _showAddress = !_showAddress;
-                                      _showAddressWidget = !_showAddressWidget;
+                                      _showLocationWidget = true;
+                                      _showBuildingTypeWidget = false;
+                                      _showFeeWidget = false;
+                                      _showMoveInDateWidget = false;
+                                      _showHahstagWidget = false;
                                     });
                                   },
                                   child: const Text('주소'),
@@ -92,8 +86,11 @@ class _FilterWidgetState extends State<FilterModal> {
                                 child: ElevatedButton(
                                   onPressed: () {
                                     setState(() {
-                                      _showBuildingType = !_showBuildingType;
-                                      _showBuildingTypeWidget = !_showBuildingTypeWidget;
+                                      _showLocationWidget = false;
+                                      _showBuildingTypeWidget = true;
+                                      _showFeeWidget = false;
+                                      _showMoveInDateWidget = false;
+                                      _showHahstagWidget = false;
                                     });
                                   },
                                   child: const Text('건물 유형'),
@@ -103,8 +100,11 @@ class _FilterWidgetState extends State<FilterModal> {
                                 child: ElevatedButton(
                                   onPressed: () {
                                     setState(() {
-                                      _showFee = ! _showFee;
-                                      _showFeeWidget = !_showFeeWidget;
+                                      _showLocationWidget = false;
+                                      _showBuildingTypeWidget = false;
+                                      _showFeeWidget = true;
+                                      _showMoveInDateWidget = false;
+                                      _showHahstagWidget = false;
                                     });
                                   },
                                   child: const Text('금액'),
@@ -114,8 +114,11 @@ class _FilterWidgetState extends State<FilterModal> {
                                 child: ElevatedButton(
                                   onPressed: () {
                                     setState(() {
-                                      _showMoveInDate = !_showMoveInDate;
-                                      _showMoveInDateWidget = !_showMoveInDateWidget;
+                                      _showLocationWidget = false;
+                                      _showBuildingTypeWidget = false;
+                                      _showFeeWidget = false;
+                                      _showMoveInDateWidget = true;
+                                      _showHahstagWidget = false;
                                     });
                                   },
                                   child: const Text('입주가능일'),
@@ -125,8 +128,11 @@ class _FilterWidgetState extends State<FilterModal> {
                                 child: ElevatedButton(
                                   onPressed: () {
                                     setState(() {
-                                      _showOptions = !_showOptions;
-                                      _showOptionsWidget = !_showOptionsWidget;
+                                      _showLocationWidget = false;
+                                      _showBuildingTypeWidget = false;
+                                      _showFeeWidget = false;
+                                      _showMoveInDateWidget = false;
+                                      _showHahstagWidget = true;
                                     });
                                   },
                                   child: const Text('옵션'),
@@ -134,8 +140,10 @@ class _FilterWidgetState extends State<FilterModal> {
                               ),
                             ],
                           ),
+
+                          // 위에서 변경된 불리언 상태를 판별하여 특정 위젯 표시
                           const SizedBox(height: 16.0),
-                          if (_showAddressWidget)
+                          if (_showLocationWidget)
                             Row(
                               children: [
                                 Expanded(
@@ -165,7 +173,7 @@ class _FilterWidgetState extends State<FilterModal> {
                                 ),
                               ],
                             ),
-                          if (_showOptionsWidget)
+                          if (_showHahstagWidget)
                             Row(
                               children: [
                                 Expanded(
@@ -174,83 +182,7 @@ class _FilterWidgetState extends State<FilterModal> {
                               ],
                             ),
                           const SizedBox(height: 16.0),
-                          // 모달 내에 위젯 추가
-                          // 각 위젯을 Row와 Column으로 구분
-                          Visibility(
-                            visible: _showAddress,
-                            child: SizedBox(
-                              height: 50, // 높이 제한
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    child: JusoSiDropdownWidget(),
-                                  ),
-                                  Expanded(
-                                    child: JusoGuDropdownWidget(),
-                                  ),
-                                  Expanded(
-                                    child: JusoDongDropdownWidget(),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 16.0),
-                          Visibility(
-                            visible: _showFee,
-                            child: SizedBox(
-                            height: 50, // 높이 제한
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    child: SetFeeWidget(),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 16.0),
-                          Visibility(
-                            visible: _showMoveInDate,
-                            child: SizedBox(
-                            height: 50, // 높이 제한
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    child: CalendarWidget(),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 16.0),
-                          Visibility(
-                            visible: _showBuildingType,
-                            child: SizedBox(
-                            height: 50, // 높이 제한
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    child: SetBuildingtypeButtonsWidget(),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 16.0),
-                          Visibility(
-                            visible: _showOptions,
-                            child: SizedBox(
-                            height: 50, // 높이 제한
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    child: SelectHashtagWidget(),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
+
                           const SizedBox(height: 30),
                           if (_selectedLocation != _prevLocation) ...[
                             Text('주소: ' + _selectedLocation),
