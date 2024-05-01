@@ -3,7 +3,9 @@ import 'package:get/get.dart';
 import 'package:testapp/controllers/condition/condition_controller.dart';
 
 class SetBuildingtypeButtonsWidget extends StatefulWidget {
-  const SetBuildingtypeButtonsWidget({super.key});
+
+  final Function(String)? onChanged;
+  const SetBuildingtypeButtonsWidget({super.key, this.onChanged});
 
   @override
   _SetBuildingtypeButtonsWidgetState createState() =>
@@ -36,6 +38,10 @@ class _SetBuildingtypeButtonsWidgetState
               }
 
               controller.buildingType = selectedBuildingTypes.join(', ');
+
+              if (widget.onChanged != null) {
+                widget.onChanged!(controller.buildingType);
+              }
             });
           },
           selectedColor: Colors.white,

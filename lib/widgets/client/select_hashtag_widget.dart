@@ -4,7 +4,9 @@ import 'package:testapp/controllers/condition/condition_controller.dart';
 import 'package:testapp/controllers/condition/condition_controller.dart';
 
 class SelectHashtagWidget extends StatefulWidget {
-  const SelectHashtagWidget({super.key});
+
+  final Function(String)? onChanged;
+  const SelectHashtagWidget({super.key, this.onChanged});
 
   @override
   State<SelectHashtagWidget> createState() => SelectHashtagWidgetState();
@@ -72,5 +74,9 @@ class SelectHashtagWidgetState extends State<SelectHashtagWidget> {
 
     controller.hashtag = selectedHashtags.join(' ');
     debugPrint('controller.hashtag.value: ${controller.hashtag}');
+
+    if (widget.onChanged != null) {
+      widget.onChanged!(controller.hashtag);
+    }
   }
 }

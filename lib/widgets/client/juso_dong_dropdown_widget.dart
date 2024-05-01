@@ -4,13 +4,15 @@ import 'package:testapp/controllers/condition/condition_controller.dart';
 import 'package:testapp/widgets/client/dropdown_fields_widget.dart';
 
 class JusoDongDropdownWidget extends StatefulWidget {
-  const JusoDongDropdownWidget({super.key});
+  final Function(String)? onChanged;
+  const JusoDongDropdownWidget({super.key, this.onChanged});
 
   @override
   State<JusoDongDropdownWidget> createState() => _JusoDongDropdownWidgetState();
 }
 
 class _JusoDongDropdownWidgetState extends State<JusoDongDropdownWidget> {
+
   final ConditionController controller = Get.find<ConditionController>();
 
   @override
@@ -53,6 +55,9 @@ class _JusoDongDropdownWidgetState extends State<JusoDongDropdownWidget> {
           initialValue: initialValue,
           onChanged: (String newValue) {
             controller.dong = newValue;
+            if (widget.onChanged != null) {
+              widget.onChanged!(newValue);
+            }
           },
         ));
   }

@@ -11,7 +11,7 @@ import 'package:testapp/widgets/client/set_fee_widget.dart';
 import '../../widgets/client/set_buildingtype_buttons_widget.dart';
 
 class FilterModal extends StatefulWidget {
-  const FilterModal({super.key});
+  const FilterModal({Key? key});
 
   @override
   State<FilterModal> createState() => _FilterWidgetState();
@@ -31,18 +31,11 @@ class _FilterWidgetState extends State<FilterModal> {
   String _selectedHashtag = '';
   String _prevHashtag = '';
 
-
   bool _showAddress = false;
   bool _showBuildingType = false;
   bool _showFee = false;
   bool _showMoveInDate = false;
   bool _showOptions = false;
-
-  bool _showAddressWidget = false;
-  bool _showBuildingTypeWidget = false;
-  bool _showFeeWidget = false;
-  bool _showMoveInDateWidget = false;
-  bool _showOptionsWidget = false;
 
   @override
   Widget build(BuildContext context) {
@@ -62,251 +55,203 @@ class _FilterWidgetState extends State<FilterModal> {
           onPressed: () {
             showModalBottomSheet(
               context: context,
-              isScrollControlled: true, // 모달 높이를 스크롤로 제어
+              isScrollControlled: true,
               builder: (BuildContext context) {
-                // 모달의 높이를 제한하기 위해 컨테이너를 사용
-                return Container(
-                  height: MediaQuery.of(context).size.height * 0.8, // 모달 높이 제한 (전체 화면 높이의 80%)
-                  child: SingleChildScrollView(
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min, // 자식 위젯에 따라 높이 조정
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          // Row: 위젯의 가로 배치를 위한 컨테이너
-                          Row(
-                            children: [
-                              Expanded(
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                    setState(() {
-                                      _showAddress = !_showAddress;
-                                      _showAddressWidget = !_showAddressWidget;
-                                    });
-                                  },
-                                  child: const Text('주소'),
-                                ),
-                              ),
-                              Expanded(
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                    setState(() {
-                                      _showBuildingType = !_showBuildingType;
-                                      _showBuildingTypeWidget = !_showBuildingTypeWidget;
-                                    });
-                                  },
-                                  child: const Text('건물 유형'),
-                                ),
-                              ),
-                              Expanded(
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                    setState(() {
-                                      _showFee = ! _showFee;
-                                      _showFeeWidget = !_showFeeWidget;
-                                    });
-                                  },
-                                  child: const Text('금액'),
-                                ),
-                              ),
-                              Expanded(
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                    setState(() {
-                                      _showMoveInDate = !_showMoveInDate;
-                                      _showMoveInDateWidget = !_showMoveInDateWidget;
-                                    });
-                                  },
-                                  child: const Text('입주가능일'),
-                                ),
-                              ),
-                              Expanded(
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                    setState(() {
-                                      _showOptions = !_showOptions;
-                                      _showOptionsWidget = !_showOptionsWidget;
-                                    });
-                                  },
-                                  child: const Text('옵션'),
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 16.0),
-                          if (_showAddressWidget)
+                return StatefulBuilder(
+                  builder: (BuildContext context, StateSetter modalSetState) {
+                    return SingleChildScrollView(
+                      child: Container(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
                             Row(
                               children: [
                                 Expanded(
-                                  child: JusoSiDropdownWidget(),
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      print("_showAddress: "+_showAddress.toString());
+                                      modalSetState(() {
+                                        _showAddress = !_showAddress;
+                                      });
+                                    },
+                                    child: const Text('주소'),
+                                  ),
                                 ),
                                 Expanded(
-                                  child: JusoGuDropdownWidget(),
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      modalSetState(() {
+                                        _showBuildingType = !_showBuildingType;
+                                      });
+                                    },
+                                    child: const Text('건물 유형'),
+                                  ),
                                 ),
                                 Expanded(
-                                  child: JusoDongDropdownWidget(),
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      modalSetState(() {
+                                        _showFee = !_showFee;
+                                      });
+                                    },
+                                    child: const Text('금액'),
+                                  ),
+                                ),
+                                Expanded(
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      modalSetState(() {
+                                        _showMoveInDate = !_showMoveInDate;
+                                      });
+                                    },
+                                    child: const Text('입주가능일'),
+                                  ),
+                                ),
+                                Expanded(
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      modalSetState(() {
+                                        _showOptions = !_showOptions;
+                                      });
+                                    },
+                                    child: const Text('옵션'),
+                                  ),
                                 ),
                               ],
                             ),
-                          if (_showFeeWidget)
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: SetFeeWidget(),
-                                ),
-                              ],
-                            ),
-                          if (_showMoveInDateWidget)
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: CalendarWidget(),
-                                ),
-                              ],
-                            ),
-                          if (_showOptionsWidget)
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: SelectHashtagWidget(),
-                                ),
-                              ],
-                            ),
-                          const SizedBox(height: 16.0),
-                          // 모달 내에 위젯 추가
-                          // 각 위젯을 Row와 Column으로 구분
-                          Visibility(
-                            visible: _showAddress,
-                            child: SizedBox(
-                              height: 50, // 높이 제한
+                            const SizedBox(height: 16.0),
+                            Visibility(
+                              visible: _showAddress,
                               child: Row(
                                 children: [
                                   Expanded(
-                                    child: JusoSiDropdownWidget(),
+                                    child: JusoSiDropdownWidget(
+                                      onChanged: (value) {
+                                        setState(() {
+                                          _selectedLocation = value;
+                                        });
+                                      },
+                                    ),
                                   ),
                                   Expanded(
-                                    child: JusoGuDropdownWidget(),
+                                    child: JusoGuDropdownWidget(
+                                      onChanged: (value) {
+                                        setState(() {
+                                          _selectedLocation += ' $value';
+                                        });
+                                      },
+                                    ),
                                   ),
                                   Expanded(
-                                    child: JusoDongDropdownWidget(),
+                                    child: JusoDongDropdownWidget(
+                                      onChanged: (value) {
+                                        setState(() {
+                                          _selectedLocation += ' $value';
+                                        });
+                                      },
+                                    ),
                                   ),
                                 ],
                               ),
                             ),
-                          ),
-                          const SizedBox(height: 16.0),
-                          Visibility(
-                            visible: _showFee,
-                            child: SizedBox(
-                            height: 50, // 높이 제한
+                            Visibility(
+                              visible: _showFee,
                               child: Row(
                                 children: [
                                   Expanded(
-                                    child: SetFeeWidget(),
+                                    child: SetFeeWidget(
+                                      onChanged: (value) {
+                                        setState(() {
+                                          _selectedFee = value as int;
+                                        });
+                                      },
+                                    ),
                                   ),
                                 ],
                               ),
                             ),
-                          ),
-                          const SizedBox(height: 16.0),
-                          Visibility(
-                            visible: _showMoveInDate,
-                            child: SizedBox(
-                            height: 50, // 높이 제한
+                            Visibility(
+                              visible: _showMoveInDate,
                               child: Row(
                                 children: [
                                   Expanded(
-                                    child: CalendarWidget(),
+                                    child: CalendarWidget(
+                                      onChanged: (value) {
+                                        setState(() {
+                                          _selectedMoveInDate = value as DateTime;
+                                        });
+                                      },
+                                    ),
                                   ),
                                 ],
                               ),
                             ),
-                          ),
-                          const SizedBox(height: 16.0),
-                          Visibility(
-                            visible: _showBuildingType,
-                            child: SizedBox(
-                            height: 50, // 높이 제한
+                            Visibility(
+                              visible: _showBuildingType,
                               child: Row(
                                 children: [
                                   Expanded(
-                                    child: SetBuildingtypeButtonsWidget(),
+                                    child: SetBuildingtypeButtonsWidget(
+                                      onChanged: (value) {
+                                        setState(() {
+                                          _selectedBuildingType = value;
+                                        });
+                                      },
+                                    ),
                                   ),
                                 ],
                               ),
                             ),
-                          ),
-                          const SizedBox(height: 16.0),
-                          Visibility(
-                            visible: _showOptions,
-                            child: SizedBox(
-                            height: 50, // 높이 제한
+                            Visibility(
+                              visible: _showOptions,
                               child: Row(
                                 children: [
                                   Expanded(
-                                    child: SelectHashtagWidget(),
+                                    child: SelectHashtagWidget(
+                                      onChanged: (value) {
+                                        setState(() {
+                                          _selectedHashtag = value;
+                                        });
+                                      },
+                                    ),
                                   ),
                                 ],
                               ),
                             ),
-                          ),
-                          const SizedBox(height: 30),
-                          if (_selectedLocation != _prevLocation) ...[
+                            //나머지 Visibility 위젯들도 동일하게 수정
+                            const SizedBox(height: 30),
                             Text('주소: ' + _selectedLocation),
                             const SizedBox(height: 10),
-                          ] else ...[
-                            Text('주소: '),
-                            const SizedBox(height: 10),
-                          ],
-                          if (_selectedBuildingType != _prevBuildingType) ...[
                             Text('건물 유형: ' + _selectedBuildingType),
                             const SizedBox(height: 10),
-                          ] else ...[
-                            Text('건물 유형: '),
-                            const SizedBox(height: 10),
-                          ],
-                          if (_selectedFee != _prevFee) ...[
                             Text('금액: ' + _selectedFee.toString()),
                             const SizedBox(height: 10),
-                          ] else ...[
-                            Text('금액: '),
-                            const SizedBox(height: 10),
-                          ],
-                          if (_selectedMoveInDate != _prevMoveInDate) ...[
                             Text('입주 가능일: ' + _selectedMoveInDate.toString()),
                             const SizedBox(height: 10),
-                          ] else ...[
-                            Text('입주 가능일: '),
-                            const SizedBox(height: 10),
-                          ],
-                          if (_selectedHashtag != _prevHashtag) ...[
                             Text('옵션: ' + _selectedHashtag),
                             const SizedBox(height: 10),
-                          ] else ...[
-                            Text('옵션: '),
-                            const SizedBox(height: 10),
+                            // 검색 버튼 추가
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                ElevatedButton(
+                                  onPressed: () {
+                                    // 검색하기 버튼 클릭 시 동작할 코드
+                                  },
+                                  child: const Text('검색하기'),
+                                ),
+                              ],
+                            ),
                           ],
-                          // 검색 버튼 추가
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              ElevatedButton(
-                                onPressed: () {
-                                  // 검색하기 버튼 클릭 시 동작할 코드
-                                },
-                                child: const Text('검색하기'),
-                              ),
-                            ],
-                          ),
-                        ],
+                        ),
                       ),
-                    ),
-                  ),
+                    );
+                  },
                 );
               },
             );
-
           },
           child: const Icon(
             Icons.tune,
