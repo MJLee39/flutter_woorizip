@@ -21,6 +21,7 @@ class _ConditionReadOneScreenState extends State<ConditionReadOneScreen> {
   void initState() {
     super.initState();
     _controller = Get.put(ConditionController());
+    _controller.readOneCondition(); // readOneCondition 메서드 호출
   }
 
   @override
