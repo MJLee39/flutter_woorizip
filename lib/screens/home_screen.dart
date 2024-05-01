@@ -115,11 +115,22 @@ class HomeScreen extends StatelessWidget {
                     height: 10,
                   ),
                   HalfButtonWidget(
-                      text: 'test',
+                      text: '공인중개사 조건 조회 페이지',
                       imagePath: 'assets/images/icon_officetel.png',
-                      urlPath: '/setdetails')
+                      urlPath: '/conditionreadall')
                 ],
-              )
+              ),
+              const Row(
+                children: [
+                  SizedBox(
+                    height: 10,
+                  ),
+                  HalfButtonWidget(
+                      text: '관리자 페이지',
+                      imagePath: 'assets/images/icon_officetel.png',
+                      urlPath: '/admin')
+                ],
+              ),
             ],
           ),
         ),

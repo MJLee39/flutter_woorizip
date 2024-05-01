@@ -11,10 +11,21 @@ import 'package:testapp/widgets/app_bar_widget.dart';
 
 
 class ZipDetailRegistration55Screen extends StatelessWidget {
-  final zipRegistration = Get.put(ZipRegistration());
+  final ZipRegistration controller = Get.find<ZipRegistration>();
 
   @override
   Widget build(BuildContext context) {
+    debugPrint('5.5-location: ${controller.location}');
+    debugPrint('5.5-estate: ${controller.estate}');
+    debugPrint('5.5-attechement: ${controller.attachments}');
+    debugPrint('5.5-total floor: ${controller.total_floor}');
+    debugPrint('5.5-deposit: ${controller.deposit}');
+    debugPrint('5.5-fee: ${controller.fee}');
+    debugPrint('5.5-maintenance_fee: ${controller.maintenance_fee}');
+    debugPrint('5.5-buildingType: ${controller.buildingType}');
+    debugPrint('5.5-direction: ${controller.direction}');
+    debugPrint('5.5-moveInDate: ${controller.moveInDate}');
+
     return Scaffold(
       appBar: const AppBarWidget(),
       body: PageNormalPaddingWidget(
@@ -34,6 +45,9 @@ class ZipDetailRegistration55Screen extends StatelessWidget {
                             decoration: const InputDecoration(
                               labelText: '방 수를 입력해주세요',
                             ),
+                            onChanged: (value) {
+                              controller.room = int.tryParse(value) ?? 0;
+                            },
                           ),
                         ),
                       ],
@@ -47,6 +61,9 @@ class ZipDetailRegistration55Screen extends StatelessWidget {
                             decoration: const InputDecoration(
                               labelText: '화장실 수를 입력하세요',
                             ),
+                            onChanged: (value) {
+                              controller.toilet = int.tryParse(value) ?? 0;
+                            },
                           ),
                         ),
                       ],
@@ -60,6 +77,9 @@ class ZipDetailRegistration55Screen extends StatelessWidget {
                             decoration: const InputDecoration(
                               labelText: '공급 면적을 입력하세요',
                             ),
+                            onChanged: (value) {
+                              controller.m2 = double.tryParse(value) ?? 0;
+                            },
                           ),
                         ),
                       ],

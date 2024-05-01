@@ -10,6 +10,7 @@ import 'package:testapp/controllers/search_condition/fee_type_controller.dart';
 import 'package:testapp/widgets/app_bar_widget.dart';
 import 'package:testapp/widgets/text_header_widget.dart';
 import 'package:testapp/widgets/page_normal_padding_widget.dart';
+import 'package:testapp/screens/zip_update/update_zip_screen.dart';
 
 class ZipListAgentScreen extends StatefulWidget {
   const ZipListAgentScreen({Key? key}) : super(key: key);
@@ -39,10 +40,11 @@ class _ZipListAgentScreenState extends State<ZipListAgentScreen> {
     fetchData();
   }
 
+
   Future<void> fetchData() async {
     try {
       final response = await http.post(
-        Uri.parse('http://10.0.2.2/zipListByAgent'),
+        Uri.parse('http://localhost/zipListByAgent'),
         body: jsonEncode({'agentId': additionalArgument}),
         headers: {'Content-Type': 'application/json'},
       );
@@ -113,6 +115,10 @@ class _ZipListAgentScreenState extends State<ZipListAgentScreen> {
     );
   }
 
+  void _showEdit(String itemId){
+    Get.to(UpdateAddressScreen(itemId: itemId), transition: Transition.noTransition);
+  }
+
 
 
 
@@ -177,6 +183,7 @@ class _ZipListAgentScreenState extends State<ZipListAgentScreen> {
                                         icon: Icon(Icons.edit),
                                         onPressed: () {
                                           // Handle edit action
+                                          _showEdit(item['id']);
                                         },
                                       ),
                                       IconButton(

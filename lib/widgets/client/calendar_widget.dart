@@ -5,7 +5,8 @@ import 'package:testapp/controllers/condition/condition_controller.dart';
 import 'package:intl/intl.dart';
 
 class CalendarWidget extends StatefulWidget {
-  const CalendarWidget({super.key});
+  final Function(String)? onChanged;
+  const CalendarWidget({super.key, this.onChanged});
 
   @override
   _CalendarWidgetState createState() => _CalendarWidgetState();
@@ -26,8 +27,8 @@ class _CalendarWidgetState extends State<CalendarWidget> {
     return TableCalendar(
         selectedDayPredicate: (date) => isSameDay(_selectedDate, date),
         focusedDay: _selectedDate,
-        firstDay: DateTime(2020),
-        lastDay: DateTime(2030),
+        firstDay: DateTime.now(),
+        lastDay: DateTime(2100),
         headerStyle: const HeaderStyle(
           titleCentered: true,
           formatButtonVisible: false,
@@ -37,11 +38,17 @@ class _CalendarWidgetState extends State<CalendarWidget> {
           ),
         ),
         onDaySelected: (selectedDate, focusedDate) {
+
+          if (widget.onChanged != null) {
+            widget.onChanged!(selectedDate as String);
+          }
+
           setState(() {
             _selectedDate = selectedDate;
           });
           controller.moveInDate =
               DateTime(selectedDate.year, selectedDate.month, selectedDate.day);
-        });
+        }
+      );
   }
 }

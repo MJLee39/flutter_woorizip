@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:testapp/screens/zip_registration/update_picture_3_screen.dart';
+import 'package:testapp/screens/zip_update/update_zip_screen.dart';
 import 'package:testapp/widgets/app_bar_widget.dart';
 import 'package:testapp/widgets/text_header_widget.dart';
 import 'package:testapp/controllers/zip_registration_controller.dart';
 
-class ResultSummaryScreen extends StatelessWidget {
-  const ResultSummaryScreen({super.key});
+class UpdateZipAddressResultScreen extends StatelessWidget {
+  const UpdateZipAddressResultScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     final Map<String, dynamic> args = Get.arguments ?? {};
 
     // Extract data from arguments
+    final String id = args['id'];
     final String selectedAddress = args['selectedAddress'] ?? '';
     final String selectedDong = args['selectedDong'] ?? '';
     final String selectedFloor = args['selectedFloor'] ?? '';
@@ -37,11 +38,14 @@ class ResultSummaryScreen extends StatelessWidget {
               Text("$selectedDong $selectedFloor $selectedHo", style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
             if (selectedDong == "")
               Text("$selectedFloor $selectedHo", style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
-        
+
+            SizedBox(height: 20,),
             ElevatedButton(
               onPressed: () {
                 // Navigate to UpdatePictureScreen when the button is pressed
-                Get.to(() => UpdatePictureScreen());
+                Get.to(() => UpdateAddressScreen(itemId: id), arguments: {
+                  'updatedLocation': selectedAddress, // 수정된 주소 전달
+                });
               },
               child: const Text("확인"),
             ),

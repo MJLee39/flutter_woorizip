@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:testapp/controllers/condition/condition_controller.dart';
+import 'package:testapp/controllers/condition/condition_controller.dart';
 
 class SelectHashtagWidget extends StatefulWidget {
-  const SelectHashtagWidget({super.key});
+
+  final Function(String)? onChanged;
+  const SelectHashtagWidget({super.key, this.onChanged});
 
   @override
   State<SelectHashtagWidget> createState() => SelectHashtagWidgetState();
@@ -13,21 +16,12 @@ final buttonLabels = [
   '풀옵션',
   '주차가능',
   '엘리베이터',
-  '베란다',
   '보안/안전시설',
   '단기임대',
-  '역세권',
-  '붙박이 옷장',
+  '베란다',
   '1종 근린',
   '2종 근린',
-  '반려동물 가능',
-  '신축',
-  '에어컨',
-  '냉장고',
-  '세탁기',
-  '신발장',
-  '인덕션',
-  'CCTV',
+  '360° VR',
 ];
 
 class SelectHashtagWidgetState extends State<SelectHashtagWidget> {
@@ -40,7 +34,7 @@ class SelectHashtagWidgetState extends State<SelectHashtagWidget> {
     return Expanded(
       child: GridView.builder(
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
+          crossAxisCount: 3,
           childAspectRatio: 4,
           mainAxisSpacing: 8.0,
           crossAxisSpacing: 16.0,
@@ -80,5 +74,9 @@ class SelectHashtagWidgetState extends State<SelectHashtagWidget> {
 
     controller.hashtag = selectedHashtags.join(' ');
     debugPrint('controller.hashtag.value: ${controller.hashtag}');
+
+    if (widget.onChanged != null) {
+      widget.onChanged!(controller.hashtag);
+    }
   }
 }

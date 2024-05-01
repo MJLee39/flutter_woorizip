@@ -5,8 +5,13 @@ import 'package:testapp/widgets/client/number_input_widget.dart';
 import 'package:testapp/widgets/page_normal_padding_widget.dart';
 
 class SetFeeWidget extends StatefulWidget {
+
+  final Function(String)? onChanged;
+
+  const SetFeeWidget({super.key, this.onChanged});
+
   @override
-  _SetFeeWidgetState createState() => _SetFeeWidgetState();
+  State<SetFeeWidget> createState() => _SetFeeWidgetState();
 }
 
 class _SetFeeWidgetState extends State<SetFeeWidget> {
@@ -30,6 +35,9 @@ class _SetFeeWidgetState extends State<SetFeeWidget> {
                     setState(() {
                       controller.fee = newValue.toInt();
                     });
+                    if (widget.onChanged != null) {
+                      widget.onChanged!(newValue as String);
+                    }
                   },
                   activeColor: Colors.blue,
                   inactiveColor: Colors.grey,

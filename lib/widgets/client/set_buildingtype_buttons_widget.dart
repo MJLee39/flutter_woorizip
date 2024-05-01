@@ -3,7 +3,9 @@ import 'package:get/get.dart';
 import 'package:testapp/controllers/condition/condition_controller.dart';
 
 class SetBuildingtypeButtonsWidget extends StatefulWidget {
-  const SetBuildingtypeButtonsWidget({super.key});
+
+  final Function(String)? onChanged;
+  const SetBuildingtypeButtonsWidget({super.key, this.onChanged});
 
   @override
   _SetBuildingtypeButtonsWidgetState createState() =>
@@ -15,7 +17,6 @@ class _SetBuildingtypeButtonsWidgetState
   final ConditionController controller = Get.find<ConditionController>();
 
   final List<String> buildingTypes = ['아파트', '투룸/빌라+', '원룸', '오피스텔'];
-
   List<bool> _selections = [false, false, false, false];
 
   @override
@@ -26,8 +27,21 @@ class _SetBuildingtypeButtonsWidgetState
           isSelected: _selections,
           onPressed: (int index) {
             setState(() {
-              _selections = List.generate(_selections.length, (i) => i == index);
-              controller.buildingType = buildingTypes[index];
+              _selections[index] = !_selections[index];
+
+              List<String> selectedBuildingTypes = [];
+
+              for (int i = 0; i < _selections.length; i++) {
+                if (_selections[i]) {
+                  selectedBuildingTypes.add(buildingTypes[i]);
+                }
+              }
+
+              controller.buildingType = selectedBuildingTypes.join(', ');
+
+              if (widget.onChanged != null) {
+                widget.onChanged!(controller.buildingType);
+              }
             });
           },
           selectedColor: Colors.white,
@@ -61,6 +75,5 @@ class _SetBuildingtypeButtonsWidgetState
         ),
       ],
     );
-
   }
 }

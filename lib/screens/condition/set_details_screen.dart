@@ -1,5 +1,5 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:testapp/controllers/condition/condition_controller.dart';
 import 'package:testapp/widgets/app_bar_widget.dart';
 import 'package:testapp/widgets/bottom_navigation_widget.dart';
@@ -19,47 +19,107 @@ class SetDetailsScreen extends GetView<ConditionController> {
 
   @override
   Widget build(BuildContext context) {
-    Get.put(ConditionController());
+    final ConditionController controller = Get.put(ConditionController());
+
+    final RxList<String> locationArray = <String>[].obs;
+
     return Scaffold(
       appBar: const AppBarWidget(),
       body: PageNormalPaddingWidget(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
-
           children: [
             const SizedBox(height: 20),
             const TextHeaderWidget(text: '원하는 지역을 알려주세요'),
             const SizedBox(height: 20),
 
-            // set location: si /gu /dong
-            const Row(
+            // selected location: si /gu /dong
+            Row(
               children: [
-                Expanded(
+                const Expanded(
                   child: JusoSiDropdownWidget(),
                 ),
-                Expanded(
+                const Expanded(
                   child: JusoGuDropdownWidget(),
                 ),
-                Expanded(
+                const Expanded(
                   child: JusoDongDropdownWidget(),
                 ),
-                // ElevatedButton(
-                //   onPressed: () {
-                //     print(controller.si + " " + controller.gu + " " + controller.dong);
-                //   },
-                //   child: const Text('고르기'),
-                // ),
+                TextButton(
+                  onPressed: () {
+                    if (locationArray.length < 3) {
+                      String newLocation =
+                          '${controller.si} ${controller.gu} ${controller.dong}';
+                      print(
+                          'new location: ${controller.si} ${controller.gu} ${controller.dong}');
+                      locationArray.add(newLocation);
+                    } else {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: const Text('위치 목록은 최대 3개까지만 등록할 수 있습니다'),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: const Text('확인'),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    }
+                  },
+                  style: TextButton.styleFrom(
+                    foregroundColor: Colors.indigo,
+                    textStyle: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  child: const Text('추가'),
+                ),
               ],
             ),
 
+            // 선택된 location 출력(최대 3개)
+            SizedBox(
+              height: 120,
+              child: Obx(() {
+                return Column(
+                  children: locationArray.map((location) {
+                    return Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            location,
+                            style: const TextStyle(
+                              color: Colors.grey,
+                              fontSize: 18,
+                            ),
+                          ),
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.delete, color: Colors.grey),
+                          onPressed: () {
+                            locationArray.remove(location);
+                          },
+                        ),
+                      ],
+                    );
+                  }).toList(),
+                );
+              }),
+            ),
 
             const SizedBox(height: 80),
 
-            //set building type
             const TextHeaderWidget(text: '원하는 건물 유형을 알려주세요'),
 
             const SizedBox(height: 20),
 
+            // set building type
             const Row(children: [SetBuildingtypeButtonsWidget()]),
 
             const SizedBox(height: 80),
@@ -80,13 +140,13 @@ class SetDetailsScreen extends GetView<ConditionController> {
                 TextButton(
                   onPressed: () {
                     // 지역과 건물 유형이 선택되지 않은 경우 알림 창 표시
-                    if (controller.buildingType == '') {
+                    if (locationArray.isEmpty ||
+                        controller.buildingType == '') {
                       showDialog(
                         context: context,
                         builder: (BuildContext context) {
                           return AlertDialog(
                             title: const Text('필수조건 누락!'),
-                            content: const Text('건물 유형을 알려주세요'),
                             actions: [
                               TextButton(
                                 onPressed: () {
@@ -99,11 +159,7 @@ class SetDetailsScreen extends GetView<ConditionController> {
                         },
                       );
                     } else {
-                      String si = controller.si;
-                      String gu = controller.gu;
-                      String dong = controller.dong;
-                      controller.location = si + gu + dong;
-
+                      controller.location = locationArray.join(', ');
                       Get.toNamed('/setmoveindate');
                     }
                   },
@@ -111,7 +167,6 @@ class SetDetailsScreen extends GetView<ConditionController> {
                 ),
               ],
             ),
-
           ],
         ),
       ),

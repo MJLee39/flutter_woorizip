@@ -3,15 +3,13 @@ import 'package:testapp/chat/chat.dart';
 import 'package:testapp/chat/chatroom_list.dart';
 import 'package:testapp/map/screens/map_screen.dart';
 import 'package:testapp/middleware/auth_guard.dart';
+import 'package:testapp/screens/admin_screen.dart';
+import 'package:testapp/screens/condition/condition_read_all_screen.dart';
 import 'package:testapp/screens/zip_registration/address_search_1_screen.dart';
-import 'package:testapp/screens/condition/condition_detail_screen.dart';
-import 'package:testapp/screens/condition/condition_update_screen.dart';
 import 'package:testapp/screens/home_screen.dart';
 import 'package:testapp/screens/login_screen.dart';
 import 'package:testapp/screens/zip_registration/result_summary_2_screen.dart';
-import 'package:testapp/screens/home_screen.dart';
-import 'package:testapp/screens/login_screen.dart';
-import 'package:testapp/screens/condition/condition_read_all_screen.dart';
+import 'package:testapp/screens/condition/condition_read_one_screen.dart';
 import 'package:testapp/screens/see_more_screen.dart';
 import 'package:testapp/screens/condition/set_hashtag_screen.dart';
 import 'package:testapp/screens/condition/set_details_screen.dart';
@@ -23,6 +21,10 @@ import 'package:testapp/screens/zip_registration/zip_detail_registration_5_scree
 import 'package:testapp/screens/zip_registration/zip_detail_registration_next_6_screen.dart';
 import 'package:testapp/screens/zip_registration/zip_hashtag_7_screen.dart';
 import 'package:testapp/screens/zip_registration/zip_detail_registration_5_5_screen.dart';
+import 'package:testapp/screens/zip_update/update_zip_address_result_screen.dart';
+import 'package:testapp/screens/zip_update/update_zip_picture_screen.dart';
+
+import '../screens/zip_update/update_zip_address_screen.dart';
 
 class AppPages {
   static const initial = '/';
@@ -68,7 +70,7 @@ class AppPages {
     ),
     _getPageWithMiddleware(
       name: '/chatRoomList',
-      page: () => ChatRoomList(
+      page: () => ChatRoomListScreen(
         accountId: 'qassadsadsa',
       ),
       middlewares: [],
@@ -87,6 +89,7 @@ class AppPages {
       page: () => SeeMoreScreen(),
       middlewares: [],
     ),
+    //중개사의 내 매물 리스트 보기
     _getPageWithMiddleware(
       name: '/my_listings',
       page: () => const ZipListAgentScreen(),
@@ -124,7 +127,16 @@ class AppPages {
      */
     _getPageWithMiddleware(
       name: '/sethashtag',
-      page: () => const SetHashtagScreen(),
+      page: () => SetHashtagScreen(),
+      middlewares: [],
+    ),
+
+    /*
+    client condition read one
+     */
+    _getPageWithMiddleware(
+      name: '/conditionreadone',
+      page: () => const ConditionReadOneScreen(),
       middlewares: [],
     ),
 
@@ -137,15 +149,6 @@ class AppPages {
       middlewares: [],
     ),
 
-    /*
-    client condition update
-     */
-    _getPageWithMiddleware(
-      name: '/updatecondition',
-      page: () => ConditionUpdateScreen(),
-      middlewares: [],
-    ),
-
     //매물 등록에서 보증금 입력 페이지로 이동
     _getPageWithMiddleware(
       name: '/depositAndFee',
@@ -154,6 +157,9 @@ class AppPages {
     ),
 
     //매물 등록에서 상세 정보 입력 페이지로 이동
+    /*
+    client condition update
+     */
     _getPageWithMiddleware(
       name: '/detail_registration',
       page: () => ZipDetailRegistrationScreen(),
@@ -174,11 +180,35 @@ class AppPages {
       middlewares: [],
     ),
 
-    //매물 등록에서 상세 입력2
+    //매물 등록에서 상세 입력 2
     _getPageWithMiddleware(
       name: '/detail_registration5_5',
       page: () => ZipDetailRegistration55Screen(),
       middlewares: [],
     ),
+
+    //매물 수정에서 주소 검색
+    _getPageWithMiddleware(
+      name: '/update_zip_address',
+      page: () => UpdateZipAddressScreen(),
+      middlewares: [],
+    ),
+
+    //매물 수정에서 주소 결과
+    _getPageWithMiddleware(
+      name: '/update_zip_address_result',
+      page: () => UpdateZipAddressResultScreen(),
+      middlewares: [],
+    ),
+
+    //매물 수정에서 사진 변경
+    _getPageWithMiddleware(
+      name: '/update_zip_picture_screen',
+      page: () => UpdateZipPictureScreen(),
+      middlewares: [],
+    ),
+
+    _getPageWithMiddleware(
+        name: '/admin', page: () => AdminScreen(), middlewares: [])
   ];
 }

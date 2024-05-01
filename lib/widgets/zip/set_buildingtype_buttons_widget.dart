@@ -29,7 +29,7 @@ class _SetBuildingtypeButtonsWidgetState
             setState(() {
               _selections =
                   List.generate(_selections.length, (i) => i == index);
-              controller.buildingType.value = buildingTypes[index];
+              controller.buildingType = buildingTypes[index];
             });
           },
           selectedColor: Colors.white,

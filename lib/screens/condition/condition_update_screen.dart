@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:testapp/controllers/condition/condition_controller.dart';
-import 'package:testapp/controllers/condition/condition_update_controller.dart';
 import 'package:testapp/widgets/app_bar_widget.dart';
 import 'package:testapp/widgets/bottom_navigation_widget.dart';
 import 'package:testapp/widgets/page_normal_padding_widget.dart';
@@ -14,13 +13,20 @@ class ConditionUpdateScreen extends GetView<ConditionController> {
   Widget build(BuildContext context) {
     final arguments = Get.arguments as Map<String, dynamic>;
 
-    final TextEditingController idController = TextEditingController(text: arguments['id'] as String?);
-    final TextEditingController accountIdController = TextEditingController(text: arguments['accountId'] as String?);
-    final TextEditingController locationController = TextEditingController(text: arguments['location'] as String?);
-    final TextEditingController buildingTypeController = TextEditingController(text: arguments['buildingType'] as String?);
-    final TextEditingController feeController = TextEditingController(text: arguments['fee'].toString());
-    final TextEditingController moveInDateController = TextEditingController(text: arguments['moveInDate'] as String?);
-    final TextEditingController hashtagController = TextEditingController(text: arguments['hashtag'] as String?);
+    final TextEditingController idController =
+        TextEditingController(text: arguments['id'] as String?);
+    final TextEditingController accountIdController =
+        TextEditingController(text: arguments['accountId'] as String?);
+    final TextEditingController locationController =
+        TextEditingController(text: arguments['location'] as String?);
+    final TextEditingController buildingTypeController =
+        TextEditingController(text: arguments['buildingType'] as String?);
+    final TextEditingController feeController =
+        TextEditingController(text: arguments['fee'].toString());
+    final TextEditingController moveInDateController =
+        TextEditingController(text: arguments['moveInDate'] as String?);
+    final TextEditingController hashtagController =
+        TextEditingController(text: arguments['hashtag'] as String?);
 
     Get.put(ConditionController());
 
@@ -38,9 +44,7 @@ class ConditionUpdateScreen extends GetView<ConditionController> {
             TextField(
               controller: locationController,
               decoration: const InputDecoration(
-                labelText: '지역',
-                border: OutlineInputBorder()
-              ),
+                  labelText: '지역', border: OutlineInputBorder()),
             ),
             const SizedBox(height: 20),
             TextField(
@@ -94,7 +98,8 @@ class ConditionUpdateScreen extends GetView<ConditionController> {
                     print('** got BT');
                     controller.fee = int.parse(feeController.text);
                     print('** got fee');
-                    controller.moveInDate = DateTime.parse(moveInDateController.text);
+                    controller.moveInDate =
+                        DateTime.parse(moveInDateController.text);
                     print('** got datetime');
                     controller.hashtag = hashtagController.text;
                     print('** got hashtag');
@@ -102,7 +107,9 @@ class ConditionUpdateScreen extends GetView<ConditionController> {
                     controller.accountId = "accountId01";
                     controller.updateCondition();
 
-                    Get.toNamed('/conditionreadall');
+                    controller.readAllCondition();
+
+                    Get.toNamed('/conditionreadone');
                   },
                   child: const Text('수정'),
                 ),
