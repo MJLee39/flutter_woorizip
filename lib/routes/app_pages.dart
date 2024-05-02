@@ -56,7 +56,6 @@ class AppPages {
     _getPageWithMiddleware(
       name: '/zipFind',
       page: () => ZipFindScreen(),
-      middlewares: [],
     ),
     _getPageWithMiddleware(
       name: '/addressSearch',
