@@ -21,7 +21,7 @@ class Chat extends StatefulWidget {
 }
 
 class ChatState extends State<Chat> {
-  final String webSocketUrl = 'https://chat.teamwaf.app/stomp/chat';
+  final String webSocketUrl = 'http://localhost:8080/stomp/chat';
   late StompClient _client;
   final ChatController _chatController = ChatController();
   final TextEditingController _controller = TextEditingController();
@@ -309,8 +309,9 @@ class ChatState extends State<Chat> {
 class ChatBubblePainter extends CustomPainter {
   final bool isMyMessage;
   final Color color;
+  final double minBubbleLength;
 
-  ChatBubblePainter({required this.isMyMessage, required this.color});
+  ChatBubblePainter({required this.isMyMessage, required this.color, this.minBubbleLength = 50.0});
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -321,27 +322,31 @@ class ChatBubblePainter extends CustomPainter {
     final path = Path();
 
     if (isMyMessage) {
-      path.moveTo(size.width - 20, 0);
-      path.quadraticBezierTo(size.width, 0, size.width, 15);
-      path.lineTo(size.width, size.height - 15);
-      path.quadraticBezierTo(size.width, size.height, size.width - 20, size.height);
-      path.lineTo(size.width - 40, size.height);
-      path.quadraticBezierTo(size.width - 60, size.height + 10, size.width - 50, size.height);
-      path.lineTo(10, size.height);
-      path.quadraticBezierTo(0, size.height, 0, size.height - 15);
-      path.lineTo(0, 15);
-      path.quadraticBezierTo(0, 0, 10, 0);
-    } else {
-      path.moveTo(20, 0);
+      path.moveTo(15, 0);
       path.quadraticBezierTo(0, 0, 0, 15);
       path.lineTo(0, size.height - 15);
       path.quadraticBezierTo(0, size.height, 20, size.height);
       path.lineTo(40, size.height);
-      path.quadraticBezierTo(60, size.height + 10, 50, size.height);
+      if (size.width >= minBubbleLength) {
+        path.quadraticBezierTo(60, size.height + 10, 50, size.height);
+      }
       path.lineTo(size.width - 10, size.height);
       path.quadraticBezierTo(size.width, size.height, size.width, size.height - 15);
       path.lineTo(size.width, 15);
       path.quadraticBezierTo(size.width, 0, size.width - 20, 0);
+    } else {
+      path.moveTo(size.width - 15, 0);
+      path.quadraticBezierTo(size.width, 0, size.width, 15);
+      path.lineTo(size.width, size.height - 15);
+      path.quadraticBezierTo(size.width, size.height, size.width - 20, size.height);
+      path.lineTo(size.width - 40, size.height);
+      if (size.width >= minBubbleLength) {
+        path.quadraticBezierTo(size.width - 60, size.height + 10, size.width - 50, size.height);
+      }
+      path.lineTo(10, size.height);
+      path.quadraticBezierTo(0, size.height, 0, size.height - 15);
+      path.lineTo(0, 15);
+      path.quadraticBezierTo(0, 0, 10, 0);
     }
 
     canvas.drawPath(path, paint);

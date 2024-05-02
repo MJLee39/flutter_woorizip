@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 class ChatController {
 
   Future<List<ChatRoomResponseDTO>> fetchChatRooms(String accountId) async {
-    final url = Uri.parse("https://chat.teamwaf.app/chat/find/$accountId/room");
+    final url = Uri.parse("http://localhost:8080/chat/find/$accountId/room");
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
@@ -18,7 +18,7 @@ class ChatController {
 
   Future<Map<String, dynamic>> createChatRoom(String clientId, String agentId) async {
     final response = await http.post(
-        Uri.parse('https://chat.teamwaf.app/chat/create'),
+        Uri.parse('http://localhost:8080/chat/create'),
         headers: {
           'content-type': 'application/json'
         },
@@ -36,7 +36,7 @@ class ChatController {
   }
 
   Future<String> exitChatRoom(String chatRoomId) async {
-    final url = Uri.parse("https://chat.teamwaf.app/chat/room/$chatRoomId");
+    final url = Uri.parse("http://localhost:8080//chat/room/$chatRoomId");
     final response = await http.delete(url);
 
     if (response.statusCode == 200) {
@@ -47,8 +47,7 @@ class ChatController {
   }
 
   Future<dynamic> fetchChatRoom(String chatRoomId) async {
-    print(chatRoomId);
-    final url = Uri.parse("https://chat.teamwaf.app/chat/room?chatRoomId=$chatRoomId");
+    final url = Uri.parse("http://localhost:8080/chat/room?chatRoomId=$chatRoomId");
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
@@ -61,7 +60,7 @@ class ChatController {
   }
 
   Future<String> sendReport(String senderId, String targetId) async {
-    final url = Uri.parse("https://chat.teamwaf.app/report");
+    final url = Uri.parse("http://localhost:8080/report");
     final response = await http.post(url,
       headers: {
         'content-type': 'application/json'
