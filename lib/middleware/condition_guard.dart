@@ -8,7 +8,7 @@ class ConditionGuard extends GetMiddleware {
   GetPage? onPageCalled(GetPage? page) {
     Get.snackbar(
       '원하는 매물이 없으신가요?',
-      '원하는 매물의 조건을 등록할 수 있습니다.\n조건에 맞는 물건을 찾으면 연락드리겠습니다.',
+      '원하는 매물의 조건을 등록하세요.\n조건에 맞는 물건을 찾아드리겠습니다.',
       snackPosition: SnackPosition.BOTTOM,
       margin: EdgeInsets.only(bottom: kBottomNavigationBarHeight + 16.0), // Adjust margin to position above bottom navigation bar
       duration: const Duration(seconds: 5),
