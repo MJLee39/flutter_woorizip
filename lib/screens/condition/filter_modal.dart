@@ -6,9 +6,9 @@ import 'package:testapp/widgets/client/juso_dong_dropdown_widget.dart';
 import 'package:testapp/widgets/client/juso_gu_dropdown_widget.dart';
 import 'package:testapp/widgets/client/juso_si_dropdown_widget.dart';
 import 'package:testapp/widgets/client/select_hashtag_widget.dart';
+import 'package:testapp/widgets/client/set_buildingtype_buttons_widget.dart';
 import 'package:testapp/widgets/client/set_fee_widget.dart';
-
-import '../../widgets/client/set_buildingtype_buttons_widget.dart';
+import 'package:intl/intl.dart';
 
 class FilterModal extends StatefulWidget {
   const FilterModal({Key? key});
@@ -19,17 +19,13 @@ class FilterModal extends StatefulWidget {
 
 class _FilterWidgetState extends State<FilterModal> {
   final ConditionController controller = Get.find<ConditionController>();
-
-  String _selectedLocation = '';
-  String _prevLocation = '';
+  String _selectedSi = '';
+  String _selectedGu = '';
+  String _selectedDong = '';
   String _selectedBuildingType = '';
-  String _prevBuildingType = '';
-  int _selectedFee = 0;
-  int _prevFee = 0;
-  DateTime _selectedMoveInDate = DateTime.now();
-  DateTime _prevMoveInDate = DateTime.now();
+  String _selectedFee = '';
+  String _selectedMoveInDate = '';
   String _selectedHashtag = '';
-  String _prevHashtag = '';
 
   bool _showAddress = false;
   bool _showBuildingType = false;
@@ -73,7 +69,12 @@ class _FilterWidgetState extends State<FilterModal> {
                                     onPressed: () {
                                       print("_showAddress: "+_showAddress.toString());
                                       modalSetState(() {
-                                        _showAddress = !_showAddress;
+                                        print("selected location");
+                                        _showAddress = true;
+                                        _showBuildingType = false;
+                                        _showFee = false;
+                                        _showMoveInDate = false;
+                                        _showOptions = false;
                                       });
                                     },
                                     child: const Text('주소'),
@@ -83,7 +84,12 @@ class _FilterWidgetState extends State<FilterModal> {
                                   child: ElevatedButton(
                                     onPressed: () {
                                       modalSetState(() {
-                                        _showBuildingType = !_showBuildingType;
+                                        print("selected building type");
+                                        _showAddress = false;
+                                        _showBuildingType = true;
+                                        _showFee = false;
+                                        _showMoveInDate = false;
+                                        _showOptions = false;
                                       });
                                     },
                                     child: const Text('건물 유형'),
@@ -93,7 +99,12 @@ class _FilterWidgetState extends State<FilterModal> {
                                   child: ElevatedButton(
                                     onPressed: () {
                                       modalSetState(() {
-                                        _showFee = !_showFee;
+                                        print("selected fee");
+                                        _showAddress = false;
+                                        _showBuildingType = false;
+                                        _showFee = true;
+                                        _showMoveInDate = false;
+                                        _showOptions = false;
                                       });
                                     },
                                     child: const Text('금액'),
@@ -103,22 +114,32 @@ class _FilterWidgetState extends State<FilterModal> {
                                   child: ElevatedButton(
                                     onPressed: () {
                                       modalSetState(() {
-                                        _showMoveInDate = !_showMoveInDate;
+                                        print("selected moveInDate");
+                                        _showAddress = false;
+                                        _showBuildingType = false;
+                                        _showFee = false;
+                                        _showMoveInDate = true;
+                                        _showOptions = false;
                                       });
                                     },
                                     child: const Text('입주가능일'),
                                   ),
                                 ),
-                                Expanded(
-                                  child: ElevatedButton(
-                                    onPressed: () {
-                                      modalSetState(() {
-                                        _showOptions = !_showOptions;
-                                      });
-                                    },
-                                    child: const Text('옵션'),
-                                  ),
-                                ),
+                                // Expanded(
+                                //   child: ElevatedButton(
+                                //     onPressed: () {
+                                //       modalSetState(() {
+                                //         print("selected hashtag");
+                                //         _showAddress = false;
+                                //         _showBuildingType = false;
+                                //         _showFee = false;
+                                //         _showMoveInDate = false;
+                                //         _showOptions = true;
+                                //       });
+                                //     },
+                                //     child: const Text('옵션'),
+                                //   ),
+                                // ),
                               ],
                             ),
                             const SizedBox(height: 16.0),
@@ -130,7 +151,8 @@ class _FilterWidgetState extends State<FilterModal> {
                                     child: JusoSiDropdownWidget(
                                       onChanged: (value) {
                                         setState(() {
-                                          _selectedLocation = value;
+                                          _selectedSi = value;
+                                          controller.si = value;
                                         });
                                       },
                                     ),
@@ -139,7 +161,8 @@ class _FilterWidgetState extends State<FilterModal> {
                                     child: JusoGuDropdownWidget(
                                       onChanged: (value) {
                                         setState(() {
-                                          _selectedLocation += ' $value';
+                                          _selectedGu = value;
+                                          controller.gu = value;
                                         });
                                       },
                                     ),
@@ -148,7 +171,10 @@ class _FilterWidgetState extends State<FilterModal> {
                                     child: JusoDongDropdownWidget(
                                       onChanged: (value) {
                                         setState(() {
-                                          _selectedLocation += ' $value';
+                                          _selectedDong = value;
+                                          controller.dong = value;
+                                          controller.location = controller.si + " " + controller.gu + " " + controller.dong;
+                                          print(controller.location);
                                         });
                                       },
                                     ),
@@ -164,7 +190,11 @@ class _FilterWidgetState extends State<FilterModal> {
                                     child: SetFeeWidget(
                                       onChanged: (value) {
                                         setState(() {
-                                          _selectedFee = value as int;
+                                          print(value.runtimeType);
+                                          _selectedFee = value.toString();
+                                          print(_selectedFee);
+                                          controller.fee = value;
+                                          print(controller.fee);
                                         });
                                       },
                                     ),
@@ -180,7 +210,15 @@ class _FilterWidgetState extends State<FilterModal> {
                                     child: CalendarWidget(
                                       onChanged: (value) {
                                         setState(() {
-                                          _selectedMoveInDate = value as DateTime;
+                                          DateFormat dateFormatter = DateFormat('yyyy-MM-dd');
+                                          String formattedDate = dateFormatter.format(value as DateTime);
+
+                                          _selectedMoveInDate = formattedDate;
+                                          print('** ');
+                                          print(_selectedMoveInDate);
+
+                                          controller.moveInDate = value;
+                                          print(controller.moveInDate);
                                         });
                                       },
                                     ),
@@ -197,6 +235,8 @@ class _FilterWidgetState extends State<FilterModal> {
                                       onChanged: (value) {
                                         setState(() {
                                           _selectedBuildingType = value;
+                                          controller.buildingType = value;
+                                          print(controller.buildingType);
                                         });
                                       },
                                     ),
@@ -204,41 +244,50 @@ class _FilterWidgetState extends State<FilterModal> {
                                 ],
                               ),
                             ),
-                            Visibility(
-                              visible: _showOptions,
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    child: SelectHashtagWidget(
-                                      onChanged: (value) {
-                                        setState(() {
-                                          _selectedHashtag = value;
-                                        });
-                                      },
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            //나머지 Visibility 위젯들도 동일하게 수정
+                            // Visibility(
+                            //   visible: _showOptions,
+                            //   child: Row(
+                            //     children: [
+                            //       Expanded(
+                            //         child: SelectHashtagWidget(
+                            //           onChanged: (value) {
+                            //             setState(() {
+                            //               _selectedHashtag += value;
+                            //               controller.hashtag += value;
+                            //               print(controller.hashtag);
+                            //             });
+                            //           },
+                            //         ),
+                            //       ),
+                            //     ],
+                            //   ),
+                            // ),
+
                             const SizedBox(height: 30),
-                            Text('주소: ' + _selectedLocation),
+                            Text('주소: ' + _selectedSi + " " + _selectedGu + " " + _selectedDong),
                             const SizedBox(height: 10),
                             Text('건물 유형: ' + _selectedBuildingType),
                             const SizedBox(height: 10),
-                            Text('금액: ' + _selectedFee.toString()),
+                            Text('금액: ${_selectedFee as String}'),
                             const SizedBox(height: 10),
-                            Text('입주 가능일: ' + _selectedMoveInDate.toString()),
+                            Text('입주 가능일: ' + _selectedMoveInDate),
                             const SizedBox(height: 10),
-                            Text('옵션: ' + _selectedHashtag),
-                            const SizedBox(height: 10),
+                            // Text('옵션: ' + _selectedHashtag),
+                            // const SizedBox(height: 10),
                             // 검색 버튼 추가
                             Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
                                 ElevatedButton(
                                   onPressed: () {
-                                    // 검색하기 버튼 클릭 시 동작할 코드
+                                    print(controller.location);
+                                    print(controller.buildingType);
+                                    print(controller.fee);
+                                    print(controller.moveInDate);
+
+                                    controller.readByWhereCondition();
+                                    Navigator.pop(context);
+                                    Get.toNamed('/conditionreadbywhere');
                                   },
                                   child: const Text('검색하기'),
                                 ),
