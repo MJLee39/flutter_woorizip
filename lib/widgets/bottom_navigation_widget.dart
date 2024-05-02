@@ -46,7 +46,7 @@ class BottomNavigationWidget extends GetView<NavigationController> {
             controller.currentIndex = index;
             print(index);
             if (index == 0) {
-              Get.toNamed('/'); // 홈 페이지로 이동
+              Get.offAllNamed('/'); // 홈 페이지로 이동
             } else if (index == 1) {
               
               Get.toNamed('/split'); // 다른 페이지로 이동
