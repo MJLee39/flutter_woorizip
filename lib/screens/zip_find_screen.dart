@@ -7,6 +7,9 @@ import 'package:testapp/controllers/search_condition/building_type_controller.da
 import 'package:testapp/screens/search_type_selector.dart';
 import 'package:testapp/controllers/search_condition/deposit_type_controller.dart';
 import 'package:testapp/controllers/search_condition/fee_type_controller.dart';
+import 'dart:async';
+
+import '../middleware/condition_guard.dart'; // 타이머를 사용하기 위한 import 추가
 
 class ZipFindScreen extends StatelessWidget {
   final ZipFindController _controller = Get.put(ZipFindController());
@@ -19,6 +22,14 @@ class ZipFindScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    Get.put(ConditionGuard());
+
+    // 타이머 설정: 5초 후에 ConditionGuard 호출
+    Timer(Duration(seconds: 5), () {
+      Get.find<ConditionGuard>().onPageCalled(null);
+    });
+
     return Scaffold(
       appBar: AppBar(
         bottom: PreferredSize(
