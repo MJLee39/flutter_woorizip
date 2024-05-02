@@ -6,7 +6,7 @@ import 'package:testapp/widgets/page_normal_padding_widget.dart';
 
 class SetFeeWidget extends StatefulWidget {
 
-  final Function(String)? onChanged;
+  final Function(int)? onChanged;
 
   const SetFeeWidget({super.key, this.onChanged});
 
@@ -36,7 +36,7 @@ class _SetFeeWidgetState extends State<SetFeeWidget> {
                       controller.fee = newValue.toInt();
                     });
                     if (widget.onChanged != null) {
-                      widget.onChanged!(newValue as String);
+                      widget.onChanged!(newValue.toInt());
                     }
                   },
                   activeColor: Colors.blue,

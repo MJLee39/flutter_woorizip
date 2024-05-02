@@ -4,8 +4,8 @@ import 'package:testapp/controllers/condition/condition_controller.dart';
 import 'package:testapp/controllers/chat_controller.dart';
 import 'package:testapp/chat/chat.dart';
 
-class ReadAllWidget extends StatelessWidget {
-  ReadAllWidget({super.key});
+class SpreadReadByWhereWidget extends StatelessWidget {
+  SpreadReadByWhereWidget({super.key});
 
   final ConditionController conditionController = Get.find<ConditionController>();
   final ChatController _chatController = ChatController();
@@ -14,12 +14,15 @@ class ReadAllWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(() {
       if (conditionController.isLoading.value) {
+        print('** conditionController.isLoading.value');
         return const Center(child: CircularProgressIndicator());
       } else if (conditionController.error.value.isNotEmpty) {
+        print('** conditionController.error.value.isNotEmpty');
         return Center(
           child: Text('Error: ${conditionController.error.value}'),
         );
       } else {
+        print('** its OK. now in else');
         return Expanded(
           child: ListView.builder(
             itemCount: conditionController.jsonData.length,
