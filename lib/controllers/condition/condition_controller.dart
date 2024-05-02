@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 
 class ConditionController extends GetxController {
   late String id = '';
-  late String accountId = 'accountId03';
+  late String accountId = 'accountId02';
   late String si = '';
   late String gu = '';
   late String dong = '';
@@ -23,18 +23,6 @@ class ConditionController extends GetxController {
   //     'http://10.0.2.16:8093/condition/readAll/$additionalArgument';
 
 
-  Future<String> fetchData(String url) async {
-    http.Response response = await http.get(Uri.parse(url));
-    if (response.statusCode == 200) {
-      // 성공적으로 데이터를 가져왔을 때
-      print("성공적으로 데이터 가져옴");
-      return response.body;
-    } else {
-      // 데이터 가져오기에 실패했을 때
-      throw Exception('Failed to load data');
-    }
-  }
-
   /*
   is registered
    */
@@ -47,29 +35,24 @@ class ConditionController extends GetxController {
 
       String url = 'http://localhost:8093/condition/isregistered/$accountId';
 
-      print("CHECK_V1");
       final response = await http.get(Uri.parse(url));
-
-      fetchData(url)
-          .then((data) {
-        // 데이터를 가져와서 사용합니다.
-        print('가져온 데이터: '+data);
-      })
-          .catchError((error) {
-        // 에러가 발생했을 때 처리합니다.
-        print(error);
-      });
+      // print("** response.runtime: $response.runtimeType");
+      // print(response.runtimeType);
+      // print("** response $response");
+      // print(response);
+      // print("** response.body.runtimeType");
+      // print(response.body.runtimeType);
+      // print(response.body);
 
       if (response.statusCode == 200) {
-        print("CHECK");
-        // List<dynamic> responseData =
-        //     jsonDecode(utf8.decode(response.bodyBytes));
-        //jsonData.assignAll(responseData.cast<Map<String, dynamic>>());
+        print("** status is 200");
+        String resp = response.body;
+        print('resp: $resp');
+        bool isRegistered = false;
 
-        final responseBoolean = response.body;
-        print("BOOLEAN!!!!!!!!!!! $responseBoolean");
-
-        bool isRegistered = true;
+        if (resp == "true") {
+          isRegistered = true;
+        }
 
         print('** response: OK. isRegistered: {$isRegistered}');
         return isRegistered;
@@ -78,6 +61,7 @@ class ConditionController extends GetxController {
         return false;
       }
     } catch (e) {
+      print("in isRegistered, got error");
       error.value = 'Error fetching data: $e';
       return false;
     } finally {
@@ -97,8 +81,8 @@ class ConditionController extends GetxController {
       String url = 'http://localhost:8093/condition/save';
 
       String input = jsonEncode({
+        'accountId': accountId,
         'location': location,
-        'accountId': "accountId01",
         'buildingType': buildingType,
         'fee': fee,
         'moveInDate': moveInDate.toIso8601String(),
@@ -140,30 +124,32 @@ class ConditionController extends GetxController {
 
     try {
       print('** in ReadOne --------------');
-      print("내 조건 있음 - 조회하자!!!!!!!!!");
-
-      String accountId = jsonEncode({
-        'accountId': "accountId01",
-      });
-
-      String url = 'http://localhost:8093/condition/read$accountId';
+      String url = 'http://localhost:8093/condition/read/$accountId';
 
       print('** input: $accountId');
 
       final response = await http.get(Uri.parse(url));
 
       if (response.statusCode == 200) {
-        List<dynamic> responseData =
-            jsonDecode(utf8.decode(response.bodyBytes));
-        jsonData.assignAll(responseData.cast<Map<String, dynamic>>());
-        print('** in ReadOne controller try, respose: OK');
+        final responseData = jsonDecode(utf8.decode(response.bodyBytes));
+        print('Received responseData: $responseData');
+
+        if (responseData is Map<String, dynamic>) {
+          jsonData.clear();
+          jsonData.add(responseData);
+          print('Data added to jsonData');
+        } else {
+          throw Exception('Unexpected data format');
+        }
       } else if (response.statusCode == 204) {
-        // no contnent: 요청 성공. 현재 페이지에서 벗어나지 않아도 됨
+        print('No content available for accountId: $accountId');
       } else {
         throw Exception('Failed to load data: ${response.statusCode}');
       }
-    } catch (e) {
+    } catch (e, stackTrace) {
       error.value = 'Error fetching data: $e';
+      print('Error fetching data: $e');
+      print(stackTrace);
     } finally {
       isLoading.value = false;
     }
@@ -204,13 +190,15 @@ class ConditionController extends GetxController {
     isLoading.value = true;
 
     try {
-      String url = 'http://localhost:8093//condition/readByWhere';
+      String url = 'http://localhost:8093/condition/readByWhere';
 
       print('** in readByWhere --------------');
+      print(location);
+      print(buildingType);
+      print(fee);
+      print(moveInDate);
 
       String input = jsonEncode({
-        'id': id,
-        'accountId': accountId,
         'location': location,
         'buildingType': buildingType,
         'fee': fee,

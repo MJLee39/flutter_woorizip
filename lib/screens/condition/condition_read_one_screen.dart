@@ -21,7 +21,7 @@ class _ConditionReadOneScreenState extends State<ConditionReadOneScreen> {
   void initState() {
     super.initState();
     _controller = Get.put(ConditionController());
-    _controller.readOneCondition(); // readOneCondition 메서드 호출
+    _controller.readOneCondition();
   }
 
   @override
@@ -49,6 +49,8 @@ class _ConditionReadOneScreenState extends State<ConditionReadOneScreen> {
 
                   if (isRegistered) {
                     // 조건 수정
+                    print("** in condition_read_one_screen, isRegistered: $isRegistered");
+                    print("내 조건 조회");
                     return ReadOneWidget();
                   } else {
                     // 조건 등록
