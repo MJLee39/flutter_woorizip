@@ -131,6 +131,14 @@ class HomeScreen extends StatelessWidget {
                       urlPath: '/admin')
                 ],
               ),
+              // SizedBox(
+              //   height: 90,
+              // ),
+              // Image.asset(
+              //   'assets/images/advert.png',
+              //   fit: BoxFit.cover,
+              //
+              // ),
             ],
           ),
         ),
