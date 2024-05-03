@@ -26,7 +26,7 @@ class ZipFindScreen extends StatelessWidget {
     Get.put(ConditionGuard());
 
     // 타이머 설정: 5초 후에 ConditionGuard 호출
-    Timer(Duration(seconds: 5), () {
+    Timer(Duration(seconds: 60), () {
       Get.find<ConditionGuard>().onPageCalled(null);
     });
 
@@ -91,7 +91,6 @@ class ZipFindScreen extends StatelessWidget {
             itemCount: _controller.jsonData.length,
             itemBuilder: (BuildContext context, int index) {
               final item = _controller.jsonData[index];
-              print("!!!!!!!!!!!!!!!!!!!!!!! item: "+item.toString());
               // jsonData의 0번째 값이 {'placeholder': 'premiumZip이 비어있습니다.'}이 아니면서 index가 0인 경우에 네모 박스를 그립니다.
               if (index == 0 && item['placeholder'] == null) {
                 return Container(

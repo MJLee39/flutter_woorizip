@@ -63,7 +63,7 @@ class AppPages {
     _getPageWithMiddleware(
       name: '/addressSearch',
       page: () => AddressSearchScreen(),
-      
+      middlewares: [],
     ),
     _getPageWithMiddleware(
       name: '/result',
