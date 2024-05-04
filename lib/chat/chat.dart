@@ -84,7 +84,7 @@ class ChatState extends State<Chat> {
   }
 
   void _showItemList() async {
-    final String url = 'http://localhost/zipListByAgent';
+    final String url = 'http://10.0.2.2/zipListByAgent';
     final Map<String, dynamic> requestBody = {'agentId': '명진 부동산1'};
     final response = await http.post(
       Uri.parse(url),

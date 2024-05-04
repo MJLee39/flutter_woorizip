@@ -36,7 +36,7 @@ class _ZipListAgentScreenState extends State<ZipListAgentScreen> {
   void initState() {
     super.initState();
     //additionalArgument = Get.arguments;
-    additionalArgument = "명진 부동산88";
+    additionalArgument = "명진 부동산1";
     fetchData();
   }
 
@@ -44,7 +44,7 @@ class _ZipListAgentScreenState extends State<ZipListAgentScreen> {
   Future<void> fetchData() async {
     try {
       final response = await http.post(
-        Uri.parse('http://localhost/zipListByAgent'),
+        Uri.parse('http://10.0.2.2/zipListByAgent'),
         body: jsonEncode({'agentId': additionalArgument}),
         headers: {'Content-Type': 'application/json'},
       );

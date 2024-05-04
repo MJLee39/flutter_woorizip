@@ -26,7 +26,7 @@ class ZipFindScreen extends StatelessWidget {
     Get.put(ConditionGuard());
 
     // 타이머 설정: 5초 후에 ConditionGuard 호출
-    Timer(Duration(seconds: 5), () {
+    Timer(Duration(seconds: 60), () {
       Get.find<ConditionGuard>().onPageCalled(null);
     });
 
