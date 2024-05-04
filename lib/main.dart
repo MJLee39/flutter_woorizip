@@ -48,5 +48,4 @@ Future<void> initServices() async {
     await storageService.initStorage();
     return storageService;
   });
-  // 다른 서비스 등록...
 }

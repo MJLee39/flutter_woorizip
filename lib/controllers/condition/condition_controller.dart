@@ -19,13 +19,7 @@ class ConditionController extends GetxController {
   final RxString error = ''.obs;
   final String additionalArgument = 'accountId01';
 
-  // String url =
-  //     'http://10.0.2.16:8093/condition/readAll/$additionalArgument';
 
-
-  /*
-  is registered
-   */
   Future<bool> isRegistered() async {
     isLoading.value = true;
 
