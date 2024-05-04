@@ -64,7 +64,6 @@ class SeeMoreScreen extends StatelessWidget {
             color: Colors.grey,
             height: 20,
             thickness: 0.5,
-       
           ),
             Padding(
               padding: EdgeInsets.fromLTRB(20.0, 2.0, 20.0, 2.0),
@@ -108,10 +107,32 @@ class SeeMoreScreen extends StatelessWidget {
                 ],
               ),
             ),
+            Padding(
+              padding: EdgeInsets.fromLTRB(20.0, 2.0, 20.0, 2.0),
+              child: Row(
+                children: [
+                  Icon(Icons.home_work_outlined, color: Colors.grey[400]),
+                
+                  SizedBox(width: 10),
+                  TextButton(
+                    onPressed: () {
+                      Get.toNamed('/conditionreadone');
+                    },
+                    style: TextButton.styleFrom(
+                      backgroundColor: Colors.white,
+                    ),
+                    child: const Text(
+                      '내 조건',
+                      style: TextStyle(color: Colors.black87, fontSize: 20, fontWeight: FontWeight.normal),
+                    ),
+                  ),
+                ],
+              ),
+            ),
 
         ],
       
-      ),
+      ),  
       bottomNavigationBar: const BottomNavigationWidget(),
     );
   }
