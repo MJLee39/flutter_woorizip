@@ -3,29 +3,29 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class ChatController {
-
   Future<List<ChatRoomResponseDTO>> fetchChatRooms(String accountId) async {
-    final url = Uri.parse("http://localhost:8080/chat/find/$accountId/room");
+
+    final url = Uri.parse("https://chat.teamwaf.app/chat/find/$accountId/room");
+
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
-      final List<dynamic> jsonList = jsonDecode(utf8.decode(response.bodyBytes));
-      return jsonList.map((json) => ChatRoomResponseDTO.fromJson(json)).toList();
+      final List<dynamic> jsonList =
+          jsonDecode(utf8.decode(response.bodyBytes));
+      return jsonList
+          .map((json) => ChatRoomResponseDTO.fromJson(json))
+          .toList();
     } else {
       throw Exception("Failed to fetch chat rooms");
     }
   }
 
-  Future<Map<String, dynamic>> createChatRoom(String clientId, String agentId) async {
+  Future<Map<String, dynamic>> createChatRoom(
+      String clientId, String agentId) async {
     final response = await http.post(
-        Uri.parse('http://localhost:8080/chat/create'),
-        headers: {
-          'content-type': 'application/json'
-        },
-        body: jsonEncode({
-          'clientId': clientId,
-          'agentId': agentId
-        }),
+      Uri.parse('https://chat.teamwaf.app/chat/create'),
+      headers: {'content-type': 'application/json'},
+      body: jsonEncode({'clientId': clientId, 'brokerId': agentId}),
     );
 
     if (response.statusCode == 200) {
@@ -47,7 +47,9 @@ class ChatController {
   }
 
   Future<dynamic> fetchChatRoom(String chatRoomId) async {
-    final url = Uri.parse("http://localhost:8080/chat/room?chatRoomId=$chatRoomId");
+    print(chatRoomId);
+    final url =
+        Uri.parse("https://chat.teamwaf.app/chat/room?chatRoomId=$chatRoomId");
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
@@ -62,14 +64,8 @@ class ChatController {
   Future<String> sendReport(String senderId, String targetId) async {
     final url = Uri.parse("http://localhost:8080/report");
     final response = await http.post(url,
-      headers: {
-        'content-type': 'application/json'
-      },
-      body: jsonEncode({
-        'senderId': senderId,
-        'targetId': targetId
-      })
-    );
+        headers: {'content-type': 'application/json'},
+        body: jsonEncode({'senderId': senderId, 'targetId': targetId}));
 
     if (response.statusCode == 200) {
       return "신고가 성공적으로 접수됐습니다.";
@@ -77,7 +73,6 @@ class ChatController {
       throw Exception("Failed to fetch chat room");
     }
   }
-
 }
 
 class ChatRoomResponseDTO {

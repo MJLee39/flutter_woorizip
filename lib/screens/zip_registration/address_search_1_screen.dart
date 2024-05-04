@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:testapp/controllers/api_controller.dart';
 import 'package:testapp/widgets/app_bar_widget.dart';
 import 'package:testapp/widgets/bottom_expend_button_widget.dart';
+import 'package:testapp/widgets/bottom_navigation_widget.dart';
 import 'package:testapp/widgets/text_header_widget.dart';
 
 class AddressSearchScreen extends GetView<ApiController> {
@@ -258,7 +259,7 @@ class AddressSearchScreen extends GetView<ApiController> {
                 : const SizedBox.shrink(),
           ),
         ],
-      ),
+      ),bottomNavigationBar: const BottomNavigationWidget()
     );
 
   }

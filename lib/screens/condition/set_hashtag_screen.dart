@@ -4,7 +4,6 @@ import 'package:testapp/controllers/condition/condition_controller.dart';
 import 'package:testapp/widgets/app_bar_widget.dart';
 import 'package:testapp/widgets/bottom_navigation_widget.dart';
 import 'package:testapp/widgets/client/select_hashtag_widget.dart';
-import 'package:testapp/widgets/client/user_write_widget.dart';
 import 'package:testapp/widgets/page_normal_padding_widget.dart';
 import 'package:testapp/widgets/text_header_widget.dart';
 
@@ -15,8 +14,11 @@ class SetHashtagScreen extends GetView<ConditionController> {
   Widget build(BuildContext context) {
     debugPrint('Location: ${controller.location}');
     debugPrint('Building Type: ${controller.buildingType}');
+    debugPrint('Location: ${controller.location}');
+    debugPrint('Building Type: ${controller.buildingType}');
     debugPrint('Fee: ${controller.fee}');
     debugPrint('Move-In Date: ${controller.moveInDate}');
+    debugPrint('Hashtag: ${controller.hashtag}');
     debugPrint('Hashtag: ${controller.hashtag}');
 
     return Scaffold(
@@ -24,6 +26,7 @@ class SetHashtagScreen extends GetView<ConditionController> {
       body: PageNormalPaddingWidget(
         child: Column(
           children: [
+            const SizedBox(height: 20),
             const SizedBox(height: 20),
             const TextHeaderWidget(text: '원하는 옵션을 알려주세요'),
             const SizedBox(height: 40),
@@ -33,8 +36,6 @@ class SetHashtagScreen extends GetView<ConditionController> {
 
             const SizedBox(height: 40),
 
-            // const UserWriteWidget(),
-
             // 화면이동 버튼
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
@@ -42,11 +43,11 @@ class SetHashtagScreen extends GetView<ConditionController> {
                 TextButton(
                   onPressed: () {
                     controller.saveCondition();
-
-                    Get.toNamed('/conditionreadone');
+                    Navigator.pushNamed(context, '/conditionreadone');
                   },
                   style: ButtonStyle(
-                    foregroundColor: MaterialStateProperty.all<Color>(Colors.indigo),
+                    foregroundColor:
+                        MaterialStateProperty.all<Color>(Colors.indigo),
                   ),
                   child: const Text('확인'),
                 ),

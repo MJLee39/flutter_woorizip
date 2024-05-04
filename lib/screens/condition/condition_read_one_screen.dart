@@ -21,6 +21,7 @@ class _ConditionReadOneScreenState extends State<ConditionReadOneScreen> {
   void initState() {
     super.initState();
     _controller = Get.put(ConditionController());
+    _controller.readOneCondition();
   }
 
   @override
@@ -38,19 +39,18 @@ class _ConditionReadOneScreenState extends State<ConditionReadOneScreen> {
               future: _controller.isRegistered(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  // 로딩 중일 때 중앙에 로딩 인디케이터 표시
                   return const Center(child: CircularProgressIndicator());
                 } else if (snapshot.hasError) {
-                  // 오류 발생 시 유용한 오류 메시지 표시
                   return Center(
                     child: Text('Error fetching data: ${snapshot.error}'),
                   );
                 } else {
-                  // 성공적으로 불리언 값을 가져왔을 때
                   bool isRegistered = snapshot.data ?? false;
 
                   if (isRegistered) {
                     // 조건 수정
+                    print("** in condition_read_one_screen, isRegistered: $isRegistered");
+                    print("내 조건 조회");
                     return ReadOneWidget();
                   } else {
                     // 조건 등록

@@ -22,6 +22,7 @@ class AuthGuard extends GetMiddleware {
       // Unexpected null value. 어쩔수 없음
     }
 
+
     return super.onPageCalled(page);
   }
 }

@@ -4,20 +4,18 @@ import 'package:testapp/controllers/condition/condition_controller.dart';
 import 'package:testapp/widgets/app_bar_widget.dart';
 import 'package:testapp/widgets/bottom_navigation_widget.dart';
 import 'package:testapp/screens/condition/filter_modal.dart';
+import 'package:testapp/widgets/client/spread_read_by_where.dart';
 import 'package:testapp/widgets/page_normal_padding_widget.dart';
 import 'package:testapp/widgets/text_header_widget.dart';
 import 'package:testapp/widgets/client/read_all_widget.dart';
 
-class ConditionReadAllScreen extends GetView<ConditionController> {
-  ConditionReadAllScreen({super.key});
+class ConditionReadByWhereScreen extends GetView<ConditionController> {
+  ConditionReadByWhereScreen({super.key});
 
-  final controller = Get.put(ConditionController());
+  final ConditionController controller = Get.find<ConditionController>();
 
   @override
   Widget build(BuildContext context) {
-    Get.put(ConditionController());
-    controller.readAllCondition();
-
     return Scaffold(
       appBar: const AppBarWidget(),
       body: PageNormalPaddingWidget(
@@ -35,8 +33,9 @@ class ConditionReadAllScreen extends GetView<ConditionController> {
 
             const SizedBox(height: 20),
 
-            // 조건 전체 조회
-            ReadAllWidget(),
+            // 조건부 조건 조회 뿌리기
+            SpreadReadByWhereWidget(),
+
           ],
         ),
       ),

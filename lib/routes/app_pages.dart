@@ -5,6 +5,8 @@ import 'package:testapp/map/screens/map_screen.dart';
 import 'package:testapp/middleware/auth_guard.dart';
 import 'package:testapp/screens/admin_screen.dart';
 import 'package:testapp/screens/condition/condition_read_all_screen.dart';
+import 'package:testapp/screens/condition/condition_read_by_where_screen.dart';
+import 'package:testapp/screens/condition/condition_update_screen.dart';
 import 'package:testapp/screens/zip_registration/address_search_1_screen.dart';
 import 'package:testapp/screens/home_screen.dart';
 import 'package:testapp/screens/login_screen.dart';
@@ -61,7 +63,7 @@ class AppPages {
     _getPageWithMiddleware(
       name: '/addressSearch',
       page: () => AddressSearchScreen(),
-      middlewares: [],
+      
     ),
     _getPageWithMiddleware(
       name: '/result',
@@ -127,7 +129,7 @@ class AppPages {
      */
     _getPageWithMiddleware(
       name: '/sethashtag',
-      page: () => const SetHashtagScreen(),
+      page: () => SetHashtagScreen(),
       middlewares: [],
     ),
 
@@ -145,7 +147,25 @@ class AppPages {
      */
     _getPageWithMiddleware(
       name: '/conditionreadall',
-      page: () => const ConditionReadAllScreen(),
+      page: () => ConditionReadAllScreen(),
+      middlewares: [],
+    ),
+
+    /*
+    client readByWhere
+     */
+    _getPageWithMiddleware(
+      name: '/conditionreadbywhere',
+      page: () => ConditionReadByWhereScreen(),
+      middlewares: [],
+    ),
+
+    /*
+    client update
+     */
+    _getPageWithMiddleware(
+      name: '/conditionupdate',
+      page: () => ConditionUpdateScreen(),
       middlewares: [],
     ),
 
@@ -157,6 +177,9 @@ class AppPages {
     ),
 
     //매물 등록에서 상세 정보 입력 페이지로 이동
+    /*
+    client condition update
+     */
     _getPageWithMiddleware(
       name: '/detail_registration',
       page: () => ZipDetailRegistrationScreen(),
@@ -206,9 +229,6 @@ class AppPages {
     ),
 
     _getPageWithMiddleware(
-      name: '/admin',
-      page: () => AdminScreen(),
-      middlewares: []
-    )
+        name: '/admin', page: () => AdminScreen(), middlewares: [])
   ];
 }
