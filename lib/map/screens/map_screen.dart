@@ -12,10 +12,12 @@ class MapScreen extends StatelessWidget {
 
   final MapProvider mapProvider = MapProvider();
   final String buildingType;
+  
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      
       body: FutureBuilder(
         future: mapProvider.getCurrentLocation(),
         builder: (context, AsyncSnapshot<CustomLocation> snapshot) {
