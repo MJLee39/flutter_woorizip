@@ -18,7 +18,7 @@ class HalfButtonWidget extends StatelessWidget {
         },
         style: TextButton.styleFrom(
           backgroundColor: Colors.white,
-          minimumSize: const Size(0, 100),
+          minimumSize: const Size(0, 120),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
             side: BorderSide(

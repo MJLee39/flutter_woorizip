@@ -20,7 +20,7 @@ class HomeScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               const TextHeaderWidget(text: "어떤 집을 찾고 계신가요?"),
-              const SizedBox(height: 10),
+              const SizedBox(height: 30),
               TextButton(
                 onPressed: () {
                   Get.toNamed('/addressSearch');
@@ -28,12 +28,13 @@ class HomeScreen extends StatelessWidget {
                 style: TextButton.styleFrom(
                   backgroundColor: AppColors.mainColorTest,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(6),
                     side: BorderSide(
                       color: Colors.grey[300]!,
                       width: 1.0,
                     ),
                   ),
+                  minimumSize: Size(0, 100),
                 ),
                 child: const Row(
                   children: [
@@ -49,6 +50,7 @@ class HomeScreen extends StatelessWidget {
                     ),
                     SizedBox(width: 8), // 이미지와 텍스트 사이 간격 조정
                     Expanded(
+                      
                       flex: 5, // 텍스트 영역이 이미지보다 더 많은 공간을 차지하도록 조정
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -73,7 +75,7 @@ class HomeScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 20),
               const Row(
                 children: [
                   HalfButtonWidget(
@@ -109,28 +111,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              const Row(
-                children: [
-                  SizedBox(
-                    height: 10,
-                  ),
-                  HalfButtonWidget(
-                      text: '공인중개사 조건 조회 페이지',
-                      imagePath: 'assets/images/icon_officetel.png',
-                      urlPath: '/conditionreadall')
-                ],
-              ),
-              const Row(
-                children: [
-                  SizedBox(
-                    height: 10,
-                  ),
-                  HalfButtonWidget(
-                      text: '관리자 페이지',
-                      imagePath: 'assets/images/icon_officetel.png',
-                      urlPath: '/admin')
-                ],
-              ),
+            
               // SizedBox(
               //   height: 90,
               // ),

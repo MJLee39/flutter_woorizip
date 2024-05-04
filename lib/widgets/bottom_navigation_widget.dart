@@ -57,7 +57,7 @@ class BottomNavigationWidget extends GetView<NavigationController> {
                 'accountId': 'qassadsadsa',
               });
             } else if (index == 4) {
-              Get.toNamed('/seeMore'); // '더보기' 페이지로 이동
+              Get.offAllNamed('/seeMore'); // '더보기' 페이지로 이동
             }
           },
         ),

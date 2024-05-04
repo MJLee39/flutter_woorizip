@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:testapp/controllers/condition/condition_controller.dart';
 import 'package:testapp/widgets/app_bar_widget.dart';
@@ -24,7 +23,7 @@ class SetDetailsScreen extends GetView<ConditionController> {
     final RxList<String> locationArray = <String>[].obs;
 
     return Scaffold(
-      appBar: const AppBarWidget(),
+      appBar: const AppBarWidget(title: '조건 설정',),
       body: PageNormalPaddingWidget(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
