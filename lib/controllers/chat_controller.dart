@@ -36,7 +36,7 @@ class ChatController {
   }
 
   Future<String> exitChatRoom(String chatRoomId) async {
-    final url = Uri.parse("http://localhost:8080//chat/room/$chatRoomId");
+    final url = Uri.parse("https://chat.teamwaf.app/chat/room/$chatRoomId");
     final response = await http.delete(url);
 
     if (response.statusCode == 200) {
@@ -62,7 +62,7 @@ class ChatController {
   }
 
   Future<String> sendReport(String senderId, String targetId) async {
-    final url = Uri.parse("http://localhost:8080/report");
+    final url = Uri.parse("https://chat.teamwaf.app/chat/report");
     final response = await http.post(url,
         headers: {'content-type': 'application/json'},
         body: jsonEncode({'senderId': senderId, 'targetId': targetId}));
@@ -73,6 +73,7 @@ class ChatController {
       throw Exception("Failed to fetch chat room");
     }
   }
+
 }
 
 class ChatRoomResponseDTO {
