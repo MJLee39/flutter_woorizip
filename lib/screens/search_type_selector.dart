@@ -126,7 +126,7 @@ class _SearchTypeSelectorState extends State<SearchTypeSelector> {
     final selectedFeeType = widget.feeController.selectedFeeType;
     final selectedDeposit = widget.depositController.selectedDepositType;
 
-    final url = Uri.parse('http://10.0.2.2/search?location=$selectedLocation&buildingType=$selectedBuildingTypes&fee=$selectedFeeType&deposit=$selectedDeposit');
+    final url = Uri.parse('https://api.teamwaf.app/v1/zip/search?location=$selectedLocation&buildingType=$selectedBuildingTypes&fee=$selectedFeeType&deposit=$selectedDeposit');
 
     final response = await http.get(url);
 
