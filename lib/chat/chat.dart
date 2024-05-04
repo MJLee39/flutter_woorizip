@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:testapp/controllers/chat_controller.dart';
+import 'package:testapp/widgets/app_bar_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:stomp_dart_client/stomp.dart';
 import 'package:stomp_dart_client/stomp_config.dart';
@@ -235,9 +236,7 @@ class ChatState extends State<Chat> {
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset: true,
-        appBar: AppBar(
-          title: Text('Chat'),
-        ),
+        appBar: AppBarWidget(title: '메시지 유저 이름',),
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(

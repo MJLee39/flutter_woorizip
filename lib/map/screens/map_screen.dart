@@ -5,6 +5,7 @@ import 'package:naver_map_plugin/naver_map_plugin.dart';
 import 'package:testapp/map/dto/custom_location.dart';
 import 'package:testapp/map/provider/map_provider.dart';
 import 'package:testapp/controllers/map_controller.dart';
+import 'package:testapp/widgets/app_bar_widget.dart';
 
 class MapScreen extends StatelessWidget {
 
@@ -17,7 +18,7 @@ class MapScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
+      appBar: AppBarWidget(title: '지도로 찾기'),
       body: FutureBuilder(
         future: mapProvider.getCurrentLocation(),
         builder: (context, AsyncSnapshot<CustomLocation> snapshot) {

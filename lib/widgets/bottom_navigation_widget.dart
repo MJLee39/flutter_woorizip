@@ -35,7 +35,7 @@ class BottomNavigationWidget extends GetView<NavigationController> {
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.chat_bubble_outline_sharp),
-              label: '채팅',
+              label: '메시지',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.more_horiz),

@@ -1,10 +1,18 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
+import 'package:testapp/utils/api_config.dart';
 
 class ConditionController extends GetxController {
+
+  final apiEndpointUrl = ApiConfig().apiEndpointUrl;
+  final apiSubfixReadConditionUrl = ApiConfig().apiSubfixReadConditionUrl;
+
+
   late String id = '';
+  
   late String accountId = 'accountId02';
   late String si = '';
   late String gu = '';
