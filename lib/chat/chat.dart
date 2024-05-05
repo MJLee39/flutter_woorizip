@@ -27,7 +27,7 @@ class Chat extends StatefulWidget {
 }
 
 class ChatState extends State<Chat> {
-  final String webSocketUrl = 'http://localhost:8080/stomp/chat';
+  final String webSocketUrl = 'https://chat.teamwaf.app/stomp/chat';
   late StompClient _client;
   final ChatController _chatController = ChatController();
   final TextEditingController _controller = TextEditingController();
