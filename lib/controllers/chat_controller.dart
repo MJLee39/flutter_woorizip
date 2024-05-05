@@ -3,9 +3,25 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class ChatController {
+
+  final String urlPrefix = "http://localhost:8080";
+
+  Future<String> getNicknameBy(String accountId) async {
+    // final url = Uri.parse("");
+    // final response = await http.get(url);
+    //
+    // if (response.statusCode == 200) {
+    //   return jsonDecode(utf8.decode(response.bodyBytes));
+    // } else {
+    //   throw Exception("Failed to fetch chat rooms");
+    // }
+
+    return "닉네임";
+  }
+
   Future<List<ChatRoomResponseDTO>> fetchChatRooms(String accountId) async {
 
-    final url = Uri.parse("https://chat.teamwaf.app/chat/find/$accountId/room");
+    final url = Uri.parse("$urlPrefix/chat/find/$accountId/room");
 
     final response = await http.get(url);
 
@@ -23,7 +39,7 @@ class ChatController {
   Future<Map<String, dynamic>> createChatRoom(
       String clientId, String agentId) async {
     final response = await http.post(
-      Uri.parse('https://chat.teamwaf.app/chat/create'),
+      Uri.parse('$urlPrefix/chat/create'),
       headers: {'content-type': 'application/json'},
       body: jsonEncode({'clientId': clientId, 'brokerId': agentId}),
     );
@@ -36,7 +52,7 @@ class ChatController {
   }
 
   Future<String> exitChatRoom(String chatRoomId) async {
-    final url = Uri.parse("https://chat.teamwaf.app/chat/room/$chatRoomId");
+    final url = Uri.parse("$urlPrefix/chat/room/$chatRoomId");
     final response = await http.delete(url);
 
     if (response.statusCode == 200) {
@@ -49,7 +65,7 @@ class ChatController {
   Future<dynamic> fetchChatRoom(String chatRoomId) async {
     print(chatRoomId);
     final url =
-        Uri.parse("https://chat.teamwaf.app/chat/room?chatRoomId=$chatRoomId");
+        Uri.parse("$urlPrefix/chat/room?chatRoomId=$chatRoomId");
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
@@ -62,7 +78,7 @@ class ChatController {
   }
 
   Future<String> sendReport(String senderId, String targetId) async {
-    final url = Uri.parse("https://chat.teamwaf.app/chat/report");
+    final url = Uri.parse("$urlPrefix/chat/report");
     final response = await http.post(url,
         headers: {'content-type': 'application/json'},
         body: jsonEncode({'senderId': senderId, 'targetId': targetId}));

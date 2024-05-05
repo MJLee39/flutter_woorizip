@@ -100,14 +100,9 @@ class _BottomSheetContentState extends State<BottomSheetContent> {
   Future<void> _loadData() async {
     try {
       List<Map<String, String>> result = await _dataController.fetchData(widget.customLocation!);
-
-      if (result.isEmpty) {
-        print("None");
-      } else {
         setState(() {
           data = result;
         });
-      }
     } catch (error) {
       print('Error: $error');
     }

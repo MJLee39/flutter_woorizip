@@ -25,6 +25,7 @@ class _ChatRoomListScreenState extends State<ChatRoomListScreen> {
   @override
   void initState() {
     super.initState();
+    print(widget.accountId);
     _chatController.fetchChatRooms(widget.accountId)
         .then((value) => {
           setState(() {
@@ -40,7 +41,7 @@ class _ChatRoomListScreenState extends State<ChatRoomListScreen> {
   void subscribeToChatRoom(String chatRoomId) {
     EventFlux.instance.connect(
       EventFluxConnectionType.get,
-      'https://chat.teamwaf.app/chat/connect/$chatRoomId',
+      'http://localhost:8080/chat/connect/$chatRoomId',
       onSuccessCallback: (EventFluxResponse? response) {
         response!.stream?.listen((data) {
           if (data.event == 'chat') {
@@ -145,6 +146,8 @@ class _ChatRoomListScreenState extends State<ChatRoomListScreen> {
                             builder: (context) => Chat(
                               chatRoomId: chatRoom.id,
                               accountId: widget.accountId,
+                              myNickname: "허위 매물 사기꾼",
+                              otherNickname: chatRoom.nickname,
                             ),
                           ),
                         );
