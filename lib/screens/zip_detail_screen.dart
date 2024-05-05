@@ -277,6 +277,10 @@ class _DetailScreenState extends State<DetailScreen> {
                       onPressed: () {
                         final agentId = "qassadsadsa";
                         const clientId = "qweqwewqeewq";
+                        var otherNickname;
+                        _chatController.getNicknameBy(agentId).then(
+                                (value) => otherNickname = value
+                        );
 
                         _chatController.createChatRoom(clientId, agentId).then((chatRoomInfo) {
                           Navigator.push(
@@ -284,6 +288,8 @@ class _DetailScreenState extends State<DetailScreen> {
                               builder: (context) => Chat(
                                 chatRoomId: chatRoomInfo['id'],
                                 accountId: clientId,
+                                myNickname: "허위 매물 사기꾼",
+                                otherNickname: otherNickname,
                               ),
                             ),
                           );
