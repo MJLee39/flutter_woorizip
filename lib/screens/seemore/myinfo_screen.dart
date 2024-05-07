@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:testapp/controllers/profile/profile_controller.dart';
 import 'package:testapp/widgets/app_bar_widget.dart';
 
 class MyinfoScreen extends StatelessWidget {
@@ -6,14 +8,50 @@ class MyinfoScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ProfileController controller = Get.put(ProfileController());
+
     return Scaffold(
       appBar: AppBarWidget(title: '내 정보'),
       body: Column(
         children: <Widget>[
           SizedBox(height: 20),
-          CircleAvatar(
-            radius: 50,
-            backgroundColor: Colors.grey[300],
+          Stack(
+            alignment: Alignment.center,
+            children: <Widget>[
+              GestureDetector(
+                onTap: () => controller.pickImage(),
+                child: Obx(() => CircleAvatar(
+                      radius: 60,
+                      backgroundColor: Colors.grey[300],
+                      backgroundImage: controller.image != null
+                          ? FileImage(controller.image!) as ImageProvider<Object>
+                          : const AssetImage('assets/images/default_profile.png') ,
+                    )),
+              ),
+              Positioned(
+                bottom: 0, // 하단 정렬
+                right: 0, // 우측 정렬
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.black, // 검은색 배경
+                    borderRadius: BorderRadius.circular(20), // 모서리 둥글게
+                  ),
+                  width: 36, // 컨테이너 너비 조절
+                  height: 36, // 컨테이너 높이 조절
+                  child: Align(
+                    alignment: Alignment.center, // 중앙 정렬
+                    child: IconButton(
+                      icon: Icon(Icons.camera_alt),
+                      color: Colors.white,
+                      onPressed: () {},
+                      iconSize: 20, // 아이콘 크기 조절
+                      padding: EdgeInsets.zero, // 내부 패딩 제거
+                      constraints: BoxConstraints(), // 최소/최대 크기 제약 제거
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
           SizedBox(height: 20),
           ListTile(
@@ -45,3 +83,4 @@ class MyinfoScreen extends StatelessWidget {
     );
   }
 }
+

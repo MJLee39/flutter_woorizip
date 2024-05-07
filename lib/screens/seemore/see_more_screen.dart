@@ -108,7 +108,7 @@ class SeeMoreScreen extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: EdgeInsets.fromLTRB(20.0, 2.0, 20.0, 2.0),
+              padding: const EdgeInsets.fromLTRB(20.0, 2.0, 20.0, 2.0),
               child: Row(
                 children: [
                   Icon(Icons.home_work_outlined, color: Colors.grey[400]),

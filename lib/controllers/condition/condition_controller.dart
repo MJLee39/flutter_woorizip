@@ -2,10 +2,15 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
+import 'package:testapp/utils/api_config.dart';
 
 class ConditionController extends GetxController {
+
   late String id = '';
+  
   late String accountId = 'accountId02';
+  late String conditionId = '';
+
   late String si = '';
   late String gu = '';
   late String dong = '';
@@ -27,7 +32,7 @@ class ConditionController extends GetxController {
       print('** in registered --------------');
       print('** accountId: $accountId');
 
-      String url = 'http://localhost:8093/condition/isregistered/$accountId';
+      String url = '${ApiConfig.apiSubfixConditionUrl}'; // 수정필요 
 
       final response = await http.get(Uri.parse(url));
       // print("** response.runtime: $response.runtimeType");
@@ -72,7 +77,7 @@ class ConditionController extends GetxController {
     try {
       print('** in Save --------------');
 
-      String url = 'http://localhost:8093/condition/save';
+      String url = ApiConfig.apiSubfixConditionUrl;
 
       String input = jsonEncode({
         'accountId': accountId,
@@ -118,7 +123,7 @@ class ConditionController extends GetxController {
 
     try {
       print('** in ReadOne --------------');
-      String url = 'http://localhost:8093/condition/read/$accountId';
+      String url = '${ApiConfig.apiSubfixConditionUrl}/${conditionId}';
 
       print('** input: $accountId');
 
@@ -158,7 +163,7 @@ class ConditionController extends GetxController {
     try {
       print('** in readAll --------------');
 
-      String url = 'http://localhost:8093/condition/readAll';
+      String url = ApiConfig.apiSubfixConditionUrl;
 
       final response = await http.get(Uri.parse(url));
 
@@ -241,7 +246,7 @@ class ConditionController extends GetxController {
 
       print("** parsing check -> input: $input");
 
-      final response = await http.post(Uri.parse(url),
+      final response = await http.put(Uri.parse(url),
           headers: {'content-type': 'application/json'}, body: input);
 
       if (response.statusCode == 200) {
