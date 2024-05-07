@@ -273,7 +273,7 @@ class ConditionController extends GetxController {
     try {
       print('** in Delete --------------');
 
-      String url = 'http://localhost:8093/condition/delete/$id';
+      String url = '${ApiConfig.apiSubfixConditionUrl}/$conditionId';
 
       print("** url check -> uri: $url");
 

@@ -1,9 +1,12 @@
 // lib/services/auth_service.dart
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:testapp/models/account.dart';
 import 'package:testapp/services/storage_service.dart';
+import 'package:testapp/utils/api_config.dart';
 
 class AuthService extends GetxService {
   static AuthService get to => Get.find();
@@ -11,7 +14,6 @@ class AuthService extends GetxService {
   final RxBool isLoggedIn = false.obs;
 
   final _storageService = Get.find<StorageService>();
-
 
   bool get isLoggedInValue => isLoggedIn.value;
 
@@ -28,8 +30,7 @@ class AuthService extends GetxService {
 
   Future<void> checkLoginStatus() async {
     final token = _storageService.getAccessToken();
-    print('>>>>>>>>>>>>>>>>>&checkLoginStatus');
-    print(token);
+    debugPrint('>>>>>>>>>>>>>>>>>&checkLoginStatus\n$token');
     // 토큰 유효성 검사
     final isValid = await _validateToken(token);
     isLoggedIn.value = isValid;
@@ -37,19 +38,31 @@ class AuthService extends GetxService {
       // 토큰이 유효하지 않은 경우 로그아웃 처리
       logout();
     }
-    }
+  }
 
-  Future<bool> checkAccount(String token) async {
+  Future<bool> checkAccount(String provider, String providerUserId) async {
     try {
-      final response = await http.get(
-        Uri.parse('http://api.teamwaf.app/v1/auth/checkAccount'),
-        headers: {'Authorization': 'Paseto $token'},
+      debugPrint('provider: $provider, providerUserId: $providerUserId');
+      debugPrint('apiCheckAccountUrl: ${ApiConfig.apiLoginUrl}');
+      final response = await http.post(
+        Uri.parse(ApiConfig.apiLoginUrl),
+       headers: {'Content-Type': 'application/json; charset=utf-8'},
+        body: jsonEncode(
+            {'provider': provider, 'providerUserId': providerUserId}),
       );
       // json 형태를 디코딩하여 변수에 저장
-      final data = jsonDecode(response.body);
+      final data =  jsonDecode(utf8.decode(response.bodyBytes));
+      debugPrint('data: $data');
       // 변수에 저장된 값을 출력
       final accessToken = data['access_token'].toString().trim();
       final refreshToken = data['refresh_token'].toString().trim();
+
+      // 계정 정보 추출
+      final accountData = data['account'];
+      final account = Account.fromJson(accountData);
+
+      // 계정 정보 저장
+      setAccount(account);
 
       setTokenData(accessToken, refreshToken);
 
@@ -63,17 +76,25 @@ class AuthService extends GetxService {
 
   Future<bool> _validateToken(String token) async {
     try {
-      final response = await http.get(
-        Uri.parse('http://localhost:8080/auth/validate'),
-        headers: {'Authorization': token},
+      final response = await http.post(
+        Uri.parse(ApiConfig.apiValidationUrl),
+        headers: {'Content-Type': 'application/json; charset=utf-8'},
+        body: jsonEncode({'token': token}),
       );
-      return response.statusCode == 200;
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        return false;
+      }
     } catch (e) {
       print(e.toString());
       return false;
     }
   }
 
+  void setAccount(Account account) async {
+    _storageService.setAccount(account);
+  }
 
   void setTokenData(String accessToken, String refreshToken) {
     // 토큰 저장
@@ -92,7 +113,6 @@ class AuthService extends GetxService {
     _storageService.removeAccessToken();
     _storageService.removeRefreshToken();
 
-    
     isLoggedIn.value = false;
     Get.snackbar(
       '로그아웃',

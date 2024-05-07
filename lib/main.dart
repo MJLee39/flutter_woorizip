@@ -11,7 +11,6 @@ import 'package:testapp/services/storage_service.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initServices();
-  await dotenv.load(fileName: '.env');
   KakaoSdk.init(
     nativeAppKey: '13cde3afb1eff0fa97b72538ffc9cdf8',
     javaScriptAppKey: 'ece3176690e15f855c51937d1d07f3c7',

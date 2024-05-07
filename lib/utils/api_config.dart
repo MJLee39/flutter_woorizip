@@ -10,14 +10,20 @@ class ApiConfig {
   // readAll
   static const apiReadAllConditionUrl = '$apiSubfixConditionUrl/readAll';
   
+  static const apiAttachmentUrl = '$apiEndpointUrl/attachment';
+
   // auth
   static const apiSubfixAuthUrl = '/v1/auth';
-  static const apiCheckAccountUrl = '$apiSubfixAuthUrl/checkAccount';
-  static const apiValidateUrl = '$apiSubfixAuthUrl/validate';
+  static const apiLoginUrl = '$apiEndpointUrl$apiSubfixAuthUrl/login';
+  static const apiCheckAccountUrl= '$apiEndpointUrl$apiSubfixAuthUrl/checkAccount';
+  static const apiGetAccountByTokenUrl= '$apiEndpointUrl$apiSubfixAuthUrl/account';
+  static const apiValidationUrl = '$apiEndpointUrl$apiSubfixAuthUrl/validation';
+
+
 
   // account
   static const apiSubfixAccountUrl = '/v1/account';
-  static const apiAccountUpdateUrl = '$apiSubfixAccountUrl/update';
-  static const apiAccountDeleteUrl = '$apiSubfixAccountUrl/delete';
+  static const apiAccountUpdateUrl = '$apiEndpointUrl$apiSubfixAccountUrl/update';
+  static const apiAccountDeleteUrl = '$apiEndpointUrl$apiSubfixAccountUrl/delete';
 
 }

@@ -11,19 +11,25 @@ class KakaoLoginController extends GetxController {
   final _authService = Get.find<AuthService>();
 
 
-  Future<void> loginWithKakao() async {
-    Get.put(AuthService());
-    try {
-      OAuthToken token = await UserApi.instance.loginWithKakaoAccount();
-      print('카카오계정으로 로그인 성공 ${token.accessToken}');
-      isLoggedIn.value = true;
-      _authService.checkAccount(token.accessToken);
-    } catch (error) {
-      print('카카오계정으로 로그인 실패 $error');
-      isLoggedIn.value = false;
-      accessToken.value = '';
-    }
+Future<void> loginWithKakao() async {
+  Get.put(AuthService());
+  try {
+    // OAuthToken token = await UserApi.instance.loginWithKakaoAccount();
+    // print('카카오계정으로 로그인 성공 ${token.accessToken}');
+    // isLoggedIn.value = true;
+    // 사용자 정보 가져오기
+    User user = await UserApi.instance.me();
+    print('사용자 정보: ${user.id}, ${user.kakaoAccount?.profile?.nickname}, ${user.kakaoAccount?.profile?.profileImageUrl}');
+
+    // AuthService에 토큰과 사용자 정보 전달
+    _authService.checkAccount('kakao', user.id.toString());
+    
+  } catch (error) {
+    print('카카오계정으로 로그인 실패 $error');
+    isLoggedIn.value = false;
+    accessToken.value = '';
   }
+}
 
   Future<void> logoutFromKakao() async {
     try {
