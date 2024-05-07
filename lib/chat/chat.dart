@@ -2,6 +2,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:testapp/controllers/chat_controller.dart';
+import 'package:testapp/widgets/app_bar_widget.dart';
+import 'package:testapp/widgets/page_normal_padding_widget.dart';
+import 'package:testapp/widgets/text_header_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:stomp_dart_client/stomp.dart';
 import 'package:stomp_dart_client/stomp_config.dart';
@@ -12,8 +15,11 @@ import 'package:testapp/screens/zip_detail_screen.dart';
 class Chat extends StatefulWidget {
   final String chatRoomId;
   final String accountId;
+  final String myNickname;
+  final String otherNickname;
 
-  const Chat({Key? key, required this.chatRoomId, required this.accountId})
+  const Chat({Key? key, required this.chatRoomId, required this.accountId,
+                        required this.myNickname, required this.otherNickname})
       : super(key: key);
 
   @override
@@ -76,7 +82,7 @@ class ChatState extends State<Chat> {
           'chatRoomId': widget.chatRoomId,
           'message': message,
           'accountId': widget.accountId,
-          'nickname': 'test',
+          'nickname': widget.myNickname,
         }),
       );
       _controller.clear();
@@ -149,12 +155,19 @@ class ChatState extends State<Chat> {
     }
   }
 
+  String checkNickname(String accountId) {
+    if (accountId == widget.accountId) {
+      return widget.myNickname;
+    }
+    return widget.otherNickname;
+  }
+
   Widget _buildMessageWidget(Map<String, dynamic> message) {
     final String originalText = message['message'] ?? "안녕하세요.";
     final String id =
     (originalText.split('%%room%%%%image%%').first).replaceAll('%%room%%', '');
     final String img = originalText.split('%%room%%%%image%%').last;
-    final String nickname = message['nickname'] ?? "익명";
+    final String nickname = checkNickname(message['accountId']);
     final bool isMyMessage = message['accountId'] == widget.accountId;
     final bool containsWoorizip = originalText.toLowerCase().contains('%%room%%');
 
@@ -162,63 +175,90 @@ class ChatState extends State<Chat> {
       crossAxisAlignment:
       isMyMessage ? CrossAxisAlignment.end : CrossAxisAlignment.start,
       children: [
-        Text(
-          nickname,
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: Colors.black,
-          ),
-        ),
-        GestureDetector(
-          onTap: containsWoorizip
-              ? () {
-            Get.to(DetailScreen(itemID: id),
-                transition: Transition.noTransition);
-          }
-              : null,
-          child: CustomPaint(
-            painter: ChatBubblePainter(
-              isMyMessage: isMyMessage,
-              color: isMyMessage ? Color(0xFF224488) : Colors.grey,
-            ),
-            child: Container(
-              constraints: BoxConstraints(
-                maxWidth: MediaQuery.of(context).size.width * 0.7,
-              ),
-              padding: EdgeInsets.all(10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  containsWoorizip
-                      ? Text(
-                    '매물 보러가기',
-                    style: TextStyle(
-                      color: Colors.white,
-                      decoration: TextDecoration.underline,
-                    ),
-                  )
-                      : SizedBox.shrink(),
-                  containsWoorizip && img.isNotEmpty
-                      ? Image.asset(
-                    img,
-                    width: 200,
-                    height: 200,
-                    fit: BoxFit.cover,
-                  )
-                      : SizedBox.shrink(),
-                  containsWoorizip
-                      ? SizedBox.shrink()
-                      : Text(
-                    originalText,
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
+        if (!isMyMessage)
+          Row(
+            children: [
+              Container(
+                width: 30, // 너비 조절
+                height: 30, // 높이 조절
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: Color(0xFF224488), // 테두리 색상
+                    width: 1, // 테두리 너비
                   ),
-                ],
+                ),
+                child: CircleAvatar(
+                  backgroundColor: Colors.white,
+                  child: Text(
+                    nickname[0], // 닉네임의 첫 글자 표시
+                    style: TextStyle(color: Color(0xFF224488)),
+                  ),
+                ),
+              ),
+              SizedBox(width: 8),
+              Text(
+                nickname,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+              ),
+            ],
+          ),
+        Padding(
+          padding: EdgeInsets.only(left: 30),
+          child:GestureDetector(
+            onTap: containsWoorizip
+                ? () {
+              Get.to(DetailScreen(itemID: id),
+                  transition: Transition.noTransition);
+            }
+                : null,
+            child: CustomPaint(
+              painter: ChatBubblePainter(
+                isMyMessage: isMyMessage,
+                color: isMyMessage ? Color(0xFF224488) : Colors.grey,
+              ),
+              child: Container(
+                constraints: BoxConstraints(
+                  maxWidth: MediaQuery.of(context).size.width * 0.7,
+                ),
+                padding: EdgeInsets.all(10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    containsWoorizip
+                        ? Text(
+                      '매물 보러가기',
+                      style: TextStyle(
+                        color: Colors.white,
+                        decoration: TextDecoration.underline,
+                      ),
+                    )
+                        : SizedBox.shrink(),
+                    containsWoorizip && img.isNotEmpty
+                        ? Image.asset(
+                      img,
+                      width: 200,
+                      height: 200,
+                      fit: BoxFit.cover,
+                    )
+                        : SizedBox.shrink(),
+                    containsWoorizip
+                        ? SizedBox.shrink()
+                        : Text(
+                      originalText,
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
-        ),
+        )
       ],
     );
   }
@@ -226,24 +266,24 @@ class ChatState extends State<Chat> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        resizeToAvoidBottomInset: true,
-        appBar: AppBar(
-          title: Text('Chat'),
-        ),
-      body: Padding(
-        padding: const EdgeInsets.all(20),
+      resizeToAvoidBottomInset: true,
+      appBar: AppBarWidget(),
+      body: PageNormalPaddingWidget(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            TextHeaderWidget(text: widget.otherNickname),
             Expanded(
-              child: ListView.builder(
+              child: ListView.separated(
                 reverse: true,
                 itemCount: messages.length,
                 controller: _scrollController,
+                separatorBuilder: (context, index) => SizedBox(height: 15), // Here is the correction
                 itemBuilder: (context, index) {
                   Map<String, dynamic> item = messages[index];
                   return _buildMessageWidget(
-                      messages[messages.length - 1 - index]);
+                    messages[messages.length - 1 - index],
+                  );
                 },
               ),
             ),
@@ -290,19 +330,14 @@ class ChatState extends State<Chat> {
     _controller.dispose();
     super.dispose();
   }
-
-  Future<void> _launchURL(String url) async {
-    if (!await launchUrl(Uri.parse(url))) {
-      throw Exception('Could not launch $url');
-    }
-  }
 }
 
 class ChatBubblePainter extends CustomPainter {
   final bool isMyMessage;
   final Color color;
+  final double minBubbleLength;
 
-  ChatBubblePainter({required this.isMyMessage, required this.color});
+  ChatBubblePainter({required this.isMyMessage, required this.color, this.minBubbleLength = 50.0});
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -313,27 +348,31 @@ class ChatBubblePainter extends CustomPainter {
     final path = Path();
 
     if (isMyMessage) {
-      path.moveTo(size.width - 20, 0);
-      path.quadraticBezierTo(size.width, 0, size.width, 15);
-      path.lineTo(size.width, size.height - 15);
-      path.quadraticBezierTo(size.width, size.height, size.width - 20, size.height);
-      path.lineTo(size.width - 40, size.height);
-      path.quadraticBezierTo(size.width - 60, size.height + 10, size.width - 50, size.height);
-      path.lineTo(10, size.height);
-      path.quadraticBezierTo(0, size.height, 0, size.height - 15);
-      path.lineTo(0, 15);
-      path.quadraticBezierTo(0, 0, 10, 0);
-    } else {
-      path.moveTo(20, 0);
+      path.moveTo(15, 0);
       path.quadraticBezierTo(0, 0, 0, 15);
       path.lineTo(0, size.height - 15);
       path.quadraticBezierTo(0, size.height, 20, size.height);
       path.lineTo(40, size.height);
-      path.quadraticBezierTo(60, size.height + 10, 50, size.height);
+      if (size.width >= minBubbleLength) {
+        path.quadraticBezierTo(60, size.height + 10, 50, size.height);
+      }
       path.lineTo(size.width - 10, size.height);
       path.quadraticBezierTo(size.width, size.height, size.width, size.height - 15);
       path.lineTo(size.width, 15);
       path.quadraticBezierTo(size.width, 0, size.width - 20, 0);
+    } else {
+      path.moveTo(size.width - 15, 0);
+      path.quadraticBezierTo(size.width, 0, size.width, 15);
+      path.lineTo(size.width, size.height - 15);
+      path.quadraticBezierTo(size.width, size.height, size.width - 20, size.height);
+      path.lineTo(size.width - 40, size.height);
+      if (size.width >= minBubbleLength) {
+        path.quadraticBezierTo(size.width - 60, size.height + 10, size.width - 50, size.height);
+      }
+      path.lineTo(10, size.height);
+      path.quadraticBezierTo(0, size.height, 0, size.height - 15);
+      path.lineTo(0, 15);
+      path.quadraticBezierTo(0, 0, 10, 0);
     }
 
     canvas.drawPath(path, paint);

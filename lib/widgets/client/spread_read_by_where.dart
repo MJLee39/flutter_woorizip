@@ -55,6 +55,10 @@ class SpreadReadByWhereWidget extends StatelessWidget {
                               onPressed: () {
                                 final agentId = "qassadsadsa";
                                 const clientId = "qweqwewqeewq";
+                                var otherNickname;
+                                _chatController.getNicknameBy(clientId).then(
+                                        (value) => otherNickname = value
+                                );
 
                                 _chatController
                                     .createChatRoom(clientId, agentId)
@@ -65,6 +69,8 @@ class SpreadReadByWhereWidget extends StatelessWidget {
                                       builder: (context) => Chat(
                                         chatRoomId: chatRoomInfo['id'],
                                         accountId: clientId,
+                                        myNickname: "허위 매물 사기꾼",
+                                        otherNickname: otherNickname,
                                       ),
                                     ),
                                   );

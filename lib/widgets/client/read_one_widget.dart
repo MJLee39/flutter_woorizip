@@ -56,8 +56,12 @@ class ReadOneWidget extends StatelessWidget {
                             // 채팅 기능
                             IconButton(
                               onPressed: () {
-                                final agentId = "qassadsadsa";
+                                const agentId = "qassadsadsa";
                                 const clientId = "qweqwewqeewq";
+                                var otherNickname;
+                                _chatController.getNicknameBy(clientId).then(
+                                        (value) => otherNickname = value
+                                );
 
                                 _chatController
                                     .createChatRoom(clientId, agentId)
@@ -68,6 +72,8 @@ class ReadOneWidget extends StatelessWidget {
                                       builder: (context) => Chat(
                                         chatRoomId: chatRoomInfo['id'],
                                         accountId: clientId,
+                                        myNickname: "허위 매물 사기꾼",
+                                        otherNickname: otherNickname,
                                       ),
                                     ),
                                   );
