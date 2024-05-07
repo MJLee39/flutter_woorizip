@@ -19,9 +19,9 @@ class ZipListLocationController extends GetxController {
     isLoading.value = true; // 로딩 상태 시작
 
     try {
-      final response = await http.get(Uri.parse('http://10.0.2.2/search?location='+additionalArgument));
+      final response = await http.get(Uri.parse('https://api.teamwaf.app/v1/zip/search?location='+additionalArgument));
       if (response.statusCode == 200) {
-        List<dynamic> responseData = jsonDecode(utf8.decode(response.bodyBytes));
+        List<dynamic> responseData = jsonDecode(utf8.decode(response.bodyBytes))['Zips'];
         jsonData.assignAll(responseData.cast<Map<String, dynamic>>());
       } else {
         throw Exception('Failed to load data: ${response.statusCode}');

@@ -132,7 +132,7 @@ class _SearchTypeSelectorState extends State<SearchTypeSelector> {
 
     if (response.statusCode == 200) {
       // 성공적인 응답 처리
-      Iterable<Map<String, dynamic>> responseData = (jsonDecode(utf8.decode(response.bodyBytes)) as List<dynamic>)
+      Iterable<Map<String, dynamic>> responseData = (jsonDecode(utf8.decode(response.bodyBytes))['Zips'] as List<dynamic>)
           .map((dynamic item) => item as Map<String, dynamic>);
       _controller.updateData(responseData.toList()); // 데이터 업데이트
     } else {

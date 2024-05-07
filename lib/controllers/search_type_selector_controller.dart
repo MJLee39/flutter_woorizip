@@ -21,12 +21,11 @@ class SearchTypeSelectorController extends GetxController {
     final selectedFeeType = feeController.selectedFeeType;
     final selectedDeposit = depositController.selectedDepositType;
 
-    final url = Uri.parse('http://10.0.2.2/search?location=$selectedLocation&buildingType=$selectedBuildingTypes&fee=$selectedFeeType&deposit=$selectedDeposit');
-
+    final url = Uri.parse('https://api.teamwaf.app/v1/zip/search?location=$selectedLocation&deposit=$selectedDeposit&fee=$selectedFeeType&buildingType=$selectedBuildingTypes');
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
-      Iterable<Map<String, dynamic>> responseData = (jsonDecode(utf8.decode(response.bodyBytes)) as List<dynamic>)
+      Iterable<Map<String, dynamic>> responseData = (jsonDecode(utf8.decode(response.bodyBytes))['Zips'] as List<dynamic>)
           .map((dynamic item) => item as Map<String, dynamic>);
       _zipFindController.updateData(responseData.toList());
     } else {

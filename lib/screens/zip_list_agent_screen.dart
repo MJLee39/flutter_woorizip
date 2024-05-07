@@ -43,13 +43,9 @@ class _ZipListAgentScreenState extends State<ZipListAgentScreen> {
 
   Future<void> fetchData() async {
     try {
-      final response = await http.post(
-        Uri.parse('http://10.0.2.2/zipListByAgent'),
-        body: jsonEncode({'agentId': additionalArgument}),
-        headers: {'Content-Type': 'application/json'},
-      );
+      final response = await http.get(Uri.parse('https://api.teamwaf.app/v1/zip/agent/'+additionalArgument));
       if (response.statusCode == 200) {
-        List<dynamic> responseData = jsonDecode(utf8.decode(response.bodyBytes));
+        List<dynamic> responseData = jsonDecode(utf8.decode(response.bodyBytes))['Zips'];
         print(responseData);
         setState(() {
           jsonData = responseData.cast<Map<String, dynamic>>();
@@ -63,7 +59,7 @@ class _ZipListAgentScreenState extends State<ZipListAgentScreen> {
   }
 
   void _deleteItem(String itemId) async {
-    final url = 'http://10.0.2.2/delete/$itemId';
+    final url = 'https://api.teamwaf.app/v1/zip/$itemId';
 
     try {
       final response = await http.delete(Uri.parse(url));

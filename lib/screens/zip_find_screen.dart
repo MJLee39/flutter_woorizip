@@ -12,6 +12,7 @@ import 'dart:async';
 import '../middleware/condition_guard.dart'; // 타이머를 사용하기 위한 import 추가
 
 class ZipFindScreen extends StatelessWidget {
+  bool isTimerCalled = false; // 타이머가 호출되었는지 여부를 추적하는 변수
   final ZipFindController _controller = Get.put(ZipFindController());
   final BuildingTypeController buildingTypeController = Get.put(BuildingTypeController());
 
@@ -25,11 +26,13 @@ class ZipFindScreen extends StatelessWidget {
 
     Get.put(ConditionGuard());
 
-    // 타이머 설정: 5초 후에 ConditionGuard 호출
-    Timer(Duration(seconds: 60), () {
-      Get.find<ConditionGuard>().onPageCalled(null);
-    });
-
+    // 타이머 설정: 60초 후에 ConditionGuard 호출
+    if (!isTimerCalled) {
+      Timer(Duration(seconds: 60), () {
+        Get.find<ConditionGuard>().onPageCalled(null);
+      });
+      isTimerCalled = true; // 타이머 호출 후 변수 업데이트
+    }
     return Scaffold(
       appBar: AppBar(
         bottom: PreferredSize(

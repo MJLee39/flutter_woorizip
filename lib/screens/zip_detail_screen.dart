@@ -143,13 +143,20 @@ class _DetailScreenState extends State<DetailScreen> {
                         Icon(
                           Icons.directions_car,
                           color: Colors.black,
-                          size: 40.0,
+                          size: 24.0,
                         ),
                         SizedBox(width: 10.0),
-                        Text(
-                          zipData["location"],
-                          style: TextStyle(color: Colors.black, fontSize: 24.0),
-                        ),
+                        SingleChildScrollView(
+                          scrollDirection: Axis.horizontal, // 텍스트를 가로로 스크롤할 수 있도록 설정
+                          child: Row(
+                            children: <Widget>[
+                              Text(
+                                zipData["location"],
+                                style: TextStyle(color: Colors.black, fontSize: 20.0),
+                              ),
+                            ],
+                          ),
+                        )
                       ],
                     ),
 

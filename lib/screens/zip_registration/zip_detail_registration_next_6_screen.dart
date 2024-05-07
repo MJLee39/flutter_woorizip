@@ -43,7 +43,7 @@ class ZipDetailRegistrationNextScreen extends StatelessWidget {
                     SizedBox(height: 10),
                     CheckedAtWidget(),
                     SizedBox(height: 40),
-                    TextHeaderWidget(text: "메모를 남겨주세요. 이 정보는 비공개 됩니다."),
+                    TextHeaderWidget(text: "메모를 남겨주세요(비공개용)"),
                     Row(
                       children: [
                         Expanded(

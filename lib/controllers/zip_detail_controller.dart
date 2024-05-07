@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 class ZipDataController {
   Future<Map<String, dynamic>> fetchZipData(String itemID) async {
     final response = await http.get(
-        Uri.parse('http://10.0.2.2/zipOne?zip_id=$itemID'));
+        Uri.parse('https://api.teamwaf.app/v1/zip/$itemID'));
 
     if (response.statusCode == 200) {
       final Map<String, dynamic> responseData =

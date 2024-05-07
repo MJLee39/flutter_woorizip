@@ -91,7 +91,7 @@ class ZipRegistration extends GetxController {
     try {
       print('** in Save --------------');
 
-      String url = 'http://10.0.2.2/insert';
+      String url = 'https://api.teamwaf.app/v1/zip';
 
       print("controller attachments: "+attachments);
       print("controller direction: "+direction);
@@ -161,7 +161,7 @@ class ZipRegistration extends GetxController {
     try {
       print('** in update --------------');
 
-      String url = 'http://10.0.2.2/update';
+      String url = 'https://api.teamwaf.app/v1/zip';
 
       print("controller attachments: "+attachments);
       print("controller direction: "+direction);
