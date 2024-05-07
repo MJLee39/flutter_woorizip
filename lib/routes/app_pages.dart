@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:testapp/account/account_controller.dart';
 import 'package:testapp/chat/chat.dart';
 import 'package:testapp/chat/chatroom_list.dart';
 import 'package:testapp/controllers/chat_controller.dart';
@@ -74,20 +75,19 @@ class AppPages {
     ),
     _getPageWithMiddleware(
       name: '/chatRoomList',
-      page: () => ChatRoomListScreen(
-        accountId: 'qassadsadsa',
-      ),
+      page: () => ChatRoomListScreen(),
       middlewares: [],
     ),
     _getPageWithMiddleware(
       name: '/chat/:chatRoomId',
       page: () {
         final ChatController _chatController = ChatController();
+        final AccountController _accountController = AccountController();
         final chatRoomId = Get.parameters['chatRoomId'];
         final accountId = Get.arguments['accountId'];
         var otherNickname;
         _chatController.getNicknameBy(accountId).then((value) => otherNickname = value);
-        return Chat(chatRoomId: chatRoomId ?? "", accountId: accountId ?? "", myNickname: "허위 매물 사기꾼", otherNickname: otherNickname,);
+        return Chat(chatRoomId: chatRoomId ?? "", accountId: accountId ?? "", myNickname: _accountController.nickname, otherNickname: otherNickname,);
       },
       middlewares: [],
     ),
