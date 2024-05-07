@@ -1,77 +1,82 @@
-
-import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart' as http;
+import 'package:testapp/models/account.dart';
 import 'package:testapp/services/storage_service.dart';
-import 'package:testapp/utils/api_config.dart';
 
 class AccountController extends GetxController {
   final _storageService = Get.find<StorageService>();
 
+  // Getter
+  Account? get account => _storageService.getAccount();
 
-  // get Account
-  Future<void> getAccount() async {
-    try {
-      http.Response response = await http.get(
-        Uri.parse(ApiConfig.apiSubfixAccountUrl),
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-          'Authorization': _storageService.getAccessToken(),
-        },
-      );
+  // Getter for each column
+  String get id => account?.id ?? '';
+  String get provider => account?.provider ?? '';
+  String get providerUserId => account?.providerUserId ?? '';
+  String get nickname => account?.nickname ?? '';
+  String get role => account?.role ?? '';
+  String get licenseId => account?.licenseId ?? '';
+  String get profileImageId => account?.profileImageId ?? '';
+  String get premiumDate => account?.premiumDate ?? '';
+  String get phone => account?.phone ?? '';
 
-      if (response.statusCode == 200) {
-        debugPrint('Account: ${response.body}');
-      } else {
-        debugPrint('Failed to get account');
-      }
-    } catch (e) {
-      debugPrint('Error getting account: $e');
+  // Setter for each column
+  set id(String value) {
+    if (account != null) {
+      _updateAccount(account!.copyWith(id: value));
     }
   }
 
-  // update Account
-  Future<void> updateAccount() async {
-    try {
-      http.Response response = await http.put(
-        Uri.parse('https://yourserver.com/account'),
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-          'Authorization': _storageService.getAccessToken(),
-          
-        },
-        body: <String, String>{
-          'name': 'new name',
-          'email': 'new email',
-        },
-      );
-      if (response.statusCode == 200) {
-        debugPrint('Account updated!');
-      } else {
-        debugPrint('Account update failed!');
-      }
-    } catch (e) {
-      debugPrint('Error updating account: $e');
+  set provider(String value) {
+    if (account != null) {
+      _updateAccount(account!.copyWith(provider: value));
     }
   }
 
-  // delete Account
-  Future<void> deleteAccount() async {
-    try {
-      http.Response response = await http.delete(
-        Uri.parse('https://yourserver.com/account'),
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-          'Authorization': _storageService.getAccessToken(),
-        },
-      );
-      if (response.statusCode == 200) {
-        debugPrint('Account deleted!');
-      } else {
-        debugPrint('Account delete failed!');
-      }
-    } catch (e) {
-      debugPrint('Error deleting account: $e');
+  set providerUserId(String value) {
+    if (account != null) {
+      _updateAccount(account!.copyWith(providerUserId: value));
     }
+  }
+
+  set nickname(String value) {
+    if (account != null) {
+      _updateAccount(account!.copyWith(nickname: value));
+    }
+  }
+
+  set role(String value) {
+    if (account != null) {
+      _updateAccount(account!.copyWith(role: value));
+    }
+  }
+
+  set licenseId(String value) {
+    if (account != null) {
+      _updateAccount(account!.copyWith(licenseId: value));
+    }
+  }
+
+  set profileImageId(String value) {
+    if (account != null) {
+      _updateAccount(account!.copyWith(profileImageId: value));
+    }
+  }
+
+  set premiumDate(String value) {
+    if (account != null) {
+      _updateAccount(account!.copyWith(premiumDate: value));
+    }
+  }
+
+  set phone(String value) {
+    if (account != null) {
+      _updateAccount(account!.copyWith(phone: value));
+    }
+  }
+
+  // Update account in storage
+  void _updateAccount(Account updatedAccount) {
+    _storageService.setAccount(updatedAccount);
+    update();
   }
 }

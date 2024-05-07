@@ -122,7 +122,7 @@ class _BottomSheetContentState extends State<BottomSheetContent> {
                 title: Text('보증금/월세 : ${item['money']}'),
                 subtitle: Text('건물 유형: ${item['buildingType']}'),
                 onTap: () {
-                  Get.to(DetailScreen(itemID: '${item["id"]}'), transition: Transition.noTransition);
+                  Get.toNamed('page/zipDetail', arguments: item['id']);
                 },
               );
             },
