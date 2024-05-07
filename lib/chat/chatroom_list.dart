@@ -5,7 +5,6 @@ import 'package:testapp/controllers/chat_controller.dart';
 import 'package:testapp/widgets/app_bar_widget.dart';
 import 'package:testapp/widgets/bottom_navigation_widget.dart';
 import 'package:testapp/widgets/page_normal_padding_widget.dart';
-import 'package:testapp/widgets/text_header_widget.dart';
 import 'chat.dart';
 
 class ChatRoomListScreen extends StatefulWidget {
@@ -71,12 +70,11 @@ class _ChatRoomListScreenState extends State<ChatRoomListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarWidget(),
+      appBar: AppBarWidget(title: '메시지',),
       body: PageNormalPaddingWidget(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            TextHeaderWidget(text: "채팅방 목록",),
             Expanded(
               child: ListView.builder(
                 itemCount: chatRooms.length,
@@ -106,7 +104,7 @@ class _ChatRoomListScreenState extends State<ChatRoomListScreen> {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           IconButton(
-                            icon: Icon(
+                            icon: const Icon(
                               Icons.warning,
                               color: Colors.white,
                             ),
@@ -123,7 +121,7 @@ class _ChatRoomListScreenState extends State<ChatRoomListScreen> {
                             },
                           ),
                           IconButton(
-                            icon: Icon(
+                            icon: const Icon(
                               Icons.exit_to_app,
                               color: Colors.white,
                             ),

@@ -12,13 +12,19 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: title != null ? Text(title!, style: TextStyle(
-        color: AppColors.mainColorTest,
-        fontSize: 20,
-        fontWeight: FontWeight.bold,
-      ),) : null,
+      title: title != null
+          ? Text(
+              title!,
+              style: const TextStyle(
+                color: AppColors.mainColorTest,
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            )
+          : null,
       backgroundColor: Colors.white,
-      elevation: 0,
+      elevation: 0, // 그림자 크기 조절
+      shadowColor: Colors.grey[200], // 연한 회색 그림자 색상
       foregroundColor: AppColors.mainColorTest,
       // 기타 AppBar 속성 추가
     );

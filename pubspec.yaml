@@ -54,6 +54,7 @@ dependencies:
   flutter_svg:
   table_calendar:
   kakao_flutter_sdk: ^1.3.1
+  flutter_dotenv: ^5.1.0
 
 dev_dependencies:
   flutter_test:
@@ -98,6 +99,7 @@ flutter:
   #   - images/a_dot_ham.jpeg
     - assets/images/
 
+  
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 
@@ -117,10 +119,13 @@ flutter:
   #         style: italic
     - family: Pretendard
       fonts:
-        - asset: fonts/Pretendard-Regular.otf
-        - asset: fonts/Pretendard-Semibold.otf
+        - asset: fonts/Pretendard-Regular.subset.woff2
+          weight: 400
+        - asset: fonts/Pretendard-Medium.subset.woff2
+          weight: 500
+        - asset: fonts/Pretendard-Semibold.subset.woff2
           weight: 600
-        - asset: fonts/Pretendard-Bold.otf
+        - asset: fonts/Pretendard-Bold.subset.woff2
           weight: 700
   #
   # For details regarding fonts from package dependencies,

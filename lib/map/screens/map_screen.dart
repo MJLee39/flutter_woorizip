@@ -5,6 +5,7 @@ import 'package:naver_map_plugin/naver_map_plugin.dart';
 import 'package:testapp/map/dto/custom_location.dart';
 import 'package:testapp/map/provider/map_provider.dart';
 import 'package:testapp/controllers/map_controller.dart';
+import 'package:testapp/widgets/app_bar_widget.dart';
 
 class MapScreen extends StatelessWidget {
 
@@ -17,14 +18,7 @@ class MapScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar( // 1. AppBar 추가
-        leading: IconButton( // 뒤로 가기 버튼
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.of(context).pop(); // 현재 화면에서 뒤로 이동
-          },
-        ),
-      ),
+      appBar: const AppBarWidget(title: '지도로 찾기'),
       body: FutureBuilder(
         future: mapProvider.getCurrentLocation(),
         builder: (context, AsyncSnapshot<CustomLocation> snapshot) {
@@ -128,7 +122,7 @@ class _BottomSheetContentState extends State<BottomSheetContent> {
                 title: Text('보증금/월세 : ${item['money']}'),
                 subtitle: Text('건물 유형: ${item['buildingType']}'),
                 onTap: () {
-                  Get.to(DetailScreen(itemID: '${item["id"]}'), transition: Transition.noTransition);
+                  Get.toNamed('page/zipDetail', arguments: item['id']);
                 },
               );
             },
