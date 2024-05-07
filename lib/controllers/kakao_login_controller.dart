@@ -17,7 +17,7 @@ class KakaoLoginController extends GetxController {
       OAuthToken token = await UserApi.instance.loginWithKakaoAccount();
       print('카카오계정으로 로그인 성공 ${token.accessToken}');
       isLoggedIn.value = true;
-      _authService.CheckAccount(token.accessToken);
+      _authService.checkAccount(token.accessToken);
     } catch (error) {
       print('카카오계정으로 로그인 실패 $error');
       isLoggedIn.value = false;

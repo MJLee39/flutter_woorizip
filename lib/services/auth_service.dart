@@ -9,8 +9,7 @@ class AuthService extends GetxService {
   static AuthService get to => Get.find();
 
   final RxBool isLoggedIn = false.obs;
-  final _access_tokenKey = 'access_token';
-  final _refresh_tokenKey = 'refresh_token';
+
   final _storageService = Get.find<StorageService>();
 
 
@@ -20,7 +19,7 @@ class AuthService extends GetxService {
   void onInit() {
     super.onInit();
     // 초기값 설정
-    isLoggedIn.value = _storageService.read(_access_tokenKey) != null;
+    isLoggedIn.value = _storageService.hasToken();
     print('>>>>>>>>>>>>>>>>>&isLoggedIn.value');
     print(isLoggedIn.value);
     // 앱 시작 시 로그인 상태 확인
@@ -28,23 +27,19 @@ class AuthService extends GetxService {
   }
 
   Future<void> checkLoginStatus() async {
-    final token = _storageService.read(_access_tokenKey);
+    final token = _storageService.getAccessToken();
     print('>>>>>>>>>>>>>>>>>&checkLoginStatus');
     print(token);
-    if (token != null) {
-      // 토큰 유효성 검사
-      final isValid = await _validateToken(token);
-      isLoggedIn.value = isValid;
-      if (!isValid) {
-        // 토큰이 유효하지 않은 경우 로그아웃 처리
-        logout();
-      }
-    } else {
-      isLoggedIn.value = false;
+    // 토큰 유효성 검사
+    final isValid = await _validateToken(token);
+    isLoggedIn.value = isValid;
+    if (!isValid) {
+      // 토큰이 유효하지 않은 경우 로그아웃 처리
+      logout();
     }
-  }
+    }
 
-  Future<bool> CheckAccount(String token) async {
+  Future<bool> checkAccount(String token) async {
     try {
       final response = await http.get(
         Uri.parse('http://api.teamwaf.app/v1/auth/checkAccount'),
@@ -82,13 +77,10 @@ class AuthService extends GetxService {
 
   void setTokenData(String accessToken, String refreshToken) {
     // 토큰 저장
-    _storageService.write(_access_tokenKey, accessToken);
-    _storageService.write(_refresh_tokenKey, refreshToken);
-    isLoggedIn.value = true;
+    _storageService.setAccessToken(accessToken);
+    _storageService.setRefreshToken(refreshToken);
 
-    print('Access T >> ${_storageService.read(_access_tokenKey)}');
-    print('Refresh T >> ${_storageService.read(_refresh_tokenKey)}');
-    // 이전 페이지를 로컬 스토리지에 담았다가 읽어서 이동
+    isLoggedIn.value = true;
 
     _storageService.read('intendedRoute') != null
         ? Get.offAllNamed(_storageService.read('intendedRoute'))
@@ -97,8 +89,10 @@ class AuthService extends GetxService {
 
   void logout() {
     // 토큰 삭제
-    _storageService.remove(_access_tokenKey);
-    _storageService.remove(_refresh_tokenKey);
+    _storageService.removeAccessToken();
+    _storageService.removeRefreshToken();
+
+    
     isLoggedIn.value = false;
     Get.snackbar(
       '로그아웃',

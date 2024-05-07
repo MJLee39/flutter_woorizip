@@ -50,8 +50,12 @@ class ReadAllWidget extends StatelessWidget {
                           children: [
                             IconButton(
                               onPressed: () {
-                                final agentId = "qassadsadsa";
+                                const agentId = "qassadsadsa";
                                 const clientId = "qweqwewqeewq";
+                                var otherNickname;
+                                _chatController.getNicknameBy(clientId).then(
+                                        (value) => otherNickname = value
+                                );
 
                                 _chatController
                                     .createChatRoom(clientId, agentId)
@@ -62,6 +66,8 @@ class ReadAllWidget extends StatelessWidget {
                                       builder: (context) => Chat(
                                         chatRoomId: chatRoomInfo['id'],
                                         accountId: clientId,
+                                        myNickname: "허위 매물 사기꾼",
+                                        otherNickname: otherNickname,
                                       ),
                                     ),
                                   );

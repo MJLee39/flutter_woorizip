@@ -18,7 +18,7 @@ class MapScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarWidget(title: '지도로 찾기'),
+      appBar: const AppBarWidget(title: '지도로 찾기'),
       body: FutureBuilder(
         future: mapProvider.getCurrentLocation(),
         builder: (context, AsyncSnapshot<CustomLocation> snapshot) {
@@ -94,9 +94,9 @@ class _BottomSheetContentState extends State<BottomSheetContent> {
   Future<void> _loadData() async {
     try {
       List<Map<String, String>> result = await _dataController.fetchData(widget.customLocation!);
-      setState(() {
-        data = result;
-      });
+        setState(() {
+          data = result;
+        });
     } catch (error) {
       print('Error: $error');
     }
