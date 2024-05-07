@@ -67,5 +67,17 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NMFClientId</key>
+		<string>0akipmvx1h</string> <!-- 네이버 클라이언트 ID -->
+	<key>io.flutter.embedded_views_preview</key>
+		<true/>
+	<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+    	<string>[USAGE PERPOSE]</string>
+    <key>NSLocationAlwaysUsageDescription</key>
+    	<string>[USAGE PERPOSE]</string>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    	<string>[USAGE PERPOSE]</string>
 </dict>
 </plist>

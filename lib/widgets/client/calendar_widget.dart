@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:testapp/controllers/condition/condition_controller.dart';
-import 'package:intl/intl.dart';
 
 class CalendarWidget extends StatefulWidget {
-  const CalendarWidget({super.key});
+  final Function(DateTime)? onChanged;
+  const CalendarWidget({super.key, this.onChanged});
 
   @override
   _CalendarWidgetState createState() => _CalendarWidgetState();
@@ -37,11 +37,16 @@ class _CalendarWidgetState extends State<CalendarWidget> {
           ),
         ),
         onDaySelected: (selectedDate, focusedDate) {
+          if (widget.onChanged != null) {
+            widget.onChanged!(selectedDate);
+          }
+
           setState(() {
             _selectedDate = selectedDate;
           });
           controller.moveInDate =
               DateTime(selectedDate.year, selectedDate.month, selectedDate.day);
-        });
+        }
+    );
   }
 }

@@ -12,10 +12,19 @@ class MapScreen extends StatelessWidget {
 
   final MapProvider mapProvider = MapProvider();
   final String buildingType;
+  
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar( // 1. AppBar 추가
+        leading: IconButton( // 뒤로 가기 버튼
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.of(context).pop(); // 현재 화면에서 뒤로 이동
+          },
+        ),
+      ),
       body: FutureBuilder(
         future: mapProvider.getCurrentLocation(),
         builder: (context, AsyncSnapshot<CustomLocation> snapshot) {
@@ -91,9 +100,9 @@ class _BottomSheetContentState extends State<BottomSheetContent> {
   Future<void> _loadData() async {
     try {
       List<Map<String, String>> result = await _dataController.fetchData(widget.customLocation!);
-      setState(() {
-        data = result;
-      });
+        setState(() {
+          data = result;
+        });
     } catch (error) {
       print('Error: $error');
     }

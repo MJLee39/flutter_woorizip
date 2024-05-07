@@ -21,7 +21,7 @@ class SearchTypeSelectorController extends GetxController {
     final selectedFeeType = feeController.selectedFeeType;
     final selectedDeposit = depositController.selectedDepositType;
 
-    final url = Uri.parse('http://10.0.2.2/search?location=$selectedLocation&buildingType=$selectedBuildingTypes&fee=$selectedFeeType&deposit=$selectedDeposit');
+    final url = Uri.parse('http://localhost/search?location=$selectedLocation&buildingType=$selectedBuildingTypes&fee=$selectedFeeType&deposit=$selectedDeposit');
 
     final response = await http.get(url);
 

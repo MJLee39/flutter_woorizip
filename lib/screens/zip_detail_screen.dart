@@ -1,10 +1,9 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:testapp/controllers/chat_controller.dart';
 import 'package:testapp/widgets/bottom_navigation_widget.dart';
 import 'package:testapp/controllers/zip_detail_controller.dart';
-
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:testapp/utils/app_colors.dart';
 import '../chat/chat.dart';
 
 class DetailScreen extends StatefulWidget  {
@@ -42,6 +41,13 @@ class _DetailScreenState extends State<DetailScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+    final List<String> imageList = [
+      'assets/images/room1.jpg',
+      'assets/images/room2.jpg',
+      // 여기에 추가 이미지 경로 추가 가능
+    ];
+
     if (zipData.isEmpty) {
       return Scaffold(
         body: Center(
@@ -54,34 +60,62 @@ class _DetailScreenState extends State<DetailScreen> {
         body: SingleChildScrollView(
           child: Column(
             children: <Widget>[
-              Stack(
-                children: <Widget>[
-                  Container(
-                    height: MediaQuery
-                        .of(context)
-                        .size
-                        .height * 0.5,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: NetworkImage(
-                            'https://test.teamwaf.app/attachment/' +
-                                zipData['attachments']), //배경 이미지 URL
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    child: Padding(
-                      padding: EdgeInsets.all(40.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                      ),
-                    ),
-                  ),
-                ],
+              // Stack(
+              //   children: <Widget>[
+              //     Container(
+              //       height: MediaQuery
+              //           .of(context)
+              //           .size
+              //           .height * 0.5,
+              //       decoration: BoxDecoration(
+              //         image: DecorationImage(
+              //           image: NetworkImage(
+              //               'https://test.teamwaf.app/attachment/' +
+              //                   zipData['attachments']), //배경 이미지 URL
+              //           fit: BoxFit.cover,
+              //         ),
+              //       ),
+              //     ),
+              //     Positioned(
+              //       left: 0,
+              //       right: 0,
+              //       bottom: 0,
+              //       child: Padding(
+              //         padding: EdgeInsets.all(40.0),
+              //         child: Column(
+              //           crossAxisAlignment: CrossAxisAlignment.start,
+              //         ),
+              //       ),
+              //     ),
+              //   ],
+              // ),
+              CarouselSlider(
+                options: CarouselOptions(
+                  aspectRatio: 16 / 9,
+                  viewportFraction: 0.8,
+                  autoPlay: true,
+                  autoPlayInterval: Duration(seconds: 3),
+                  autoPlayAnimationDuration: Duration(milliseconds: 800),
+                  enableInfiniteScroll: true,
+                  enlargeCenterPage: true,
+                ),
+                items: imageList.map((imageUrl) {
+                  return Builder(
+                    builder: (BuildContext context) {
+                      return Container(
+                        width: MediaQuery.of(context).size.width,
+                        margin: EdgeInsets.symmetric(horizontal: 5.0),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5.0),
+                          image: DecorationImage(
+                            image: AssetImage(imageUrl),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                }).toList(),
               ),
               Row(
                   children: [
@@ -139,7 +173,7 @@ class _DetailScreenState extends State<DetailScreen> {
                       ],
                     ),
                     SizedBox(height: 20.0),
-                    Divider(color: Colors.blueAccent),
+                    Divider(color: AppColors.mainColor),
                     SizedBox(height: 20.0),
                     Row(
                       children: <Widget>[
@@ -243,6 +277,10 @@ class _DetailScreenState extends State<DetailScreen> {
                       onPressed: () {
                         final agentId = "qassadsadsa";
                         const clientId = "qweqwewqeewq";
+                        var otherNickname;
+                        _chatController.getNicknameBy(agentId).then(
+                                (value) => otherNickname = value
+                        );
 
                         _chatController.createChatRoom(clientId, agentId).then((chatRoomInfo) {
                           Navigator.push(
@@ -250,13 +288,15 @@ class _DetailScreenState extends State<DetailScreen> {
                               builder: (context) => Chat(
                                 chatRoomId: chatRoomInfo['id'],
                                 accountId: clientId,
+                                myNickname: "허위 매물 사기꾼",
+                                otherNickname: otherNickname,
                               ),
                             ),
                           );
                         });
                       },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue,
+                      backgroundColor: AppColors.mainColor1,
                       // 버튼의 배경색을 파란색으로 설정
                       textStyle: TextStyle(fontSize: 30),
                       // 텍스트의 크기를 20으로 설정

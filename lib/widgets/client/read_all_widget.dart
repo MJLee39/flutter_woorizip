@@ -14,17 +14,12 @@ class ReadAllWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(() {
       if (conditionController.isLoading.value) {
-        print('** v1 - conditionController.isLoading.value');
         return const Center(child: CircularProgressIndicator());
       } else if (conditionController.error.value.isNotEmpty) {
-        print('** v2 - conditionController.error.value.isNotEmpty');
         return Center(
           child: Text('Error: ${conditionController.error.value}'),
         );
       } else {
-        print('** v3 - spread content');
-        // conditionController.readAllCondition();
-
         return Expanded(
           child: ListView.builder(
             itemCount: conditionController.jsonData.length,
@@ -53,71 +48,32 @@ class ReadAllWidget extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            // chat
                             IconButton(
                               onPressed: () {
-                                final agentId = "qassadsadsa";
+                                const agentId = "qassadsadsa";
                                 const clientId = "qweqwewqeewq";
+                                var otherNickname;
+                                _chatController.getNicknameBy(clientId).then(
+                                        (value) => otherNickname = value
+                                );
 
-                                _chatController.createChatRoom(clientId, agentId).then((chatRoomInfo) {
+                                _chatController
+                                    .createChatRoom(clientId, agentId)
+                                    .then((chatRoomInfo) {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) => Chat(
                                         chatRoomId: chatRoomInfo['id'],
                                         accountId: clientId,
+                                        myNickname: "허위 매물 사기꾼",
+                                        otherNickname: otherNickname,
                                       ),
                                     ),
                                   );
                                 });
                               },
-                              icon: Icon(Icons.chat),
-                            ),
-
-                            // update condition
-                            IconButton(
-                              onPressed: () {
-                                Get.toNamed('/setdetails',
-                                    arguments: {
-                                      'id':condition['id'],
-                                      'accoountId':condition['acoundId'],
-                                      'location':condition['location'],
-                                      'buildingType':condition['buildingType'],
-                                      'fee':condition['fee'],
-                                      'moveInDate':condition['moveInDate'],
-                                      'hashtag':condition['hashtag'],
-                                    });
-                              },
-                              icon: const Icon(Icons.settings),
-                            ),
-
-                            // delete condition
-                            IconButton(
-                              onPressed: () {
-                                Get.dialog(
-                                  AlertDialog(
-                                    content: const Text('삭제할까요?'),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () {
-                                          Get.back();
-                                        },
-                                        child: const Text('취소'),
-                                      ),
-                                      TextButton(
-                                        onPressed: () {
-                                          conditionController.id = condition['id'];
-                                          // conditionController.accountId = condition['accoundId'];
-                                          conditionController.deleteCondition();
-                                        },
-                                        child: const Text('확인'),
-                                      ),
-                                    ],
-                                  ),
-                                  barrierDismissible: true,
-                                );
-                              },
-                              icon: const Icon(Icons.cancel),
+                              icon: const Icon(Icons.chat),
                             ),
                           ],
                         ),

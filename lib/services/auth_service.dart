@@ -47,7 +47,7 @@ class AuthService extends GetxService {
   Future<bool> CheckAccount(String token) async {
     try {
       final response = await http.get(
-        Uri.parse('http://localhost:8080/auth/checkAccount'),
+        Uri.parse('http://api.teamwaf.app/v1/auth/checkAccount'),
         headers: {'Authorization': 'Paseto $token'},
       );
       // json 형태를 디코딩하여 변수에 저장
