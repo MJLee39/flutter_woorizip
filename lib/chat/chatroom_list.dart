@@ -40,7 +40,7 @@ class _ChatRoomListScreenState extends State<ChatRoomListScreen> {
   void subscribeToChatRoom(String chatRoomId) {
     EventFlux.instance.connect(
       EventFluxConnectionType.get,
-      'https://chat.teamwaf.app/chat/connect/$chatRoomId',
+      'http://15.164.244.88:8080/chat/connect/$chatRoomId',
       onSuccessCallback: (EventFluxResponse? response) {
         response!.stream?.listen((data) {
           if (data.event == 'chat') {

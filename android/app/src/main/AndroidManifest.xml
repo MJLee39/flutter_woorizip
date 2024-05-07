@@ -42,7 +42,6 @@
             android:value="0akipmvx1h" />
 
     </application>
-
     <queries>
         <intent>
             <action android:name="android.intent.action.PROCESS_TEXT"/>

@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 
 class ChatController {
 
-  final String urlPrefix = "https://chat.teamwaf.app";
+  final String urlPrefix = "http://15.164.244.88:8080";
 
   Future<String> getNicknameBy(String accountId) async {
     // final url = Uri.parse("");
