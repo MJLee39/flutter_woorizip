@@ -52,6 +52,8 @@ class ChatState extends State<Chat> {
   }
 
   void onConnectCallback(StompFrame connectFrame) {
+    print(widget.chatRoomId);
+
     _client.subscribe(
       destination: '/exchange/chat.exchange/room.${widget.chatRoomId}',
       headers: {},
