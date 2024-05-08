@@ -239,6 +239,16 @@ class AppPages {
     ),
 
     _getPageWithMiddleware(
-        name: '/admin', page: () => AdminScreen(), middlewares: [])
+        name: '/admin', page: () => AdminScreen(), middlewares: []),
+
+    /*
+    신고자 목록 조회
+     */
+    // _getPageWithMiddleware(
+    //   name: '/myreport',
+    //   page: () => const ReportListScreen(),
+    //   middlewares: [],
+    // ),
+
   ];
 }
