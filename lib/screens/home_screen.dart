@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:testapp/utils/app_colors.dart';
 import 'package:testapp/widgets/app_bar_widget.dart';
 import 'package:testapp/widgets/bottom_navigation_widget.dart';
 import 'package:testapp/widgets/half_button_widget.dart';
+import 'package:testapp/widgets/home/get_button_widget.dart';
+import 'package:testapp/widgets/page_normal_padding_widget.dart';
 import 'package:testapp/widgets/text_header_widget.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -11,70 +11,17 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const AppBarWidget(),
-      body: SizedBox(
+
+    return const Scaffold(
+      appBar: AppBarWidget(),
+      body: PageNormalPaddingWidget(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            const TextHeaderWidget(text: "어떤 집을 찾고 계신가요?"),
-            const SizedBox(height: 30),
-            TextButton(
-              onPressed: () {
-                Get.toNamed('/addressSearch');
-              },
-              style: TextButton.styleFrom(
-                backgroundColor: AppColors.mainColorTest,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(6),
-                  side: BorderSide(
-                    color: Colors.grey[300]!,
-                    width: 1.0,
-                  ),
-                ),
-                minimumSize: Size(0, 100),
-              ),
-              child: const Row(
-                children: [
-                  Expanded(
-                    child: Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Image(
-                        image: AssetImage('assets/images/icon_house.png'),
-                        width: 40,
-                        height: 40,
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: 8), // 이미지와 텍스트 사이 간격 조정
-                  Expanded(
-                    
-                    flex: 5, // 텍스트 영역이 이미지보다 더 많은 공간을 차지하도록 조정
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          '집을 소개할게요 ️',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        Text(
-                          '예비 임차인들에게 집을 소개해 줄 수 있어요! ️',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 20),
-            const Row(
+            TextHeaderWidget(text: "어떤 집을 찾고 계신가요?"),
+            SizedBox(height: 30),
+            GetButtonWidget(),
+            Row(
               children: [
                 HalfButtonWidget(
                   text: "원룸",
@@ -91,8 +38,8 @@ class HomeScreen extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 10),
-            const Row(
+            SizedBox(height: 10),
+            Row(
               children: [
                 HalfButtonWidget(
                   text: "오피스텔",
@@ -121,7 +68,9 @@ class HomeScreen extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: const BottomNavigationWidget(),
+      bottomNavigationBar: BottomNavigationWidget(),
     );
   }
+  
 }
+

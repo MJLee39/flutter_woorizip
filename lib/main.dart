@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk_template.dart';
+import 'package:testapp/account/account_controller.dart';
 import 'package:testapp/controllers/navigation_controller.dart';
 import 'package:testapp/routes/app_pages.dart';
 import 'package:testapp/services/auth_service.dart';
@@ -16,13 +17,12 @@ void main() async {
     javaScriptAppKey: 'ece3176690e15f855c51937d1d07f3c7',
   );
 
-  print("ID :: ${await KakaoSdk.origin}");
-
   runApp(GetMaterialApp(
     initialBinding: BindingsBuilder(
       () {
         Get.put(NavigationController());
         Get.put(AuthService());
+        Get.put(AccountController());
       },
     ),
     theme: ThemeData(
