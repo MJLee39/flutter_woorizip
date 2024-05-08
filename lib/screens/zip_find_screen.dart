@@ -154,14 +154,22 @@ class ZipFindScreen extends StatelessWidget {
                       Get.to(DetailScreen(itemID: item['id']), transition: Transition.noTransition);
                     },
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      padding: const EdgeInsets.all(10.0), // 여기에서 패딩 조정
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Expanded(
-                            flex: 2,
-                            child: Image.network('${ApiConfig.attachmentApiEndpointUri}/'+item['attachments'].split(',')[0],
-                                fit: BoxFit.cover),
+                          Container(
+                            width: 180, // 원하는 너비
+                            height: 160, // 원하는 높이
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5.0),
+                              image: DecorationImage(
+                                image: NetworkImage(
+                                  '${ApiConfig.attachmentApiEndpointUri}/'+item['attachments'].split(',')[0],
+                                ),
+                                fit: BoxFit.cover, // 이미지를 가득 채우도록 설정
+                              ),
+                            ),
                           ),
                           Expanded(
                             flex: 3,

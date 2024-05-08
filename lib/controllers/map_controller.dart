@@ -5,7 +5,7 @@ import 'package:testapp/map/dto/custom_location.dart';
 class DataController {
   Future<List<Map<String, String>>> fetchData(CustomLocation customLocation) async {
     final response = await http.get(Uri.parse('https://api.teamwaf.app/v1/zip/search?location=${customLocation.address}'));
-    
+    print("!!!!!!!!!!내위치: "+customLocation.address.toString());
     if (response.statusCode == 200) {
       final decodedData = jsonDecode(utf8.decode(response.bodyBytes));
       
