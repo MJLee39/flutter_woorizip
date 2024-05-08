@@ -2,15 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:testapp/utils/app_colors.dart';
 
-class RoundedInputBoxController extends GetxController {
+class RoundInputWidgetController extends GetxController {
   var isFocused = false.obs;
 }
 
-class RoundedInputBox extends StatelessWidget {
-  final RoundedInputBoxController controller = Get.put(RoundedInputBoxController());
+class RoundInputWidget extends StatelessWidget {
+  final RoundInputWidgetController controller = Get.put(RoundInputWidgetController());
   final String hint;
+  final TextEditingController textController;
 
-  RoundedInputBox({required this.hint});
+  RoundInputWidget({super.key, required this.hint, required this.textController});
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +24,7 @@ class RoundedInputBox extends StatelessWidget {
         borderRadius: BorderRadius.circular(6.0),
       ),
       child: TextField(
+        controller: textController,
         onTap: () {
           controller.isFocused.value = true;
         },
@@ -31,9 +33,9 @@ class RoundedInputBox extends StatelessWidget {
         },
         decoration: InputDecoration(
           hintText: hint,
-          hintStyle: TextStyle(color: Colors.grey),
+          hintStyle: const TextStyle(color: Colors.grey),
           border: InputBorder.none,
-          contentPadding: EdgeInsets.all(15.0),
+          contentPadding: const EdgeInsets.all(15.0),
         ),
       ),
     ));
