@@ -190,6 +190,12 @@ class AppPages {
       name: '/depositAndFee',
       page: () => RentalInfoScreen(),
     ),
+    _getPageWithMiddleware(
+      name: '/zipDetail/:itemID',
+      page: () => RoomDetailScreen(
+        itemID: Get.parameters['itemID'] ?? '',
+      ),
+    ),
 
     //매물 등록에서 상세 정보 입력 페이지로 이동
     /*

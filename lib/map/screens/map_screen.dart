@@ -122,7 +122,7 @@ class _BottomSheetContentState extends State<BottomSheetContent> {
               final item = data[index];
               return GestureDetector(
                 onTap: () {
-                  Get.to(DetailScreen(itemID: '${item["id"]}'), transition: Transition.noTransition);
+                  Get.toNamed('/zipDetail/${item['id']}', arguments: {'itemID': item['id']});
                 },
                 child: Column(
                   children: [
