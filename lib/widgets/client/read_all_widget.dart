@@ -52,11 +52,14 @@ class ReadAllWidget extends StatelessWidget {
                             IconButton(
                               onPressed: () {
                                 var agentId = AccountController().id;
+                                print('AgentIdInCondition : $agentId');
                                 var clientId = condition['accountId'];
+                                print('clientIdInCondition : $clientId');
                                 var otherNickname;
                                 _chatController.getNicknameBy(clientId).then(
                                         (value) => otherNickname = value
                                 );
+                                print('otherNicknameInCondition : $otherNickname');
 
                                 _chatController
                                     .createChatRoom(clientId, agentId)

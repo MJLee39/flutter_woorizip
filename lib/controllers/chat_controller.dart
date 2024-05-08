@@ -36,8 +36,9 @@ class ChatController {
     }
   }
 
-  Future<Map<String, dynamic>> createChatRoom(
-      String clientId, String agentId) async {
+  Future<Map<String, dynamic>> createChatRoom(String clientId, String agentId) async {
+    print('ClientID: $clientId, AgentId: $agentId');
+
     final response = await http.post(
       Uri.parse('$urlPrefix/chat/create'),
       headers: {'content-type': 'application/json'},

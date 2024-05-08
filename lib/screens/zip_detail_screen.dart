@@ -256,12 +256,14 @@ class _DetailScreenState extends State<DetailScreen> {
                       onPressed: () {
                         AccountController _accountController = AccountController();
                         final agentId = zipData['agentId'];
-                        print(agentId);
+                        print('AGENTIDV1: $agentId');
                         var clientId = _accountController.id;
+                        print('CLIENTIDV1: $clientId');
                         var otherNickname;
                         _chatController.getNicknameBy(agentId).then(
                                 (value) => otherNickname = value
                         );
+                        print('NICKNAME: $otherNickname');
 
                         _chatController.createChatRoom(clientId, agentId).then((chatRoomInfo) {
                           Navigator.push(
