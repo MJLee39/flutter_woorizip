@@ -13,6 +13,8 @@ import 'package:stomp_dart_client/stomp_frame.dart';
 import 'package:get/get.dart';
 import 'package:testapp/screens/zip_detail_screen.dart';
 
+import '../utils/api_config.dart';
+
 class Chat extends StatefulWidget {
   final String chatRoomId;
   final String accountId;
@@ -132,15 +134,23 @@ class ChatState extends State<Chat> {
                         ),
                       ),
                       SizedBox(width: 10),
-                      Image.asset(
-                        'assets/images/room1.jpg',
-                        width: 100,
-                        height: 90,
+                      Container(
+                        width: 100, // 이미지의 폭 설정
+                        height: 90, // 이미지의 높이 설정
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10), // 이미지 모서리 둥글게 설정
+                          image: DecorationImage(
+                            image: NetworkImage(
+                              '${ApiConfig.attachmentApiEndpointUri}/'+(item['attachments']?.split(',')[0] ?? ''),
+                            ),
+                            fit: BoxFit.cover, // 이미지가 올바르게 표시되도록 설정
+                          ),
+                        ),
                       ),
                     ],
                   ),
                   onTap: () {
-                    _handleMessageTap(item['id'], item['attachments']);
+                    _handleMessageTap(item['id'], item['attachments']?.split(',')[0] ?? '');
                     Navigator.of(context).pop();
                   },
                 );
@@ -155,7 +165,7 @@ class ChatState extends State<Chat> {
   void _handleMessageTap(String? id, String? attachments) {
     if (id != null) {
       _controller.text = '%%room%%' + id + '%%room%%';
-      _controller.text += '%%image%%' + 'assets/images/room1.jpg';
+      _controller.text += '%%image%%' + attachments!;
       _sendMessage();
     }
   }
@@ -243,12 +253,12 @@ class ChatState extends State<Chat> {
                     )
                         : SizedBox.shrink(),
                     containsWoorizip && img.isNotEmpty
-                        ? Image.asset(
-                      img,
-                      width: 200,
-                      height: 200,
-                      fit: BoxFit.cover,
-                    )
+                        ? Image.network(
+                        '${ApiConfig.attachmentApiEndpointUri}/' + img,
+                            fit: BoxFit.cover,
+                            width: 200, // 이미지의 가로 길이를 조절합니다.
+                            height: 200,
+                          )
                         : SizedBox.shrink(),
                     containsWoorizip
                         ? SizedBox.shrink()
