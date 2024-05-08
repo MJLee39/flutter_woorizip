@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:testapp/account/account_controller.dart';
@@ -6,15 +8,36 @@ import 'package:testapp/services/auth_service.dart';
 import 'package:testapp/utils/api_config.dart';
 import 'package:testapp/widgets/app_bar_widget.dart';
 
-class MyinfoScreen extends StatelessWidget {
+class MyinfoScreen extends StatefulWidget {
   const MyinfoScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final ProfileController profileController = Get.put(ProfileController());
-    final accountController = Get.find<AccountController>();
-    final authService = Get.find<AuthService>();
+  _MyinfoScreenState createState() => _MyinfoScreenState();
+}
 
+class _MyinfoScreenState extends State<MyinfoScreen> {
+  final ProfileController profileController = Get.put(ProfileController());
+  final accountController = Get.find<AccountController>();
+  final authService = Get.find<AuthService>();
+
+  @override
+  void initState() {
+    super.initState();
+    accountController.addListener(update);
+  }
+
+  @override
+  void dispose() {
+    accountController.removeListener(update);
+    super.dispose();
+  }
+
+  void update() {
+    setState(() {});
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: const AppBarWidget(title: '내 정보'),
       body: Column(
@@ -25,16 +48,14 @@ class MyinfoScreen extends StatelessWidget {
             children: <Widget>[
               GestureDetector(
                 onTap: () => profileController.pickImage(),
-                child: Obx(
-                  () => CircleAvatar(
-                    radius: 60,
-                    backgroundColor: Colors.grey[300],
-                    backgroundImage: profileController.image != null
-                        ? FileImage(profileController.image!)
-                        : accountController.profileImageId.isNotEmpty
-                            ? NetworkImage('${ApiConfig.attachmentApiEndpointUri}/${accountController.profileImageId}') as ImageProvider
-                            : const AssetImage('assets/images/default_profile.png'),
-                  ),
+                child: CircleAvatar(
+                  radius: 60,
+                  backgroundColor: Colors.grey[300],
+                  backgroundImage: profileController.image != null
+                      ? FileImage(profileController.image!)
+                      : accountController.profileImageId.isNotEmpty
+                          ? NetworkImage('${ApiConfig.attachmentApiEndpointUri}/${accountController.profileImageId}') as ImageProvider
+                          : const AssetImage('assets/images/default_profile.png'),
                 ),
               ),
               Positioned(
@@ -50,33 +71,33 @@ class MyinfoScreen extends StatelessWidget {
                   child: Align(
                     alignment: Alignment.center,
                     child: IconButton(
-                      icon: Icon(Icons.camera_alt),
+                      icon: const Icon(Icons.camera_alt),
                       color: Colors.white,
                       onPressed: () => profileController.pickImage(),
                       iconSize: 20,
                       padding: EdgeInsets.zero,
-                      constraints: BoxConstraints(),
+                      constraints: const BoxConstraints(),
                     ),
                   ),
                 ),
               ),
             ],
           ),
-          SizedBox(height: 20),
-          ListTile(
+          const SizedBox(height: 20),
+          const ListTile(
             title: Text('연결된 소셜 계정'),
             trailing: Icon(Icons.arrow_forward_ios),
           ),
           ListTile(
-            title: Text('이름'),
+            title: const Text('이름'),
             subtitle: Text(accountController.nickname),
-            trailing: Icon(Icons.arrow_forward_ios),
+            trailing: const Icon(Icons.arrow_forward_ios),
             onTap: () => Get.toNamed('/modify_nickname'),
           ),
           ListTile(
-            title: Text('휴대폰 번호'),
+            title: const Text('휴대폰 번호'),
             subtitle: Text(accountController.phone),
-            trailing: Icon(Icons.arrow_forward_ios),
+            trailing: const Icon(Icons.arrow_forward_ios),
           ),
           ListTile(
             title: const Text('로그아웃'),
@@ -89,8 +110,8 @@ class MyinfoScreen extends StatelessWidget {
             thickness: 0.5,
           ),
           ListTile(
-            title: Text('회원탈퇴'),
-            trailing: Icon(Icons.arrow_forward_ios),
+            title: Text('우리집 그만 이용하기', style: TextStyle(color: Colors.black38, fontSize: 16)),
+            onTap: () => Get.toNamed('/delete_account'),
           ),
         ],
       ),

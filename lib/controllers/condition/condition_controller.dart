@@ -6,10 +6,9 @@ import 'package:testapp/account/account_controller.dart';
 import 'package:testapp/utils/api_config.dart';
 
 class ConditionController extends GetxController {
-
+  final AccountController _accountController = Get.find<AccountController>();
   late String id = '';
-
-  AccountController _accountController = AccountController();
+  
   late String accountId = _accountController.id;
   late String conditionId = '';
 
