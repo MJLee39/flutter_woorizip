@@ -262,7 +262,7 @@ class _RoomDetailScreenState extends State<RoomDetailScreen> {
 
               var chatRoomInfo =
                   await _chatController.createChatRoom(clientId, agentId);
-              Get.toNamed('/chat/${chatRoomInfo['id']}',
+              Get.toNamed('/chat/${chatRoomInfo['chatRoomId']}',
                   arguments: {
                     'accountId': clientId,
                     'otherNickname': otherNickname

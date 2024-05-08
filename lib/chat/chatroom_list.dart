@@ -30,9 +30,9 @@ class _ChatRoomListScreenState extends State<ChatRoomListScreen> {
         .then((value) => {
           setState(() {
             chatRooms = value;
-            // for (var chatRoom in chatRooms) {
-            //   subscribeToChatRoom(chatRoom.id);
-            // }
+            for (var chatRoom in chatRooms) {
+              subscribeToChatRoom(chatRoom.id);
+            }
           }
         )
     }).catchError((err) => print(err));
