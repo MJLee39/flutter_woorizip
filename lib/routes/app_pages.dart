@@ -13,6 +13,7 @@ import 'package:testapp/screens/seemore/delete_account_screen.dart';
 import 'package:testapp/screens/report_list_screen.dart';
 import 'package:testapp/screens/seemore/modify_nickname_screen.dart';
 import 'package:testapp/screens/seemore/myinfo_screen.dart';
+import 'package:testapp/screens/test/room_detail_screen.dart';
 import 'package:testapp/screens/zip_registration/address_search_1_screen.dart';
 import 'package:testapp/screens/home_screen.dart';
 import 'package:testapp/screens/login_screen.dart';
@@ -137,6 +138,11 @@ class AppPages {
       page: () => const SetMoveInDateScreen(),
     ),
 
+
+    _getPageWithMiddleware(
+      name: '/test',
+      page: () => RoomDetailScreen(),
+    ),
     /*
     client set Hashtag
      */
