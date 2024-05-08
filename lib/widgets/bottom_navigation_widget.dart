@@ -10,6 +10,7 @@ class BottomNavigationWidget extends GetView<NavigationController> {
   @override
   Widget build(BuildContext context) {
     AccountController _accountController = AccountController();
+
     return Obx(
       () => ClipRRect(
         borderRadius: const BorderRadius.only(
@@ -28,10 +29,6 @@ class BottomNavigationWidget extends GetView<NavigationController> {
               label: '홈',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.favorite_border_sharp),
-              label: '관심',
-            ),
-            BottomNavigationBarItem(
               icon: Icon(Icons.map),
               label: '지도',
             ),
@@ -47,18 +44,16 @@ class BottomNavigationWidget extends GetView<NavigationController> {
           onTap: (index) {
             controller.currentIndex = index;
             print(index);
+
             if (index == 0) {
               Get.offAllNamed('/'); // 홈 페이지로 이동
             } else if (index == 1) {
-              
-              Get.toNamed('/split'); // 다른 페이지로 이동
-            } else if (index == 2) {
               Get.toNamed('/map/total');
-            } else if (index == 3) {
+            } else if (index == 2) {
               Get.toNamed('/chatRoomList', arguments: {
                 'accountId': _accountController.id,
               });
-            } else if (index == 4) {
+            } else if (index == 3) {
               Get.offAllNamed('/seeMore'); // '더보기' 페이지로 이동
             }
           },
