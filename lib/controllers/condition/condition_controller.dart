@@ -8,8 +8,9 @@ import 'package:testapp/utils/api_config.dart';
 class ConditionController extends GetxController {
 
   late String id = '';
-  
-  late String accountId = AccountController().id;
+
+  AccountController _accountController = AccountController();
+  late String accountId = _accountController.id;
   late String conditionId = '';
 
   late String si = '';
@@ -23,8 +24,6 @@ class ConditionController extends GetxController {
   late RxList<Map<String, dynamic>> jsonData = <Map<String, dynamic>>[].obs;
   final RxBool isLoading = true.obs;
   final RxString error = ''.obs;
-  final String additionalArgument = 'accountId01';
-
 
   Future<bool> isRegistered() async {
     isLoading.value = true;

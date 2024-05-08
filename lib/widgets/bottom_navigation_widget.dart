@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:testapp/account/account_controller.dart';
 import 'package:testapp/controllers/navigation_controller.dart';
 import 'package:testapp/utils/app_colors.dart';
 
@@ -8,6 +9,7 @@ class BottomNavigationWidget extends GetView<NavigationController> {
 
   @override
   Widget build(BuildContext context) {
+    AccountController _accountController = AccountController();
     return Obx(
       () => ClipRRect(
         borderRadius: const BorderRadius.only(
@@ -54,7 +56,7 @@ class BottomNavigationWidget extends GetView<NavigationController> {
               Get.toNamed('/map/total');
             } else if (index == 3) {
               Get.toNamed('/chatRoomList', arguments: {
-                'accountId': 'qassadsadsa',
+                'accountId': _accountController.id,
               });
             } else if (index == 4) {
               Get.offAllNamed('/seeMore'); // '더보기' 페이지로 이동

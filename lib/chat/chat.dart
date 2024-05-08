@@ -33,6 +33,8 @@ class ChatState extends State<Chat> {
   final ChatController _chatController = ChatController();
   final TextEditingController _controller = TextEditingController();
   final ScrollController _scrollController = ScrollController();
+  final AccountController _accountController = AccountController();
+
   List<dynamic> messages = [];
 
   String imageURL = '';
@@ -311,7 +313,7 @@ class ChatState extends State<Chat> {
                   ),
                 ),
                 SizedBox(width: 10),
-                if (AccountController().role == 'Agent')
+                if (_accountController.role == 'Agent')
                   ElevatedButton(
                   onPressed: _showItemList,
                   child: const Icon(
