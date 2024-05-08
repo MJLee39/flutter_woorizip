@@ -4,22 +4,26 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:testapp/account/account_controller.dart';
 import 'package:testapp/models/account.dart';
 import 'package:testapp/services/storage_service.dart';
 import 'package:testapp/utils/api_config.dart';
 
 class AuthService extends GetxService {
   static AuthService get to => Get.find();
-
+  
   final RxBool isLoggedIn = false.obs;
 
   final _storageService = Get.find<StorageService>();
 
   bool get isLoggedInValue => isLoggedIn.value;
 
+  AccountController accountController = Get.find<AccountController>();
+
   @override
   void onInit() {
     super.onInit();
+    
     // 초기값 설정
     isLoggedIn.value = _storageService.hasToken();
     print('>>>>>>>>>>>>>>>>>&isLoggedIn.value');
@@ -30,13 +34,15 @@ class AuthService extends GetxService {
 
   Future<void> checkLoginStatus() async {
     final token = _storageService.getAccessToken();
-    debugPrint('>>>>>>>>>>>>>>>>>&checkLoginStatus\n$token');
     // 토큰 유효성 검사
     final isValid = await _validateToken(token);
     isLoggedIn.value = isValid;
     if (!isValid) {
       // 토큰이 유효하지 않은 경우 로그아웃 처리
       logout();
+    } else {
+      // 토큰이 유효한 경우 계정 정보 재설정
+      checkAccount(accountController.provider, accountController.providerUserId);
     }
   }
 

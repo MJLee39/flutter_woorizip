@@ -69,12 +69,10 @@ class AppPages {
     _getPageWithMiddleware(
       name: '/addressSearch',
       page: () => AddressSearchScreen(),
-      middlewares: [],
     ),
     _getPageWithMiddleware(
       name: '/result',
       page: () => const ResultSummaryScreen(),
-      middlewares: [],
     ),
     _getPageWithMiddleware(
       name: '/chatRoomList',
@@ -91,17 +89,14 @@ class AppPages {
         _chatController.getNicknameBy(accountId).then((value) => otherNickname = value);
         return Chat(chatRoomId: chatRoomId ?? "", accountId: accountId ?? "", myNickname: _accountController.nickname, otherNickname: otherNickname,);
       },
-      middlewares: [],
     ),
     _getPageWithMiddleware(
       name: '/seeMore',
       page: () => SeeMoreScreen(),
-      middlewares: [],
     ),
     _getPageWithMiddleware(
       name: '/delete_account',
       page: () => DeleteAccountScreen(),
-      middlewares: [],
     ),
     //중개사의 내 매물 리스트 보기
     _getPageWithMiddleware(
@@ -120,7 +115,6 @@ class AppPages {
     _getPageWithMiddleware(
       name: '/modify_nickname',
       page: () => const ModifyNickNameScreen(),
-      middlewares: [],
     ),
 
     /*
@@ -134,7 +128,6 @@ class AppPages {
     _getPageWithMiddleware(
       name: '/myinfo',
       page: () => const MyinfoScreen(),
-      middlewares: [],
     ),
     /*
     client set Move In Data
@@ -142,7 +135,6 @@ class AppPages {
     _getPageWithMiddleware(
       name: '/setmoveindate',
       page: () => const SetMoveInDateScreen(),
-      middlewares: [],
     ),
 
     /*
@@ -151,7 +143,6 @@ class AppPages {
     _getPageWithMiddleware(
       name: '/sethashtag',
       page: () => SetHashtagScreen(),
-      middlewares: [],
     ),
 
     /*
@@ -160,7 +151,6 @@ class AppPages {
     _getPageWithMiddleware(
       name: '/conditionreadone',
       page: () => const ConditionReadOneScreen(),
-      middlewares: [],
     ),
 
     /*
@@ -169,7 +159,6 @@ class AppPages {
     _getPageWithMiddleware(
       name: '/conditionreadall',
       page: () => ConditionReadAllScreen(),
-      middlewares: [],
     ),
 
     /*
@@ -178,7 +167,6 @@ class AppPages {
     _getPageWithMiddleware(
       name: '/conditionreadbywhere',
       page: () => ConditionReadByWhereScreen(),
-      middlewares: [],
     ),
 
     /*
@@ -187,14 +175,12 @@ class AppPages {
     _getPageWithMiddleware(
       name: '/conditionupdate',
       page: () => ConditionUpdateScreen(),
-      middlewares: [],
     ),
 
     //매물 등록에서 보증금 입력 페이지로 이동
     _getPageWithMiddleware(
       name: '/depositAndFee',
       page: () => RentalInfoScreen(),
-      middlewares: [],
     ),
 
     //매물 등록에서 상세 정보 입력 페이지로 이동
@@ -204,21 +190,18 @@ class AppPages {
     _getPageWithMiddleware(
       name: '/detail_registration',
       page: () => ZipDetailRegistrationScreen(),
-      middlewares: [],
     ),
 
     //매물 등록에서 상세 정보 입력 다음 페이지로 이동
     _getPageWithMiddleware(
       name: '/detail_registration2',
       page: () => ZipDetailRegistrationNextScreen(),
-      middlewares: [],
     ),
 
     //매물 등록에서 옵션 입력
     _getPageWithMiddleware(
       name: '/zip_hashtag',
       page: () => ZipHashtagScreen(),
-      middlewares: [],
     ),
 
     //매물 등록에서 상세 입력 2
