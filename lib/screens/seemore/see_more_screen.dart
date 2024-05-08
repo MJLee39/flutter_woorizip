@@ -54,7 +54,7 @@ class _SeeMoreScreenState extends State<SeeMoreScreen> {
                 const SizedBox(width: 10),
                 TextButton(
                   onPressed: () {
-                    Get.toNamed('/test');
+                    Get.toNamed('/filterscreen');
                   },
                   style: TextButton.styleFrom(
                     backgroundColor: Colors.white,

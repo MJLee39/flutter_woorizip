@@ -27,196 +27,356 @@ class SearchTypeSelector extends StatefulWidget {
 }
 
 class _SearchTypeSelectorState extends State<SearchTypeSelector> {
-
   final ZipFindController _controller = Get.put(ZipFindController());
 
   late TextEditingController locationController;
 
+  final List<int> _depositValues = [
+    50,
+    100,
+    200,
+    300,
+    500,
+    1000,
+    1500,
+    2000,
+    3000,
+    4000,
+    5000,
+    6000,
+    7000,
+    8000,
+    9000,
+    10000
+  ];
+  final List<int> _feeValues = [
+    5,
+    10,
+    20,
+    25,
+    30,
+    35,
+    40,
+    50,
+    60,
+    70,
+    100,
+    150,
+    200,
+    250,
+    300,
+    400,
+    500
+  ];
+  int _selectedDepositIndex = 0;
+  int _selectedFeeIndex = 0;
+
   @override
   void initState() {
     super.initState();
-    // 컨트롤러 초기화
     locationController = widget.locationController;
   }
 
-
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(20.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Row(
-            children: [
-              Text('유형: '),
-              Expanded(
-                child: buildBuildingTypeButton('아파트', context),
-              ),
-              Expanded(
-                child: buildBuildingTypeButton('오피스텔', context),
-              ),
-              Expanded(
-                child: buildBuildingTypeButton('원룸', context),
-              ),
-              Expanded(
-                child: buildBuildingTypeButton('투룸/빌라+', context),
-              ),
-            ],
-          ),
-          SizedBox(height: 20),
-          // 다른 필터 입력 필드
-          TextFormField(
-            controller: locationController,
-            decoration: InputDecoration(labelText: '위치'),
-          ),
-          SizedBox(height: 20),
-          Row(
-            children: [
-              Text('보증금: '),
-              Expanded(
-                child: depositTypeButton('~500', context),
-              ),
-              Expanded(
-                child: depositTypeButton('~1000', context),
-              ),
-              Expanded(
-                child: depositTypeButton('~2000', context),
-              ),
-              Expanded(
-                child: depositTypeButton('2000~', context),
-              ),
-            ],
-          ),
-          SizedBox(height: 20),
-          Row(
-            children: [
-              Text('월세: '),
-              Expanded(
-                child: feeTypeButton('~50', context),
-              ),
-              Expanded(
-                child: feeTypeButton('~75', context),
-              ),
-              Expanded(
-                child: feeTypeButton('~100', context),
-              ),
-              Expanded(
-                child: feeTypeButton('100~', context),
-              ),
-            ],
-          ),
-          SizedBox(height: 20),
-          ElevatedButton(
-            onPressed: sendRequest,
-            child: Text('검색',
-              style: TextStyle(color: Colors.white),),
-            style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all(AppColors.mainColorTest),
+    return Scaffold(
+      body: GestureDetector(
+        onTap: () {
+          Navigator.of(context).pop();
+        },
+        child: Container(
+          color: Colors.black54,
+          child: GestureDetector(
+            onTap: () {},
+            child: DraggableScrollableSheet(
+              initialChildSize: 0.9,
+              minChildSize: 0.9,
+              maxChildSize: 0.95,
+              builder: (_, controller) {
+                return Container(
+                  padding: EdgeInsets.all(20.0),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20),
+                    ),
+                  ),
+                  child: ListView(
+                    controller: controller,
+                    children: [
+                      Text('방 종류',
+                          style: TextStyle(fontWeight: FontWeight.bold)),
+                      SizedBox(height: 10),
+                      Row(
+                        children: [
+                          Expanded(
+                              child: buildBuildingTypeButton('원룸', context)),
+                          SizedBox(width: 10),
+                          Expanded(
+                              child: buildBuildingTypeButton('투,쓰리룸', context)),
+                          SizedBox(width: 10),
+                          Expanded(
+                              child: buildBuildingTypeButton('오피스텔', context)),
+                          SizedBox(width: 10),
+                          Expanded(
+                              child: buildBuildingTypeButton('아파트', context)),
+                        ],
+                      ),
+                      SizedBox(height: 20),
+                      Text('거래유형',
+                          style: TextStyle(fontWeight: FontWeight.bold)),
+                      SizedBox(height: 10),
+                      Row(
+                        children: [
+                          Expanded(child: depositTypeButton('월세', context)),
+                          SizedBox(width: 10),
+                          Expanded(child: depositTypeButton('전세', context)),
+                          SizedBox(width: 10),
+                          Expanded(child: depositTypeButton('매매', context)),
+                        ],
+                      ),
+                      SizedBox(height: 20),
+                      Text('가격', style: TextStyle(fontWeight: FontWeight.bold)),
+                      SizedBox(height: 10),
+                      Stack(
+                        children: [
+                          Slider(
+                            value: _selectedDepositIndex.toDouble(),
+                            min: 0,
+                            max: _depositValues.length - 1,
+                            divisions: _depositValues.length - 1,
+                            onChanged: (value) {
+                              setState(() {
+                                _selectedDepositIndex = value.toInt();
+                              });
+                            },
+                          ),
+                          Positioned.fill(
+                            child: Align(
+                              alignment: Alignment(
+                                  (_selectedDepositIndex /
+                                              (_depositValues.length - 1)) *
+                                          2 -
+                                      1,
+                                  -1),
+                              child: Container(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 8, vertical: 4),
+                                decoration: BoxDecoration(
+                                  color: Colors.black,
+                                  borderRadius: BorderRadius.circular(4),
+                                ),
+                                child: Text(
+                                  '${_depositValues[_selectedDepositIndex]}만원',
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 12),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text('${_depositValues[0]}만원'),
+                          Text('${_depositValues[1]}만원'),
+                          Text('${_depositValues[2]}만원'),
+                          Text('${_depositValues[3]}만원'),
+                          Text('${_depositValues[4]}만원'),
+                        ],
+                      ),
+                      SizedBox(height: 20),
+                      Stack(
+                        children: [
+                          Slider(
+                            value: _selectedFeeIndex.toDouble(),
+                            min: 0,
+                            max: _feeValues.length - 1,
+                            divisions: _feeValues.length - 1,
+                            onChanged: (value) {
+                              setState(() {
+                                _selectedFeeIndex = value.toInt();
+                              });
+                            },
+                          ),
+                          Positioned.fill(
+                            child: Align(
+                              alignment: Alignment(
+                                  (_selectedFeeIndex /
+                                              (_feeValues.length - 1)) *
+                                          2 -
+                                      1,
+                                  -1),
+                              child: Container(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 8, vertical: 4),
+                                decoration: BoxDecoration(
+                                  color: Colors.black,
+                                  borderRadius: BorderRadius.circular(4),
+                                ),
+                                child: Text(
+                                  '${_feeValues[_selectedFeeIndex]}만원',
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 12),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text('${_feeValues[0]}만원'),
+                          Text('${_feeValues[1]}만원'),
+                          Text('${_feeValues[2]}만원'),
+                          Text('${_feeValues[3]}만원'),
+                          Text('${_feeValues[4]}만원'),
+                        ],
+                      ),
+                      SizedBox(height: 20),
+                      SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          onPressed: sendRequest,
+                          child: Text(
+                            '적용하기',
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold),
+                          ),
+                          style: ButtonStyle(
+                            padding: MaterialStateProperty.all(
+                                EdgeInsets.symmetric(vertical: 15)),
+                            shape: MaterialStateProperty.all(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10))),
+                            backgroundColor: MaterialStateProperty.all(
+                                AppColors.mainColorTest),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
             ),
           ),
-        ],
+        ),
       ),
     );
   }
+
   void sendRequest() async {
     final selectedLocation = widget.locationController.text;
-    final selectedBuildingTypes = widget.buildingTypeController.selectedBuildingTypes.join(',');
-    final selectedFeeType = widget.feeController.selectedFeeType;
-    final selectedDeposit = widget.depositController.selectedDepositType;
+    final selectedBuildingTypes =
+        widget.buildingTypeController.selectedBuildingTypes.join(',');
+    final selectedDeposit = _depositValues[_selectedDepositIndex];
+    final selectedFee = _feeValues[_selectedFeeIndex];
 
-    final url = Uri.parse('${ApiConfig.apiSearchZipUrl}?location=$selectedLocation&buildingType=$selectedBuildingTypes&fee=$selectedFeeType&deposit=$selectedDeposit');
+    final url = Uri.parse(
+        '${ApiConfig.apiSearchZipUrl}?location=$selectedLocation&buildingType=$selectedBuildingTypes&fee=$selectedFee&deposit=$selectedDeposit');
 
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
-      // 성공적인 응답 처리
-      Iterable<Map<String, dynamic>> responseData = (jsonDecode(utf8.decode(response.bodyBytes))['Zips'] as List<dynamic>)
-          .map((dynamic item) => item as Map<String, dynamic>);
-      _controller.updateData(responseData.toList()); // 데이터 업데이트
+      Iterable<Map<String, dynamic>> responseData =
+          (jsonDecode(utf8.decode(response.bodyBytes))['Zips'] as List<dynamic>)
+              .map((dynamic item) => item as Map<String, dynamic>);
+      _controller.updateData(responseData.toList());
     } else {
-      // 요청 실패 처리
       print('Failed to load data: ${response.statusCode}');
     }
   }
 
-
   Widget buildBuildingTypeButton(String buttonText, BuildContext context) {
-    final isSelected =
-    widget.buildingTypeController.selectedBuildingTypes.contains(buttonText);
+    final isSelected = widget.buildingTypeController.selectedBuildingTypes
+        .contains(buttonText);
     final buttonColor = isSelected ? AppColors.mainColor : Colors.grey;
 
     return ElevatedButton(
       onPressed: () {
         widget.buildingTypeController.toggleSelection(buttonText);
-        setState(() {
-          // setState를 호출하여 UI를 다시 빌드
-        });
+        setState(() {});
       },
-      child: Text(buttonText,
-        style: TextStyle(color: Colors.white,
-          fontSize: 10,
-          fontWeight: FontWeight.bold,// Adjusted font size
+      child: Text(
+        buttonText,
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 12,
+          fontWeight: FontWeight.bold,
         ),
       ),
       style: ButtonStyle(
         backgroundColor: MaterialStateProperty.all(buttonColor),
-        // ... 기존 스타일 속성 유지
+        shape: MaterialStateProperty.all(
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(20))),
       ),
     );
   }
 
   Widget depositTypeButton(String buttonText, BuildContext context) {
     final isSelected =
-        widget.depositController.selectedDepositType == buttonText; // 해당 버튼이 선택된 상태인지 확인
-    final buttonColor =
-    isSelected ? AppColors.mainColor : Colors.grey; // 선택된 상태에 따라 버튼 색상
+        widget.depositController.selectedDepositType == buttonText;
+    final buttonColor = isSelected ? AppColors.mainColor : Colors.grey;
 
     return ElevatedButton(
       onPressed: () {
         setState(() {
           if (isSelected) {
-            widget.depositController.clearSelection(); // 이미 선택된 버튼이면 선택 해제
+            widget.depositController.clearSelection();
           } else {
             widget.depositController.clearSelection();
             widget.depositController.toggleSelection(buttonText);
           }
         });
       },
-      child: Text(buttonText,
-        style: TextStyle(color: Colors.white,
-          fontSize: 11,
-        ),),
+      child: Text(
+        buttonText,
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 12,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
       style: ButtonStyle(
         backgroundColor: MaterialStateProperty.all(buttonColor),
+        shape: MaterialStateProperty.all(
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(20))),
       ),
     );
   }
 
   Widget feeTypeButton(String buttonText, BuildContext context) {
-    final isSelected =
-        widget.feeController.selectedFeeType == buttonText; // 해당 버튼이 선택된 상태인지 확인
-    final buttonColor =
-    isSelected ? AppColors.mainColor : Colors.grey; // 선택된 상태에 따라 버튼 색상
+    final isSelected = widget.feeController.selectedFeeType == buttonText;
+    final buttonColor = isSelected ? AppColors.mainColor : Colors.grey;
 
     return ElevatedButton(
       onPressed: () {
         setState(() {
           if (isSelected) {
-            widget.feeController.clearSelection(); // 이미 선택된 버튼이면 선택 해제
+            widget.feeController.clearSelection();
           } else {
             widget.feeController.clearSelection();
             widget.feeController.toggleSelection(buttonText);
           }
         });
       },
-      child: Text(buttonText,
-          style: TextStyle(color: Colors.white,
-            fontSize: 14,)),
+      child: Text(
+        buttonText,
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 12,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
       style: ButtonStyle(
         backgroundColor: MaterialStateProperty.all(buttonColor),
-        // ... 기존 스타일 속성 유지
+        shape: MaterialStateProperty.all(
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(20))),
       ),
     );
   }
