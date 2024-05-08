@@ -149,7 +149,7 @@ class _ZipListAgentScreenState extends State<ZipListAgentScreen> {
                           Expanded(
                             flex: 2,
                             child: Image.network(
-                              '${ApiConfig.attachmentApiEndpointUri}/' + item['attachments'],
+                              '${ApiConfig.attachmentApiEndpointUri}/' + item['attachments'].split(',')[0],
                               fit: BoxFit.cover,
                               width: 100, // 이미지의 가로 길이를 조절합니다.
                             ),

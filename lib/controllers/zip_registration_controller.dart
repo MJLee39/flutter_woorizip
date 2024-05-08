@@ -113,10 +113,10 @@ class ZipRegistration extends GetxController {
       print("controller hashtag: "+hashtag);
 
       String input = jsonEncode({
-        "attachments": 'add',
+        "attachments": attachments.toString(),
         "agentId": "명진 부동산777",
         "checkedAt": checked_at.toIso8601String(),
-        "estateId": "666",
+        "estateId": estate.toString(),
         "direction": direction.toString(),
         "totalFloor": total_floor.toString(),
         "buildingFloor": building_floor.toString(),
@@ -184,7 +184,7 @@ class ZipRegistration extends GetxController {
 
       String update = jsonEncode({
         "id": id,
-        "attachments": 'add',
+        "attachments": attachments.toString(),
         "agentId": "명진 부동산88",
         "checkedAt": checked_at.toIso8601String(),
         "estateId": estate.toString(),

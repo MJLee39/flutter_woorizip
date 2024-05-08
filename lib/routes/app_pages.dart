@@ -77,7 +77,6 @@ class AppPages {
     _getPageWithMiddleware(
       name: '/chatRoomList',
       page: () => ChatRoomListScreen(),
-      middlewares: [],
     ),
     _getPageWithMiddleware(
       name: '/chat/:chatRoomId',
@@ -101,7 +100,6 @@ class AppPages {
     _getPageWithMiddleware(
       name: '/my_listings',
       page: () => const ZipListAgentScreen(),
-      middlewares: [],
     ),
     _getPageWithMiddleware(
       name: '/map/:buildingType',
@@ -124,7 +122,6 @@ class AppPages {
     _getPageWithMiddleware(
       name: '/setdetails',
       page: () => const SetDetailsScreen(),
-      middlewares: [],
     ),
 
     _getPageWithMiddleware(

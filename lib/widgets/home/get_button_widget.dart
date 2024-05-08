@@ -10,12 +10,12 @@ class GetButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final accountController = Get.put(AccountController());
-    if (accountController.role == "Agent") {
+    //if (accountController.role == "Agent") {
       return const ZipRegistratitionButtonWidget();
     // } else if (accountController.role == "User") {
     //   return const ConditionRegistrationButtonWidget();
-    } else {
-      return const ConditionRegistrationButtonWidget();
-    }
+    //} else {
+    //  return const ConditionRegistrationButtonWidget();
+    //}
   }
 }
