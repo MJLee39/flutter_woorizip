@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:testapp/utils/api_config.dart';
 import 'package:testapp/widgets/bottom_navigation_widget.dart';
 import 'package:testapp/screens/zip_detail_screen.dart';
 import 'package:get/get.dart';
@@ -110,7 +111,7 @@ class ZipFindScreen extends StatelessWidget {
                         children: [
                           Expanded(
                             flex: 2,
-                            child: Image.network('https://test.teamwaf.app/attachment/'+item['attachments'],
+                            child: Image.network('${ApiConfig.attachmentApiEndpointUri}/'+item['attachments'],
                                 fit: BoxFit.cover),
                           ),
                           Expanded(
@@ -157,7 +158,7 @@ class ZipFindScreen extends StatelessWidget {
                         children: [
                           Expanded(
                             flex: 2,
-                            child: Image.network('https://test.teamwaf.app/attachment/'+item['attachments'],
+                            child: Image.network('${ApiConfig.attachmentApiEndpointUri}/'+item['attachments'],
                                 fit: BoxFit.cover),
                           ),
                           Expanded(

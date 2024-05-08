@@ -2,13 +2,14 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
+import 'package:testapp/account/account_controller.dart';
 import 'package:testapp/utils/api_config.dart';
 
 class ConditionController extends GetxController {
 
   late String id = '';
   
-  late String accountId = 'accountId02';
+  late String accountId = AccountController().id;
   late String conditionId = '';
 
   late String si = '';
@@ -32,7 +33,7 @@ class ConditionController extends GetxController {
       print('** in registered --------------');
       print('** accountId: $accountId');
 
-      String url = '${ApiConfig.apiSubfixConditionUrl}'; // 수정필요 
+      String url = '${ApiConfig.apiIsRegisteredConditionUrl}'; // 수정필요
 
       final response = await http.get(Uri.parse(url));
       // print("** response.runtime: $response.runtimeType");
@@ -77,7 +78,7 @@ class ConditionController extends GetxController {
     try {
       print('** in Save --------------');
 
-      String url = ApiConfig.apiSubfixConditionUrl;
+      String url = ApiConfig.apiSaveConditionUrl;
 
       String input = jsonEncode({
         'accountId': accountId,
@@ -123,7 +124,7 @@ class ConditionController extends GetxController {
 
     try {
       print('** in ReadOne --------------');
-      String url = '${ApiConfig.apiSubfixConditionUrl}/${conditionId}';
+      String url = '${ApiConfig.apiReadMyConditionUrl}/${conditionId}';
 
       print('** input: $accountId');
 
@@ -163,7 +164,7 @@ class ConditionController extends GetxController {
     try {
       print('** in readAll --------------');
 
-      String url = ApiConfig.apiSubfixConditionUrl;
+      String url = ApiConfig.apiReadAllConditionUrl;
 
       final response = await http.get(Uri.parse(url));
 
@@ -189,7 +190,7 @@ class ConditionController extends GetxController {
     isLoading.value = true;
 
     try {
-      String url = 'http://localhost:8093/condition/readByWhere';
+      String url = ApiConfig.apiReadByWhereConditionUrl;
 
       print('** in readByWhere --------------');
       print(location);
@@ -230,7 +231,7 @@ class ConditionController extends GetxController {
     isLoading.value = true;
 
     try {
-      String url = 'http://localhost:8093/condition/update';
+      String url = '${ApiConfig.apiUpdateConditionUrl}/$conditionId';
 
       print('** in Update --------------');
 
@@ -273,7 +274,7 @@ class ConditionController extends GetxController {
     try {
       print('** in Delete --------------');
 
-      String url = '${ApiConfig.apiSubfixConditionUrl}/$conditionId';
+      String url = '${ApiConfig.apiDeleteConditionUrl}/$conditionId';
 
       print("** url check -> uri: $url");
 
