@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:testapp/utils/api_config.dart';
 
 class AdminController extends GetxController {
   final RxString error = ''.obs;
@@ -23,56 +24,30 @@ class AdminController extends GetxController {
   }
 
   Future<void> fetchAccountData() async {
-    accountList.assignAll({
-      AccountInfo('1', 'User1', 'Google', 'google123', "AGENT"),
-      AccountInfo('2', 'User2', 'Facebook', 'facebook456', "USER"),
-      AccountInfo('3', 'User3', 'Twitter', 'twitter789', "AGENT"),
-      AccountInfo('4', 'User4', 'GitHub', 'github101112', "USER"),
-      AccountInfo('1', 'User1', 'Google', 'google123', "AGENT"),
-      AccountInfo('2', 'User2', 'Facebook', 'facebook456', "USER"),
-      AccountInfo('3', 'User3', 'Twitter', 'twitter789', "AGENT"),
-      AccountInfo('4', 'User4', 'GitHub', 'github101112', "USER"),
-      AccountInfo('1', 'User1', 'Google', 'google123', "AGENT"),
-      AccountInfo('2', 'User2', 'Facebook', 'facebook456', "USER"),
-      AccountInfo('3', 'User3', 'Twitter', 'twitter789', "AGENT"),
-      AccountInfo('4', 'User4', 'GitHub', 'github101112', "USER"),
-      AccountInfo('1', 'User1', 'Google', 'google123', "AGENT"),
-      AccountInfo('2', 'User2', 'Facebook', 'facebook456', "USER"),
-      AccountInfo('3', 'User3', 'Twitter', 'twitter789', "AGENT"),
-      AccountInfo('4', 'User4', 'GitHub', 'github101112', "USER"),
-      AccountInfo('1', 'User1', 'Google', 'google123', "AGENT"),
-      AccountInfo('2', 'User2', 'Facebook', 'facebook456', "USER"),
-      AccountInfo('3', 'User3', 'Twitter', 'twitter789', "AGENT"),
-      AccountInfo('4', 'User4', 'GitHub', 'github101112', "USER"),
-    });
+    const url = "${ApiConfig.apiAccountReadAllUrl}";
 
-    accountIdList.assignAll(accountList.map((accountInfo) => accountInfo.accountId).toList());
-    fetchAllReportCount();
+    try {
+      final response = await http.get(Uri.parse(url));
 
-    // const url = "http://localhost:8080";
-    //
-    // try {
-    //   final response = await http.get(Uri.parse(url));
-    //
-    //   if (response.statusCode == 200) {
-    //     List<dynamic> jsonData = jsonDecode(utf8.decode(response.bodyBytes));
-    //
-    //     accountList.assignAll(jsonData.map((data) {
-    //       accountIdList.add(data['accountId']);
-    //       return AccountInfo.fromJson(data);
-    //     }).toList());
-    //
-    //     fetchAllReportCount();
-    //   } else {
-    //     throw Exception('Failed to load data: ${response.statusCode}');
-    //   }
-    // } catch (e) {
-    //   error.value = 'Error fetching data: $e';
-    // }
+      if (response.statusCode == 200) {
+        List<dynamic> jsonData = jsonDecode(utf8.decode(response.bodyBytes));
+
+        accountList.assignAll(jsonData.map((data) {
+          accountIdList.add(data['accountId']);
+          return AccountInfo.fromJson(data);
+        }).toList());
+
+        fetchAllReportCount();
+      } else {
+        throw Exception('Failed to load data: ${response.statusCode}');
+      }
+    } catch (e) {
+      error.value = 'Error fetching data: $e';
+    }
   }
 
   Future<void> fetchAllReportCount() async {
-    const url = "https://chat.teamwaf.app/report/all/size";
+    const url = "${ApiConfig.chatApiEndpointUrl}/report/all/size";
 
     try {
       final response = await http.post(Uri.parse(url),
@@ -105,7 +80,7 @@ class AdminController extends GetxController {
   }
 
   Future<void> blockAccount(String accountId) async {
-    const url = "http://localhost:8080";
+    var url = "${ApiConfig.apiAccountLockUrl}/$accountId/lock";
 
     try {
       final response = await http.post(
@@ -140,7 +115,7 @@ class AdminController extends GetxController {
   }
 
   Future<void> unblockAccount(String accountId) async {
-    const url = "http://localhost:8080/block";
+    var url = "${ApiConfig.apiAccountLockUrl}/$accountId/unlock";
 
     try {
       final response = await http.post(

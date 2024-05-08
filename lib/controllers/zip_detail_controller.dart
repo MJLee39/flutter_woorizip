@@ -1,10 +1,11 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:testapp/utils/api_config.dart';
 
 class ZipDataController {
   Future<Map<String, dynamic>> fetchZipData(String itemID) async {
     final response = await http.get(
-        Uri.parse('http://localhost/zipOne?zip_id=$itemID'));
+        Uri.parse('${ApiConfig.apiGetByIdZipUrl}/$itemID'));
 
     if (response.statusCode == 200) {
       final Map<String, dynamic> responseData =
