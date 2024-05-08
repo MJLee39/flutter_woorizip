@@ -8,6 +8,8 @@ import 'package:testapp/widgets/zip/checked_at_widget.dart';
 import 'package:testapp/widgets/zip/select_hashtag_widget.dart';
 import 'package:testapp/widgets/app_bar_widget.dart';
 
+import '../../widgets/zip/update_button_widget.dart';
+
 class ZipDetailRegistrationNextScreen extends StatelessWidget {
   final ZipRegistration controller = Get.find<ZipRegistration>();
 
@@ -41,7 +43,7 @@ class ZipDetailRegistrationNextScreen extends StatelessWidget {
                     SizedBox(height: 10),
                     CheckedAtWidget(),
                     SizedBox(height: 40),
-                    TextHeaderWidget(text: "메모를 남겨주세요. 이 정보는 비공개 됩니다."),
+                    TextHeaderWidget(text: "메모를 남겨주세요(비공개용)"),
                     Row(
                       children: [
                         Expanded(
@@ -93,10 +95,33 @@ class ZipDetailRegistrationNextScreen extends StatelessWidget {
                 ),
               ),
             ),
-            BottomExpendButtonWidget(
+            UpdateButtonWidget(
               text: '다음',
-              url: '/zip_hashtag',
-              arguments: {},
+              onPressed: () {
+                // TextField가 비어 있는지 확인하여 메시지 출력
+                if (controller.checked_at == '' ||
+                    controller.showYes == '') {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text('정보를 모두 입력해주세요'),
+                        actions: <Widget>[
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: Text('확인'),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                } else {
+                  // 다음 화면으로 이동
+                  Navigator.pushNamed(context, '/zip_hashtag');
+                }
+              },
             ),
           ],
         ),

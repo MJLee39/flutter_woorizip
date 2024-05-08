@@ -6,7 +6,6 @@ class ZipDataController {
   Future<Map<String, dynamic>> fetchZipData(String itemID) async {
     final response = await http.get(
         Uri.parse('${ApiConfig.apiGetByIdZipUrl}/$itemID'));
-
     if (response.statusCode == 200) {
       final Map<String, dynamic> responseData =
       json.decode(utf8.decode(response.bodyBytes));

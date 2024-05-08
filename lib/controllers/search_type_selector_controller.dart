@@ -22,12 +22,11 @@ class SearchTypeSelectorController extends GetxController {
     final selectedFeeType = feeController.selectedFeeType;
     final selectedDeposit = depositController.selectedDepositType;
 
-    final url = Uri.parse('${ApiConfig.apiSearchZipUrl}?location=$selectedLocation&buildingType=$selectedBuildingTypes&fee=$selectedFeeType&deposit=$selectedDeposit');
-
+    final url = Uri.parse('${ApiConfig.apiSearchZipUrl}?location=$selectedLocation&deposit=$selectedDeposit&fee=$selectedFeeType&buildingType=$selectedBuildingTypes');
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
-      Iterable<Map<String, dynamic>> responseData = (jsonDecode(utf8.decode(response.bodyBytes)) as List<dynamic>)
+      Iterable<Map<String, dynamic>> responseData = (jsonDecode(utf8.decode(response.bodyBytes))['Zips'] as List<dynamic>)
           .map((dynamic item) => item as Map<String, dynamic>);
       _zipFindController.updateData(responseData.toList());
     } else {
