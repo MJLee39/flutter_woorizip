@@ -153,7 +153,9 @@ class ZipRegistration extends GetxController {
         print("저장성공!!!!!!!!!!!!!!!!");
         List<dynamic> responseData =
         jsonDecode(utf8.decode(response.bodyBytes));
+
         jsonData.assignAll(responseData.cast<Map<String, dynamic>>());
+        
       } else {
         throw Exception('Failed to load data: ${response.statusCode}');
       }
