@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:testapp/account/account_controller.dart';
+import 'package:testapp/chat/chat.dart';
 import 'package:testapp/controllers/chat_controller.dart';
 import 'package:testapp/utils/api_config.dart';
 import 'package:testapp/widgets/bottom_navbar_button.dart';
@@ -262,11 +263,16 @@ class _RoomDetailScreenState extends State<RoomDetailScreen> {
 
               var chatRoomInfo =
                   await _chatController.createChatRoom(clientId, agentId);
-              Get.toNamed('/chat/${chatRoomInfo['chatRoomId']}',
-                  arguments: {
-                    'accountId': clientId,
-                    'otherNickname': otherNickname
-                  });
+                  Navigator.push(
+                      context, MaterialPageRoute(
+                      builder: (context) => Chat(
+                        chatRoomId: chatRoomInfo['id'],
+                        accountId: clientId,
+                        myNickname: _accountController.nickname,
+                        otherNickname: otherNickname,
+                      ),
+                    ),
+                    );
             }),
       );
     }
