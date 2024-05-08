@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
+import 'package:testapp/utils/api_config.dart';
 
 class ZipFindController extends GetxController {
   final RxList<Map<String, dynamic>> jsonData = <Map<String, dynamic>>[].obs;
@@ -25,7 +26,7 @@ class ZipFindController extends GetxController {
     isLoading.value = true; // 로딩 상태 시작
 
     try {
-      final response = await http.get(Uri.parse('http://localhost/search?buildingType='+additionalArgument));
+      final response = await http.get(Uri.parse('${ApiConfig.apiSearchZipUrl}?buildingType='+additionalArgument));
       if (response.statusCode == 200) {
         List<dynamic> responseData = jsonDecode(utf8.decode(response.bodyBytes));
         RxList<Map<String, dynamic>> premiumZip = RxList<Map<String, dynamic>>();

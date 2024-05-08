@@ -1,10 +1,11 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:testapp/utils/api_config.dart';
 
 class ChatController {
 
-  final String urlPrefix = "http://15.164.244.88:8080";
+  final String urlPrefix = '${ApiConfig.chatApiEndpointUrl}';
 
   Future<String> getNicknameBy(String accountId) async {
     final url = Uri.parse("https://api.teamwaf.app/v1/account/$accountId");
