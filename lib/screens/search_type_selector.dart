@@ -61,7 +61,7 @@ class _SearchTypeSelectorState extends State<SearchTypeSelector> {
                 child: buildBuildingTypeButton('원룸', context),
               ),
               Expanded(
-                child: buildBuildingTypeButton('투룸+', context),
+                child: buildBuildingTypeButton('투룸/빌라+', context),
               ),
             ],
           ),
@@ -120,7 +120,6 @@ class _SearchTypeSelectorState extends State<SearchTypeSelector> {
       ),
     );
   }
-
   void sendRequest() async {
     final selectedLocation = widget.locationController.text;
     final selectedBuildingTypes = widget.buildingTypeController.selectedBuildingTypes.join(',');

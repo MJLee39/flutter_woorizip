@@ -68,6 +68,12 @@ class ZipHashtagScreen extends GetView<ZipRegistration> {
                     hashtag: '${controller.hashtag}'
                   );
                   controller.saveZip();
+                  Get.snackbar(
+                    "알림",
+                    "매물이 등록되었습니다",
+                    snackPosition: SnackPosition.BOTTOM, // 스낵바 위치 설정
+                    colorText: Colors.black, // 텍스트 색상 설정
+                  );
                 },
               ),
             ],

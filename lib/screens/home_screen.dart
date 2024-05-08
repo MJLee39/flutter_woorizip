@@ -31,7 +31,7 @@ class HomeScreen extends StatelessWidget {
                 ),
                 SizedBox(width: 10),
                 HalfButtonWidget(
-                  text: "투룸+",
+                  text: "투룸/빌라+",
                   imagePath: "assets/images/icon_twomore.png",
                   urlPath: "/zipFind",
                   additionalArgument: "투룸",
@@ -56,7 +56,7 @@ class HomeScreen extends StatelessWidget {
                 ),
               ],
             ),
-          
+
             // SizedBox(
             //   height: 90,
             // ),

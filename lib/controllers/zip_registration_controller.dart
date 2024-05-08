@@ -3,8 +3,14 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:testapp/account/account_controller.dart';
 import 'package:testapp/utils/api_config.dart';
+import 'package:crypto/crypto.dart';
 
 class ZipRegistration extends GetxController {
+
+  String md5Hash(String input) {
+    return md5.convert(utf8.encode(input)).toString();
+  }
+
   late String location = '';
   late String estate = '';
   late String attachments = '';
@@ -39,7 +45,6 @@ class ZipRegistration extends GetxController {
     estate = (args['selectedAddress'] ?? '') + (args['selectedDong'] ?? '') + (args['selectedFloor'] ?? '') + (args['selectedHo'] ?? '');
     total_floor = args['totalFloor'] ?? 0;
     building_floor = int.tryParse(args['selectedFloor'].split('층').first) ?? 0;
-
   }
 
   @override
@@ -96,6 +101,8 @@ class ZipRegistration extends GetxController {
       print('** in Save --------------');
       String url = '${ApiConfig.apiSaveZipUrl}';
 
+      String hashedEstate = md5Hash(estate);
+
       print("controller attachments: "+attachments);
       print("controller direction: "+direction);
       print("controller checkedAt: "+checked_at.toIso8601String());
@@ -119,7 +126,7 @@ class ZipRegistration extends GetxController {
         "attachments": attachments.toString(),
         "agentId": _accountController.id,
         "checkedAt": checked_at.toIso8601String(),
-        "estateId": estate.toString(),
+        "estateId": hashedEstate.toString(),
         "direction": direction.toString(),
         "totalFloor": total_floor.toString(),
         "buildingFloor": building_floor.toString(),
@@ -137,7 +144,6 @@ class ZipRegistration extends GetxController {
         "maintenanceFee": maintenance_fee.toString(),
         "premium": DateTime.now().toIso8601String()
       });
-
 
       print('** input: $input');
 
@@ -157,6 +163,7 @@ class ZipRegistration extends GetxController {
       isLoading.value = false;
     }
   }
+
 
   Future<void> updateZip(String id) async {
     isLoading.value = true;
