@@ -85,7 +85,7 @@ class ConditionController extends GetxController {
         'location': location,
         'buildingType': buildingType,
         'fee': fee,
-        'moveInDate': moveInDate.toIso8601String(),
+        'moveInDate': moveInDate.toIso8601String().split('T')[0],
         'hashtag': hashtag,
       });
 
@@ -124,7 +124,7 @@ class ConditionController extends GetxController {
 
     try {
       print('** in ReadOne --------------');
-      String url = '${ApiConfig.apiReadMyConditionUrl}/${conditionId}';
+      String url = '${ApiConfig.apiReadMyConditionUrl}$accountId';
 
       print('** input: $accountId');
 

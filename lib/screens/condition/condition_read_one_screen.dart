@@ -49,7 +49,7 @@ class _ConditionReadOneScreenState extends State<ConditionReadOneScreen> {
                           );
                         } else {
                           bool isRegistered = snapshot.data ?? false;
-                          if (isRegistered) {
+                          if (!isRegistered) {
                             return ReadOneWidget();
                           } else {
                             return Column(
@@ -76,7 +76,7 @@ class _ConditionReadOneScreenState extends State<ConditionReadOneScreen> {
           ),
           BottomExpendButtonWidget(
             text: '등록',
-            url: 'url',
+            url: '/setdetails',
           ),
         ],
       ),
