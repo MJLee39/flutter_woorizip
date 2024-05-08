@@ -273,9 +273,9 @@ class _DetailScreenState extends State<DetailScreen> {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.mainColor1,
                       // 버튼의 배경색을 파란색으로 설정
-                      textStyle: TextStyle(fontSize: 30),
+                      textStyle: const TextStyle(fontSize: 30),
                       // 텍스트의 크기를 20으로 설정
-                      minimumSize: Size(200, 60),
+                      minimumSize: const Size(200, 60),
                       // 버튼의 최소 크기를 지정 (가로: 200, 세로: 60)
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(

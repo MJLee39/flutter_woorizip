@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:testapp/account/account_controller.dart';
 import 'package:testapp/widgets/app_bar_widget.dart';
-import 'package:testapp/widgets/bottom_expend_button_widget.dart';
 import 'package:testapp/widgets/bottom_navbar_button.dart';
 import 'package:testapp/widgets/rounded_input_widget.dart';
 
@@ -12,8 +11,9 @@ class ModifyNickNameScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AccountController _accountController = Get.find<AccountController>();
+    TextEditingController _textController = TextEditingController(text: _accountController.nickname);
     return Scaffold(
-      appBar: AppBarWidget(title: '이름 변경'),
+      appBar: const AppBarWidget(title: '이름 변경'),
       body: Column(
         children: [
           const SizedBox(height: 20),
@@ -23,12 +23,17 @@ class ModifyNickNameScreen extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: RoundedInputBox(hint: _accountController.nickname),
+              child: RoundInputWidget(
+                hint: _accountController.nickname, textController: _textController,)
             ),
           
         ],
       ),
-      bottomNavigationBar: BottomNavbarButton(label: 'label', onTap: () {}),
+      bottomNavigationBar: BottomNavbarButton(label: '변경', onTap: () {
+          _accountController.nickname = _textController.text;
+          Get.snackbar('변경 완료', '이름이 변경되었습니다.');          
+          Navigator.of(context).pop(); // 화면 닫기
+      }),
 
     );
   }
