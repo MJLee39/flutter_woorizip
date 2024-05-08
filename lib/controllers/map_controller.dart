@@ -23,6 +23,7 @@ class DataController {
             'buildingType': data['buildingType'] ?? '',
             'attachments': data['attachments']?.toString() ?? '',
             'money': '${data['deposit']?.toString() ?? ''}/${data['fee']?.toString() ?? ''}',
+            'location': data['location']?.toString() ?? '',
           };
         }).toList();
       } else {

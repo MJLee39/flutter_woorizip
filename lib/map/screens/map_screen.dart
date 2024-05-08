@@ -7,6 +7,8 @@ import 'package:testapp/map/provider/map_provider.dart';
 import 'package:testapp/controllers/map_controller.dart';
 import 'package:testapp/widgets/app_bar_widget.dart';
 
+import '../../utils/api_config.dart';
+
 class MapScreen extends StatelessWidget {
 
   MapScreen({Key? key, required this.buildingType}) : super(key: key);
@@ -118,12 +120,49 @@ class _BottomSheetContentState extends State<BottomSheetContent> {
             itemCount: data.length,
             itemBuilder: (context, index) {
               final item = data[index];
-              return ListTile(
-                title: Text('보증금/월세 : ${item['money']}'),
-                subtitle: Text('건물 유형: ${item['buildingType']}'),
+              return GestureDetector(
                 onTap: () {
                   Get.to(DetailScreen(itemID: '${item["id"]}'), transition: Transition.noTransition);
                 },
+                child: Column(
+                  children: [
+                    SizedBox(height: 10),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // 이미지 표시
+                        Container(
+                          width: 100, // 이미지의 폭 설정
+                          height: 80, // 이미지의 높이 설정
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10), // 이미지 모서리 둥글게 설정
+                            image: DecorationImage(
+                              image: NetworkImage(
+                                  '${ApiConfig.attachmentApiEndpointUri}/'+(item['attachments']?.split(',')[0] ?? ''),
+                              ),
+                              fit: BoxFit.cover, // 이미지가 올바르게 표시되도록 설정
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 10), // 이미지와 텍스트 사이에 간격 추가
+                        // 텍스트 정보 표시
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text('보증금/월세 : ${item['money']}'),
+                              Text('건물 유형: ${item['buildingType']}'),
+                              Text('위치 : ${item['location']}'),
+                            ],
+                          ),
+                        ),
+                        SizedBox(width: 10), // 텍스트와 리스트 아이템 사이에 간격 추가
+                      ],
+                    ),
+                    SizedBox(height: 10), // 아이템 사이의 간격
+                    Divider(height: 1, color: Colors.grey), // 구분선 추가
+                  ]
+                )
               );
             },
           );
