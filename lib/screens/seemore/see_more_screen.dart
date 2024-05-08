@@ -4,6 +4,7 @@ import 'package:testapp/account/account_controller.dart';
 import 'package:testapp/widgets/app_bar_widget.dart';
 import 'package:testapp/widgets/bottom_navigation_widget.dart';
 import 'package:testapp/widgets/seemore/loggedin_top_widget.dart';
+import 'package:testapp/widgets/seemore/not_login_top_widget.dart';
 
 class SeeMoreScreen extends StatefulWidget {
   const SeeMoreScreen({super.key});
@@ -37,7 +38,9 @@ class _SeeMoreScreenState extends State<SeeMoreScreen> {
       appBar: const AppBarWidget(title: '더보기'),
       body: Column(
         children: [
-          if (_accountController.id.isNotEmpty) const LoggedinTopWidget(),
+          _accountController.account != null
+              ? const LoggedinTopWidget()
+              : const NotLoginTopWidget(),
           const Divider(
             color: Colors.grey,
             height: 20,

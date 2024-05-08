@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:testapp/models/account.dart';
 import 'package:testapp/services/storage_service.dart';
@@ -10,8 +11,7 @@ class AccountController extends GetxController {
   final _storageService = Get.find<StorageService>();
 
   // Account 정보 업데이트를 위한 API 엔드포인트 URL
-  final String _apiUrl = '${ApiConfig.apiAccountUpdateUrl}/${Get.find<StorageService>().getAccount()?.id ?? ''}';
-
+  String get _apiUrl => '${ApiConfig.apiAccountUpdateUrl}/${account?.id ?? ''}';
   // Getter
   Account? get account => _storageService.getAccount();
   String get id => account?.id ?? '';
@@ -61,9 +61,13 @@ class AccountController extends GetxController {
     _updateAccount(account!.copyWith(phone: value));
   }
 
-  // Update account on server and local storage
+  // Update account on server and local storage//
   Future<void> _updateAccount(Account updatedAccount) async {
+
+    debugPrint('Updating account: $updatedAccount');
+    debugPrint('API URL: $_apiUrl');
     try {
+    
       // 서버에 업데이트
       final serverResponse = await http.put(
         Uri.parse(_apiUrl),
@@ -107,4 +111,5 @@ class AccountController extends GetxController {
       return false;
     }
   }
+  
 }
