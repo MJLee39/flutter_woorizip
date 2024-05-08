@@ -53,35 +53,6 @@ class ReadOneWidget extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            // 채팅 기능
-                            IconButton(
-                              onPressed: () {
-                                const agentId = "qassadsadsa";
-                                const clientId = "qweqwewqeewq";
-                                var otherNickname;
-                                _chatController.getNicknameBy(clientId).then(
-                                        (value) => otherNickname = value
-                                );
-
-                                _chatController
-                                    .createChatRoom(clientId, agentId)
-                                    .then((chatRoomInfo) {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => Chat(
-                                        chatRoomId: chatRoomInfo['id'],
-                                        accountId: clientId,
-                                        myNickname: "허위 매물 사기꾼",
-                                        otherNickname: otherNickname,
-                                      ),
-                                    ),
-                                  );
-                                });
-                              },
-                              icon: Icon(Icons.chat),
-                            ),
-
                             // 조건 수정
                             IconButton(
                               onPressed: () {

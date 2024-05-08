@@ -12,7 +12,7 @@ class ApiConfig {
   // readByWhere
   static const apiReadByWhereConditionUrl = '$apiEndpointUrl$apiSubfixConditionUrl/readByWhere';
   // readMy
-  static const apiReadMyConditionUrl = '$apiEndpointUrl$apiSubfixConditionUrl/readMy';
+  static const apiReadMyConditionUrl = '$apiEndpointUrl$apiSubfixConditionUrl/readMy?accountId=';
   // delete
   static const apiDeleteConditionUrl = '$apiEndpointUrl$apiSubfixConditionUrl';
   // update
@@ -62,6 +62,13 @@ class ApiConfig {
 
   // Chat
   static const chatApiEndpointUrl = 'http://15.164.244.88:8080';
+
+  // Report
+  static const reportApiEndpointUrl = '$chatApiEndpointUrl/report';
+  // SendReport
+  static const apiSendReportUrl = '$reportApiEndpointUrl';
+  // getAllReportSize
+  static const apiGetAllReportUrl = '$reportApiEndpointUrl/all/size';
 
   // Attachment
   static const attachmentApiEndpointUri = 'https://file.teamwaf.app/attachment';
