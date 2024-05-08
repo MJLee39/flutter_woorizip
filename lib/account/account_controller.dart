@@ -61,7 +61,7 @@ class AccountController extends GetxController {
     _updateAccount(account!.copyWith(phone: value));
   }
 
-  // Update account on server and local storage
+  // Update account on server and local storage//
   Future<void> _updateAccount(Account updatedAccount) async {
 
     debugPrint('Updating account: $updatedAccount');
