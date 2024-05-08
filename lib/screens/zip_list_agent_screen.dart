@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:testapp/account/account_controller.dart';
 import 'package:testapp/utils/api_config.dart';
 import 'package:testapp/widgets/bottom_navigation_widget.dart';
 import 'package:testapp/screens/zip_detail_screen.dart'; // DetailScreen.dart를 import합니다.
@@ -31,13 +32,13 @@ class _ZipListAgentScreenState extends State<ZipListAgentScreen> {
   final TextEditingController locationController = TextEditingController();
   final DepositController depositController = Get.put(DepositController());
   final FeeTypeController feeController = Get.put(FeeTypeController());
-
+  final AccountController _accountController = AccountController();
 
   @override
   void initState() {
     super.initState();
     //additionalArgument = Get.arguments;
-    additionalArgument = "명진 부동산88";
+    additionalArgument = _accountController.id;
     fetchData();
   }
 
@@ -48,7 +49,7 @@ class _ZipListAgentScreenState extends State<ZipListAgentScreen> {
         Uri.parse('${ApiConfig.apiGetByAgentIdZipUrl}/${additionalArgument}'),
       );
       if (response.statusCode == 200) {
-        List<dynamic> responseData = jsonDecode(utf8.decode(response.bodyBytes));
+        List<dynamic> responseData = jsonDecode(utf8.decode(response.bodyBytes))['Zips'];
         print(responseData);
         setState(() {
           jsonData = responseData.cast<Map<String, dynamic>>();
@@ -63,7 +64,6 @@ class _ZipListAgentScreenState extends State<ZipListAgentScreen> {
 
   void _deleteItem(String itemId) async {
     final url = '${ApiConfig.apiDeleteZipUrl}/$itemId';
-
     try {
       final response = await http.delete(Uri.parse(url));
       if (response.statusCode == 200) {
@@ -150,7 +150,7 @@ class _ZipListAgentScreenState extends State<ZipListAgentScreen> {
                           Expanded(
                             flex: 2,
                             child: Image.network(
-                              '${ApiConfig.attachmentApiEndpointUri}/' + item['attachments'],
+                              '${ApiConfig.attachmentApiEndpointUri}/' + item['attachments'].split(',')[0],
                               fit: BoxFit.cover,
                               width: 100, // 이미지의 가로 길이를 조절합니다.
                             ),

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:testapp/account/account_controller.dart';
 import 'package:testapp/controllers/chat_controller.dart';
 import 'package:testapp/widgets/app_bar_widget.dart';
 import 'package:testapp/widgets/page_normal_padding_widget.dart';
@@ -32,6 +33,8 @@ class ChatState extends State<Chat> {
   final ChatController _chatController = ChatController();
   final TextEditingController _controller = TextEditingController();
   final ScrollController _scrollController = ScrollController();
+  final AccountController _accountController = AccountController();
+
   List<dynamic> messages = [];
 
   String imageURL = '';
@@ -92,18 +95,10 @@ class ChatState extends State<Chat> {
   }
 
   void _showItemList() async {
-    final String url = 'http://localhost/zipListByAgent';
-    final Map<String, dynamic> requestBody = {'agentId': '명진 부동산1'};
-    final response = await http.post(
-      Uri.parse(url),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(requestBody),
-    );
+    final response = await http.get(Uri.parse('https://api.teamwaf.app/v1/zip/agent/' + _accountController.id));
 
     if (response.statusCode == 200) {
-      final List<dynamic> items = json.decode(utf8.decode(response.bodyBytes));
+      final List<dynamic> items = json.decode(utf8.decode(response.bodyBytes))['Zips'];
       print("나왔다!!!!!!!!!!!!!!!!!!!!" + items.toString());
       _showItems(items);
     } else {
@@ -319,13 +314,12 @@ class ChatState extends State<Chat> {
                 ),
                 SizedBox(width: 10),
                 ElevatedButton(
-                  onPressed: _showItemList,
-                  child: const Icon(
-                    Icons.add,
-                    color: Colors.black,
-                  ),
+                onPressed: _showItemList,
+                child: const Icon(
+                  Icons.add,
+                  color: Colors.black,
                 ),
-              ],
+                )],
             ),
           ],
         ),

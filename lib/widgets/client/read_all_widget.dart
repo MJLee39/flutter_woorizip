@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:testapp/account/account_controller.dart';
 import 'package:testapp/controllers/condition/condition_controller.dart';
 import 'package:testapp/controllers/chat_controller.dart';
 import 'package:testapp/chat/chat.dart';
@@ -50,8 +51,8 @@ class ReadAllWidget extends StatelessWidget {
                           children: [
                             IconButton(
                               onPressed: () {
-                                const agentId = "qassadsadsa";
-                                const clientId = "qweqwewqeewq";
+                                var agentId = AccountController().id;
+                                var clientId = condition['accountId'];
                                 var otherNickname;
                                 _chatController.getNicknameBy(clientId).then(
                                         (value) => otherNickname = value
@@ -66,7 +67,7 @@ class ReadAllWidget extends StatelessWidget {
                                       builder: (context) => Chat(
                                         chatRoomId: chatRoomInfo['id'],
                                         accountId: clientId,
-                                        myNickname: "허위 매물 사기꾼",
+                                        myNickname: AccountController().nickname,
                                         otherNickname: otherNickname,
                                       ),
                                     ),

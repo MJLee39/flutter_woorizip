@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:testapp/account/account_controller.dart';
 import 'package:testapp/utils/api_config.dart';
 
 class ZipRegistration extends GetxController {
@@ -29,6 +30,8 @@ class ZipRegistration extends GetxController {
   final RxBool isLoading = true.obs;
   final RxList<Map<String, dynamic>> jsonData = <Map<String, dynamic>>[].obs;
   final RxString error = ''.obs;
+
+  final AccountController _accountController = AccountController();
 
   // Method to set arguments
   void setArguments(Map<String, dynamic> args) {
@@ -91,7 +94,6 @@ class ZipRegistration extends GetxController {
 
     try {
       print('** in Save --------------');
-
       String url = '${ApiConfig.apiSaveZipUrl}';
 
       print("controller attachments: "+attachments);
@@ -114,10 +116,10 @@ class ZipRegistration extends GetxController {
       print("controller hashtag: "+hashtag);
 
       String input = jsonEncode({
-        "attachments": 'add',
-        "agentId": "명진 부동산777",
+        "attachments": attachments.toString(),
+        "agentId": _accountController.id,
         "checkedAt": checked_at.toIso8601String(),
-        "estateId": "666",
+        "estateId": estate.toString(),
         "direction": direction.toString(),
         "totalFloor": total_floor.toString(),
         "buildingFloor": building_floor.toString(),
@@ -162,7 +164,7 @@ class ZipRegistration extends GetxController {
     try {
       print('** in update --------------');
 
-      String url = 'http://localhost/update';
+      String url = 'https://api.teamwaf.app/v1/zip';
 
       print("controller attachments: "+attachments);
       print("controller direction: "+direction);
@@ -185,8 +187,8 @@ class ZipRegistration extends GetxController {
 
       String update = jsonEncode({
         "id": id,
-        "attachments": 'add',
-        "agentId": "명진 부동산88",
+        "attachments": attachments.toString(),
+        "agentId": _accountController.id,
         "checkedAt": checked_at.toIso8601String(),
         "estateId": estate.toString(),
         "direction": direction.toString(),

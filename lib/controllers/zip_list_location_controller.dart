@@ -22,7 +22,7 @@ class ZipListLocationController extends GetxController {
     try {
       final response = await http.get(Uri.parse('${ApiConfig.apiSearchZipUrl}?location='+additionalArgument));
       if (response.statusCode == 200) {
-        List<dynamic> responseData = jsonDecode(utf8.decode(response.bodyBytes));
+        List<dynamic> responseData = jsonDecode(utf8.decode(response.bodyBytes))['Zips'];
         jsonData.assignAll(responseData.cast<Map<String, dynamic>>());
       } else {
         throw Exception('Failed to load data: ${response.statusCode}');

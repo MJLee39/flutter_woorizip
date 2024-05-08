@@ -13,6 +13,7 @@ class ZipFindController extends GetxController {
   void onInit() {
     super.onInit();
     additionalArgument = Get.arguments;
+
     fetchData();
   }
 
@@ -28,7 +29,8 @@ class ZipFindController extends GetxController {
     try {
       final response = await http.get(Uri.parse('${ApiConfig.apiSearchZipUrl}?buildingType='+additionalArgument));
       if (response.statusCode == 200) {
-        List<dynamic> responseData = jsonDecode(utf8.decode(response.bodyBytes));
+        List<dynamic> responseData = jsonDecode(utf8.decode(response.bodyBytes))['Zips'];
+        print("나와?!!!!!!!!"+responseData.toString());
         RxList<Map<String, dynamic>> premiumZip = RxList<Map<String, dynamic>>();
         jsonData.assignAll(responseData.cast<Map<String, dynamic>>());
         for (var data in jsonData) {

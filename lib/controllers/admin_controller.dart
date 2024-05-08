@@ -146,66 +146,47 @@ class AdminController extends GetxController {
   }
 
   Future<void> fetchCertification(String accountId) async {
-    Get.dialog(
-        AlertDialog(
-          title: Text('Certification'),
-          content: Image.asset('../assets/images/room1.jpg'),
-          actions: [
-            TextButton(
-              onPressed: () => Get.back(),
-              child: Text('승인'),
-            ),
-            TextButton(
-              onPressed: () => Get.back(),
-              child: Text('거절'),
-            ),
-            TextButton(
-              onPressed: () => Get.back(),
-              child: Text('확인'),
-            ),
-          ],
-        ),
-    );
-    // const url = "http://localhost:8080/certification";
-    //
-    // try {
-    //   final response = await http.post(
-    //       Uri.parse(url),
-    //       headers: {
-    //         'content-type': 'application/json'
-    //       },
-    //       body: {
-    //         'accountId': accountId
-    //       }
-    //   );
-    //
-    //   if (response.statusCode == 200) {
-    //     Get.dialog(
-    //       AlertDialog(
-    //         title: Text('Success'),
-    //         content: Image.network('https://example.com/image.png'),
-    //         actions: [
-    //           TextButton(
-    //             onPressed: () => Get.back(),
-    //             child: Text('승인'),
-    //           ),
-    //           TextButton(
-    //             onPressed: () => Get.back(),
-    //             child: Text('거절'),
-    //           ),
-    //           TextButton(
-    //             onPressed: () => Get.back(),
-    //             child: Text('확인'),
-    //           ),
-    //         ],
-    //       ),
-    //     );
-    //   } else {
-    //     throw Exception('Failed to load data: ${response.statusCode}');
-    //   }
-    // } catch (e) {
-    //   error.value = 'Error fetching data: $e';
-    // }
+    const url = "http://localhost:8080/certification";
+
+    try {
+      final response = await http.post(
+          Uri.parse(url),
+          headers: {
+            'content-type': 'application/json'
+          },
+          body: {
+            'accountId': accountId
+          }
+      );
+
+      if (response.statusCode == 200) {
+        final imageUrl = jsonDecode(response.body)['imageUrl']; // 이미지 URL 가져오기
+        Get.dialog(
+          AlertDialog(
+            title: Text('Success'),
+            content: Image.network('https://example.com/image.png'),
+            actions: [
+              TextButton(
+                onPressed: () => Get.back(),
+                child: Text('승인'),
+              ),
+              TextButton(
+                onPressed: () => Get.back(),
+                child: Text('거절'),
+              ),
+              TextButton(
+                onPressed: () => Get.back(),
+                child: Text('확인'),
+              ),
+            ],
+          ),
+        );
+      } else {
+        throw Exception('Failed to load data: ${response.statusCode}');
+      }
+    } catch (e) {
+      error.value = 'Error fetching data: $e';
+    }
   }
 
 }

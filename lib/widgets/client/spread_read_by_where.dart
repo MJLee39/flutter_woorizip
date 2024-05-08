@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:testapp/account/account_controller.dart';
 import 'package:testapp/controllers/condition/condition_controller.dart';
 import 'package:testapp/controllers/chat_controller.dart';
 import 'package:testapp/chat/chat.dart';
@@ -9,6 +10,7 @@ class SpreadReadByWhereWidget extends StatelessWidget {
 
   final ConditionController conditionController = Get.find<ConditionController>();
   final ChatController _chatController = ChatController();
+  final AccountController _accountController = AccountController();
 
   @override
   Widget build(BuildContext context) {
@@ -53,8 +55,8 @@ class SpreadReadByWhereWidget extends StatelessWidget {
                           children: [
                             IconButton(
                               onPressed: () {
-                                final agentId = "qassadsadsa";
-                                const clientId = "qweqwewqeewq";
+                                final agentId = _accountController.id;
+                                var clientId = condition['accountId'];
                                 var otherNickname;
                                 _chatController.getNicknameBy(clientId).then(
                                         (value) => otherNickname = value
@@ -69,7 +71,7 @@ class SpreadReadByWhereWidget extends StatelessWidget {
                                       builder: (context) => Chat(
                                         chatRoomId: chatRoomInfo['id'],
                                         accountId: clientId,
-                                        myNickname: "허위 매물 사기꾼",
+                                        myNickname: _accountController.nickname,
                                         otherNickname: otherNickname,
                                       ),
                                     ),

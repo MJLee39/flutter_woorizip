@@ -10,6 +10,7 @@ import 'package:testapp/screens/condition/condition_read_all_screen.dart';
 import 'package:testapp/screens/condition/condition_read_by_where_screen.dart';
 import 'package:testapp/screens/condition/condition_update_screen.dart';
 import 'package:testapp/screens/seemore/delete_account_screen.dart';
+import 'package:testapp/screens/report_list_screen.dart';
 import 'package:testapp/screens/seemore/modify_nickname_screen.dart';
 import 'package:testapp/screens/seemore/myinfo_screen.dart';
 import 'package:testapp/screens/zip_registration/address_search_1_screen.dart';
@@ -68,7 +69,7 @@ class AppPages {
     _getPageWithMiddleware(
       name: '/addressSearch',
       page: () => AddressSearchScreen(),
-      
+      middlewares: [],
     ),
     _getPageWithMiddleware(
       name: '/result',
@@ -78,7 +79,6 @@ class AppPages {
     _getPageWithMiddleware(
       name: '/chatRoomList',
       page: () => ChatRoomListScreen(),
-      middlewares: [],
     ),
     _getPageWithMiddleware(
       name: '/chat/:chatRoomId',
@@ -107,7 +107,6 @@ class AppPages {
     _getPageWithMiddleware(
       name: '/my_listings',
       page: () => const ZipListAgentScreen(),
-      middlewares: [],
     ),
     _getPageWithMiddleware(
       name: '/map/:buildingType',
@@ -130,7 +129,6 @@ class AppPages {
     _getPageWithMiddleware(
       name: '/setdetails',
       page: () => const SetDetailsScreen(),
-      middlewares: [],
     ),
 
     _getPageWithMiddleware(
@@ -257,11 +255,11 @@ class AppPages {
     /*
     신고자 목록 조회
      */
-    // _getPageWithMiddleware(
-    //   name: '/myreport',
-    //   page: () => const ReportListScreen(),
-    //   middlewares: [],
-    // ),
+    _getPageWithMiddleware(
+      name: '/report_history',
+      page: () => const ReportListScreen(),
+      middlewares: [],
+    ),
 
   ];
 }

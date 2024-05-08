@@ -6,6 +6,7 @@ import 'package:testapp/controllers/zip_detail_controller.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:testapp/utils/app_colors.dart';
 import '../chat/chat.dart';
+import '../utils/api_config.dart';
 
 class DetailScreen extends StatefulWidget  {
   final String itemID; // zipID를 저장하기 위한 필드
@@ -43,12 +44,6 @@ class _DetailScreenState extends State<DetailScreen> {
   @override
   Widget build(BuildContext context) {
 
-    final List<String> imageList = [
-      'assets/images/room1.jpg',
-      'assets/images/room2.jpg',
-      // 여기에 추가 이미지 경로 추가 가능
-    ];
-
     if (zipData.isEmpty) {
       return Scaffold(
         body: Center(
@@ -56,40 +51,12 @@ class _DetailScreenState extends State<DetailScreen> {
         ),
       );
     } else {
+      final List<String> imageList = zipData['attachments'].split(',');
       // zipData가 초기화된 경우에는 화면을 그립니다.
       return Scaffold(
         body: SingleChildScrollView(
           child: Column(
             children: <Widget>[
-              // Stack(
-              //   children: <Widget>[
-              //     Container(
-              //       height: MediaQuery
-              //           .of(context)
-              //           .size
-              //           .height * 0.5,
-              //       decoration: BoxDecoration(
-              //         image: DecorationImage(
-              //           image: NetworkImage(
-              //               'https://test.teamwaf.app/attachment/' +
-              //                   zipData['attachments']), //배경 이미지 URL
-              //           fit: BoxFit.cover,
-              //         ),
-              //       ),
-              //     ),
-              //     Positioned(
-              //       left: 0,
-              //       right: 0,
-              //       bottom: 0,
-              //       child: Padding(
-              //         padding: EdgeInsets.all(40.0),
-              //         child: Column(
-              //           crossAxisAlignment: CrossAxisAlignment.start,
-              //         ),
-              //       ),
-              //     ),
-              //   ],
-              // ),
               CarouselSlider(
                 options: CarouselOptions(
                   aspectRatio: 16 / 9,
@@ -109,7 +76,9 @@ class _DetailScreenState extends State<DetailScreen> {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(5.0),
                           image: DecorationImage(
-                            image: AssetImage(imageUrl),
+                            image: NetworkImage(
+                                '${ApiConfig.attachmentApiEndpointUri}/'+imageUrl
+                            ),
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -144,12 +113,16 @@ class _DetailScreenState extends State<DetailScreen> {
                         Icon(
                           Icons.directions_car,
                           color: Colors.black,
-                          size: 40.0,
+                          size: 24.0,
                         ),
                         SizedBox(width: 10.0),
-                        Text(
-                          zipData["location"],
-                          style: TextStyle(color: Colors.black, fontSize: 24.0),
+                        Expanded( // Expanded 위젯으로 감싸기
+                          child: Text(
+                            zipData["location"],
+                            style: TextStyle(color: Colors.black, fontSize: 20.0),
+                            overflow: TextOverflow.ellipsis, // 텍스트가 길어질 때 생략되도록 설정
+                            maxLines: 1, // 최대 1줄까지 표시하도록 설정
+                          ),
                         ),
                       ],
                     ),

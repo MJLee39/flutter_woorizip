@@ -31,7 +31,9 @@ class LocationService {
 
   Future<String> _convertToAddress(double longitude, double latitude) async {
     final response = await http.get(
-        Uri.parse("https://naveropenapi.apigw.ntruss.com/map-reversegeocode/v2/gc?request=coordsToaddr&coords=$longitude,$latitude&sourcecrs=epsg:4326&output=json&orders=legalcode"),
+        Uri.parse("https://naveropenapi.apigw.ntruss.com/map-reversegeocode/v2/gc?"+
+            "request=coordsToaddr&coords=$longitude,$latitude&sourcecrs=epsg:4326&output=json&orders=legalcode"),
+
         headers: {
           'X-NCP-APIGW-API-KEY-ID': '0akipmvx1h',
           'X-NCP-APIGW-API-KEY': 'BOBIX0nbXfN4oaTTIJZJeL84cofPI4klhq1FJr7j'
@@ -42,7 +44,7 @@ class LocationService {
     final gu = jsonDecode(utf8.decode(response.bodyBytes))["results"][0]["region"]["area2"]["name"];
     final dong = jsonDecode(utf8.decode(response.bodyBytes))["results"][0]["region"]["area3"]["name"];
 
-    final address = '$si $gu $dong';
+    final address = '$si $gu';
 
     return address;
   }

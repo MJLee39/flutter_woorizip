@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -8,6 +7,8 @@ import 'package:get/get.dart';
 import 'package:testapp/widgets/bottom_expend_button_widget.dart';
 import 'package:testapp/widgets/app_bar_widget.dart';
 import 'package:testapp/widgets/page_normal_padding_widget.dart';
+import 'dart:io';
+import '../../controllers/file/upload_file_controller.dart';
 
 class UpdatePictureScreen extends StatefulWidget {
   @override
@@ -16,18 +17,22 @@ class UpdatePictureScreen extends StatefulWidget {
 
 class _UpdatePictureScreenState extends State<UpdatePictureScreen> {
   List<Uint8List> _imagesData = [];
+  List<File> _imagesToUpload = [];
 
   final ZipRegistration controller = Get.find<ZipRegistration>();
+  final uploadController = Get.put(UploadFileController());
 
   Future<void> _pickImages() async {
     final ImagePicker _picker = ImagePicker();
     final List<XFile>? images = await _picker.pickMultiImage();
 
     if (images != null) {
-      for (XFile image in images) { 
+      for (XFile image in images) {
         final Uint8List imageData = await image.readAsBytes();
+        final File imageFile = File(image.path);
         setState(() {
           _imagesData.add(imageData);
+          _imagesToUpload.add(imageFile);
         });
       }
     }
@@ -36,24 +41,19 @@ class _UpdatePictureScreenState extends State<UpdatePictureScreen> {
   void _deleteImage(int index) {
     setState(() {
       _imagesData.removeAt(index);
+      _imagesToUpload.removeAt(index);
     });
   }
 
-  String  _registerImages() {
-
-    // 이미지 등록 로직 구현
-    String attachments = '';
-
-    // 새로운 이미지를 기존 첨부 파일에 추가 -> 이후에 S3로 바꾸기
-    for (Uint8List imageData in _imagesData) {
-      attachments += imageData.toString(); // 이미지 id를 구분자로 사용하여 추가
+  Future<void>  _registerImages() async  {
+    List<String> uploadedFileIds = await uploadController.uploadFiles(_imagesToUpload);
+    if (uploadedFileIds.isNotEmpty) {
+      String attachments = uploadedFileIds.join(',');
+      controller.attachments = attachments;
+      print('이미지가 등록되었습니다.');
+    } else {
+      print('이미지 등록에 실패했습니다.');
     }
-
-    controller.attachments = 'IMAGE URL'; // 업데이트된 값을 저장
-
-    print('이미지가 등록되었습니다.');
-
-    return attachments;
   }
 
   @override
