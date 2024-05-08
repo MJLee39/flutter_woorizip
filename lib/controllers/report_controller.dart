@@ -11,7 +11,7 @@ class ReportController extends GetxController {
 
   @override
   void onInit() {
-
+    super.onInit();
   }
 
   Future<void> fetchMyReportList(String accountId) async {
