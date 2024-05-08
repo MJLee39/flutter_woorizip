@@ -261,7 +261,7 @@ class _DetailScreenState extends State<DetailScreen> {
                         print('CLIENTIDV1: $clientId');
                         var otherNickname;
                         _chatController.getNicknameBy(agentId).then(
-                                (value) => otherNickname = value
+                                (value) => print("TTESTT:$value")
                         );
                         print('NICKNAME: $otherNickname');
 

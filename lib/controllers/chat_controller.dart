@@ -10,6 +10,7 @@ class ChatController {
   Future<String> getNicknameBy(String accountId) async {
     final url = Uri.parse("https://api.teamwaf.app/v1/account/$accountId");
     final response = await http.get(url);
+    print("NICKNAME가져와~ ${jsonDecode(utf8.decode(response.bodyBytes))}");
 
     if (response.statusCode == 200) {
       final account = AccountResponse.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
