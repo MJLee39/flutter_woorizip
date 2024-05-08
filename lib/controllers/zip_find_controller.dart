@@ -26,6 +26,7 @@ class ZipFindController extends GetxController {
 
     try {
       final response = await http.get(Uri.parse('https://api.teamwaf.app/v1/zip/search?buildingType='+additionalArgument));
+      //final response = await http.get(Uri.parse('http://localhost/search?buildingType='+additionalArgument));
       if (response.statusCode == 200) {
         List<dynamic> responseData = jsonDecode(utf8.decode(response.bodyBytes))['Zips'];
         RxList<Map<String, dynamic>> premiumZip = RxList<Map<String, dynamic>>();

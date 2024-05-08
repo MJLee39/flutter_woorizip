@@ -12,7 +12,7 @@ import 'dart:async';
 import '../middleware/condition_guard.dart'; // 타이머를 사용하기 위한 import 추가
 
 class ZipFindScreen extends StatelessWidget {
-  bool isTimerCalled = false; // 타이머가 호출되었는지 여부를 추적하는 변수
+
   final ZipFindController _controller = Get.put(ZipFindController());
   final BuildingTypeController buildingTypeController = Get.put(BuildingTypeController());
 
@@ -24,15 +24,15 @@ class ZipFindScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
+
     Get.put(ConditionGuard());
 
-    // 타이머 설정: 60초 후에 ConditionGuard 호출
-    if (!isTimerCalled) {
-      Timer(Duration(seconds: 60), () {
-        Get.find<ConditionGuard>().onPageCalled(null);
-      });
-      isTimerCalled = true; // 타이머 호출 후 변수 업데이트
-    }
+    // 타이머 설정: 5초 후에 ConditionGuard 호출
+    Timer(Duration(seconds: 5), () {
+      Get.find<ConditionGuard>().onPageCalled(null);
+    });
+
+
     return Scaffold(
       appBar: AppBar(
         bottom: PreferredSize(
@@ -58,10 +58,10 @@ class ZipFindScreen extends StatelessWidget {
                       context: context,
                       builder: (BuildContext context) {
                         return SearchTypeSelector(
-                          buildingTypeController: buildingTypeController,
-                          locationController: locationController,
-                          depositController: depositController,
-                          feeController: feeController
+                            buildingTypeController: buildingTypeController,
+                            locationController: locationController,
+                            depositController: depositController,
+                            feeController: feeController,
                         );
                       },
                     );
@@ -97,53 +97,53 @@ class ZipFindScreen extends StatelessWidget {
               // jsonData의 0번째 값이 {'placeholder': 'premiumZip이 비어있습니다.'}이 아니면서 index가 0인 경우에 네모 박스를 그립니다.
               if (index == 0 && item['placeholder'] == null) {
                 return Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.blueAccent), // 네모 박스 스타일 설정
-                    borderRadius: BorderRadius.circular(10), // 네모 박스의 모서리를 둥글게 설정
-                  ),
-                  child: GestureDetector(
-                    onTap: () {
-                      Get.to(DetailScreen(itemID: item['id']), transition: Transition.noTransition);
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.all(10.0), // 여기에서 패딩 조정
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Expanded(
-                            flex: 2,
-                            child: Image.network('https://test.teamwaf.app/attachment/'+item['attachments'],
-                                fit: BoxFit.cover),
-                          ),
-                          Expanded(
-                            flex: 3,
-                            child: Padding(
-                              padding: const EdgeInsets.all(16.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text("월세 "+item['deposit'].toString()+"/"+item['fee'].toString(),
-                                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0)),
-                                  const SizedBox(height: 8.0),
-                                  Text((item['m2']*0.3025).toStringAsFixed(2).toString()+"평 | "+item['buildingFloor'].toString()+"층/"+item['totalFloor'].toString()+"층 | "+ item['direction']),
-                                  Text(item['location']+" | "+item['buildingType']),
-                                  const SizedBox(height: 8.0),
-                                ],
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.blueAccent), // 네모 박스 스타일 설정
+                      borderRadius: BorderRadius.circular(10), // 네모 박스의 모서리를 둥글게 설정
+                    ),
+                    child: GestureDetector(
+                      onTap: () {
+                        Get.to(DetailScreen(itemID: item['id']), transition: Transition.noTransition);
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0), // 여기에서 패딩 조정
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              flex: 2,
+                              child: Image.network('https://test.teamwaf.app/attachment/'+item['attachments'],
+                                  fit: BoxFit.cover),
+                            ),
+                            Expanded(
+                              flex: 3,
+                              child: Padding(
+                                padding: const EdgeInsets.all(16.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text("월세 "+item['deposit'].toString()+"/"+item['fee'].toString(),
+                                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0)),
+                                    const SizedBox(height: 8.0),
+                                    Text((item['m2']*0.3025).toStringAsFixed(2).toString()+"평 | "+item['buildingFloor'].toString()+"층/"+item['totalFloor'].toString()+"층 | "+ item['direction']),
+                                    Text(item['location']+" | "+item['buildingType']),
+                                    const SizedBox(height: 8.0),
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                          // 광고 추가
-                          Text(
-                            '광고',
-                            style: TextStyle(
-                              color: Colors.grey,
-                              fontStyle: FontStyle.italic,
+                            // 광고 추가
+                            Text(
+                              '광고',
+                              style: TextStyle(
+                                color: Colors.grey,
+                                fontStyle: FontStyle.italic,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                  )
+                    )
                 );
               }else{
                 //premium 없음
@@ -193,24 +193,6 @@ class ZipFindScreen extends StatelessWidget {
         }
       }),
       bottomNavigationBar: BottomNavigationWidget(),
-    );
-  }
-
-  Widget buildBuildingTypeButton(String buttonText, bool isSelected) {
-    return GetBuilder<BuildingTypeController>(
-      builder: (controller) {
-        final buttonColor = controller.buttonColors[buttonText] ?? Colors.grey;
-        return ElevatedButton(
-          onPressed: () {
-            controller.toggleSelection(buttonText);
-          },
-          child: Text(buttonText),
-          style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(buttonColor),
-            // ... 기존 스타일 속성 유지
-          ),
-        );
-      },
     );
   }
 }
