@@ -251,6 +251,7 @@ class _DetailScreenState extends State<DetailScreen> {
                       onPressed: () {
                         AccountController _accountController = AccountController();
                         final agentId = zipData['agentId'];
+                        print(agentId);
                         var clientId = _accountController.id;
                         var otherNickname;
                         _chatController.getNicknameBy(agentId).then(
