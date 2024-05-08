@@ -92,15 +92,7 @@ class ChatState extends State<Chat> {
   }
 
   void _showItemList() async {
-    final String url = 'http://localhost/zipListByAgent';
-    final Map<String, dynamic> requestBody = {'agentId': '명진 부동산1'};
-    final response = await http.post(
-      Uri.parse(url),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(requestBody),
-    );
+    final response = await http.get(Uri.parse('https://api.teamwaf.app/v1/zip/agent/'+'명진 부동산1'));
 
     if (response.statusCode == 200) {
       final List<dynamic> items = json.decode(utf8.decode(response.bodyBytes));
