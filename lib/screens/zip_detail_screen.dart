@@ -155,7 +155,7 @@ class _DetailScreenState extends State<DetailScreen> {
                           Icons.account_balance,
                           color: Colors.black,
                           size: 25.0,
-                        ),
+                        ),  
                         SizedBox(width: 10.0),
                         Text(
                             zipData["buildingFloor"].toString() + "층",

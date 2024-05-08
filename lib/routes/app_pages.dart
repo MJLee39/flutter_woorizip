@@ -141,8 +141,10 @@ class AppPages {
 
     _getPageWithMiddleware(
       name: '/test',
-      page: () => RoomDetailScreen(),
+      page: () => RoomDetailScreen(itemID: '84866e3b-68d1-421d-b80e-4bed4643538b',),
     ),
+
+
     /*
     client set Hashtag
      */
