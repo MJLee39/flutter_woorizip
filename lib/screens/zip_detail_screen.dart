@@ -44,12 +44,6 @@ class _DetailScreenState extends State<DetailScreen> {
   @override
   Widget build(BuildContext context) {
 
-    final List<String> imageList = [
-      'assets/images/room1.jpg',
-      'assets/images/room2.jpg',
-      // 여기에 추가 이미지 경로 추가 가능
-    ];
-
     if (zipData.isEmpty) {
       return Scaffold(
         body: Center(
@@ -57,40 +51,12 @@ class _DetailScreenState extends State<DetailScreen> {
         ),
       );
     } else {
+      final List<String> imageList = zipData['attachments'].split(',');
       // zipData가 초기화된 경우에는 화면을 그립니다.
       return Scaffold(
         body: SingleChildScrollView(
           child: Column(
             children: <Widget>[
-              // Stack(
-              //   children: <Widget>[
-              //     Container(
-              //       height: MediaQuery
-              //           .of(context)
-              //           .size
-              //           .height * 0.5,
-              //       decoration: BoxDecoration(
-              //         image: DecorationImage(
-              //           image: NetworkImage(
-              //               'https://test.teamwaf.app/attachment/' +
-              //                   zipData['attachments']), //배경 이미지 URL
-              //           fit: BoxFit.cover,
-              //         ),
-              //       ),
-              //     ),
-              //     Positioned(
-              //       left: 0,
-              //       right: 0,
-              //       bottom: 0,
-              //       child: Padding(
-              //         padding: EdgeInsets.all(40.0),
-              //         child: Column(
-              //           crossAxisAlignment: CrossAxisAlignment.start,
-              //         ),
-              //       ),
-              //     ),
-              //   ],
-              // ),
               CarouselSlider(
                 options: CarouselOptions(
                   aspectRatio: 16 / 9,
@@ -111,7 +77,8 @@ class _DetailScreenState extends State<DetailScreen> {
                           borderRadius: BorderRadius.circular(5.0),
                           image: DecorationImage(
                             image: NetworkImage(
-                                '${ApiConfig.attachmentApiEndpointUri}/'+zipData['attachments'].split(',')),
+                                '${ApiConfig.attachmentApiEndpointUri}/'+imageUrl
+                            ),
                             fit: BoxFit.cover,
                           ),
                         ),
