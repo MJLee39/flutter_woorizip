@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk_template.dart';
@@ -9,12 +8,14 @@ import 'package:testapp/services/auth_service.dart';
 import 'package:testapp/services/storage_service.dart';
 
 void main() async {
+
   WidgetsFlutterBinding.ensureInitialized();
   await initServices();
   KakaoSdk.init(
     nativeAppKey: '13cde3afb1eff0fa97b72538ffc9cdf8',
     javaScriptAppKey: 'ece3176690e15f855c51937d1d07f3c7',
   );
+
   runApp(GetMaterialApp(
     initialBinding: BindingsBuilder(
       () {

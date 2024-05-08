@@ -112,6 +112,7 @@ class AuthService extends GetxService {
     // 토큰 삭제
     _storageService.removeAccessToken();
     _storageService.removeRefreshToken();
+    _storageService.removeAccount();
 
     isLoggedIn.value = false;
     Get.snackbar(

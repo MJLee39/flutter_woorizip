@@ -6,6 +6,8 @@
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
 
+        
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -24,11 +26,11 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
 
-            <intent-filter>
+            <intent-filter label="flutter_web_auth">
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="kakao13cde3afb1eff0fa97b72538ffc9cdf8://oauth" android:host="oauth"/>
+                <data android:scheme="kakao13cde3afb1eff0fa97b72538ffc9cdf8" android:host="oauth"/>
             </intent-filter>
 
         </activity>
@@ -40,6 +42,10 @@
         <meta-data
             android:name="com.naver.maps.map.CLIENT_ID"
             android:value="0akipmvx1h" />
+        
+        <meta-data
+            android:name="com.kakao.sdk.AppKey"
+            android:value="13cde3afb1eff0fa97b72538ffc9cdf8" />
 
     </application>
 
