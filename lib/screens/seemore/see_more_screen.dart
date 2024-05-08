@@ -54,7 +54,7 @@ class _SeeMoreScreenState extends State<SeeMoreScreen> {
                 const SizedBox(width: 10),
                 TextButton(
                   onPressed: () {
-                    Get.toNamed('/event');
+                    Get.toNamed('/test');
                   },
                   style: TextButton.styleFrom(
                     backgroundColor: Colors.white,

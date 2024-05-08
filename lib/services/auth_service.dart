@@ -40,10 +40,7 @@ class AuthService extends GetxService {
     if (!isValid) {
       // 토큰이 유효하지 않은 경우 로그아웃 처리
       logout();
-    } else {
-      // 토큰이 유효한 경우 계정 정보 재설정
-      checkAccount(accountController.provider, accountController.providerUserId);
-    }
+    } 
   }
 
   Future<bool> checkAccount(String provider, String providerUserId) async {

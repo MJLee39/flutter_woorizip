@@ -5,7 +5,8 @@ class BottomNavbarButton extends StatelessWidget {
   final String label;
   final VoidCallback onTap;
 
-  const BottomNavbarButton({super.key, 
+  const BottomNavbarButton({
+    super.key,
     required this.label,
     required this.onTap,
   });
@@ -16,21 +17,19 @@ class BottomNavbarButton extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         child: Container(
-          padding: const EdgeInsets.all(20.0),
+          height: 60.0,
+          padding: const EdgeInsets.symmetric(vertical: 16.0),
           decoration: const BoxDecoration(
             color: AppColors.mainColorTest,
           ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                label,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 20.0,
-                ),
+          child: Center(
+            child: Text(
+              label,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 20.0,
               ),
-            ],
+            ),
           ),
         ),
       ),
