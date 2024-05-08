@@ -10,14 +10,8 @@ class ChatController {
   Future<String> getNicknameBy(String accountId) async {
     final url = Uri.parse("https://api.teamwaf.app/v1/account/$accountId");
     final response = await http.get(url);
-    print("NICKNAME가져와~ ${jsonDecode(utf8.decode(response.bodyBytes))}");
-
-    if (response.statusCode == 200) {
-      final account = AccountResponse.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
-      return account.Nickname;
-    } else {
-      throw Exception("Failed to fetch chat rooms");
-    }
+    final jsonResponse = jsonDecode(utf8.decode(response.bodyBytes));
+    return jsonResponse['Account']['Nickname'];
   }
 
   Future<List<ChatRoomResponseDTO>> fetchChatRooms(String accountId) async {
@@ -43,7 +37,7 @@ class ChatController {
     final response = await http.post(
       Uri.parse('$urlPrefix/chat/create'),
       headers: {'content-type': 'application/json'},
-      body: jsonEncode({'clientId': clientId, 'brokerId': agentId}),
+      body: jsonEncode({'clientId': clientId, 'agentId': agentId}),
     );
 
     if (response.statusCode == 200) {

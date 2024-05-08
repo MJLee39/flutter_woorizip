@@ -10,6 +10,7 @@ class ReadAllWidget extends StatelessWidget {
 
   final ConditionController conditionController = Get.find<ConditionController>();
   final ChatController _chatController = ChatController();
+  final AccountController _accountController = AccountController();
 
   @override
   Widget build(BuildContext context) {
@@ -50,32 +51,22 @@ class ReadAllWidget extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             IconButton(
-                              onPressed: () {
-                                var agentId = AccountController().id;
-                                print('AgentIdInCondition : $agentId');
+                              onPressed: () async {
+                                var agentId = _accountController.id;
                                 var clientId = condition['accountId'];
-                                print('clientIdInCondition : $clientId');
-                                var otherNickname;
-                                _chatController.getNicknameBy(clientId).then(
-                                        (value) => otherNickname = value
-                                );
-                                print('otherNicknameInCondition : $otherNickname');
+                                var otherNickname = await _chatController.getNicknameBy(clientId);
 
-                                _chatController
-                                    .createChatRoom(clientId, agentId)
-                                    .then((chatRoomInfo) {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => Chat(
-                                        chatRoomId: chatRoomInfo['id'],
-                                        accountId: clientId,
-                                        myNickname: AccountController().nickname,
-                                        otherNickname: otherNickname,
-                                      ),
+                                var chatRoomInfo = await _chatController.createChatRoom(clientId, agentId);
+                                Navigator.push(
+                                    context, MaterialPageRoute(
+                                    builder: (context) => Chat(
+                                      chatRoomId: chatRoomInfo['id'],
+                                      accountId: clientId,
+                                      myNickname: _accountController.nickname,
+                                      otherNickname: otherNickname,
                                     ),
-                                  );
-                                });
+                                  ),
+                                );
                               },
                               icon: const Icon(Icons.chat),
                             ),

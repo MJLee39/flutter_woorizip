@@ -66,7 +66,8 @@ class ChatState extends State<Chat> {
     print(widget.chatRoomId);
 
     _client.subscribe(
-      destination: '/exchange/chat.exchange/room.${widget.chatRoomId}',
+      // destination: '/exchange/chat.exchange/room.${widget.chatRoomId}',
+      destination: '/exchange/${widget.chatRoomId}',
       headers: {},
       callback: (frame) {
         setState(() {
@@ -84,7 +85,7 @@ class ChatState extends State<Chat> {
     final message = _controller.text;
     if (message.isNotEmpty) {
       _client.send(
-        destination: '/pub/chat.message.${widget.chatRoomId}',
+        destination: '/pub/${widget.chatRoomId}',
         body: json.encode({
           'chatRoomId': widget.chatRoomId,
           'message': message,
