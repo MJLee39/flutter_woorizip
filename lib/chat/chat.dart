@@ -95,7 +95,7 @@ class ChatState extends State<Chat> {
   }
 
   void _showItemList() async {
-    final response = await http.get(Uri.parse('https://api.teamwaf.app/v1/zip/agent/'+'명진 부동산1'));
+    final response = await http.get(Uri.parse('https://api.teamwaf.app/v1/zip/agent/' + _accountController.id));
 
     if (response.statusCode == 200) {
       final List<dynamic> items = json.decode(utf8.decode(response.bodyBytes))['Zips'];
@@ -313,15 +313,13 @@ class ChatState extends State<Chat> {
                   ),
                 ),
                 SizedBox(width: 10),
-                if (_accountController.role == 'Agent')
-                  ElevatedButton(
-                  onPressed: _showItemList,
-                  child: const Icon(
-                    Icons.add,
-                    color: Colors.black,
-                  ),
+                ElevatedButton(
+                onPressed: _showItemList,
+                child: const Icon(
+                  Icons.add,
+                  color: Colors.black,
                 ),
-              ],
+                )],
             ),
           ],
         ),
