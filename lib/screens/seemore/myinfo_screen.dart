@@ -1,6 +1,7 @@
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:testapp/account/account_controller.dart';
 import 'package:testapp/controllers/profile/profile_controller.dart';
@@ -84,9 +85,11 @@ class _MyinfoScreenState extends State<MyinfoScreen> {
             ],
           ),
           const SizedBox(height: 20),
-          const ListTile(
-            title: Text('연결된 소셜 계정'),
-            trailing: Icon(Icons.arrow_forward_ios),
+          ListTile(
+            title: const Text('연결된 소셜 계정'),
+            trailing: accountController.account!.provider == 'kakao'
+                ? SvgPicture.asset('assets/images/kakao.svg', width: 30)
+                : Image.asset('assets/images/naver.png', width: 30),
           ),
           ListTile(
             title: const Text('이름'),

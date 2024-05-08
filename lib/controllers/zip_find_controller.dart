@@ -13,7 +13,7 @@ class ZipFindController extends GetxController {
   void onInit() {
     super.onInit();
     additionalArgument = Get.arguments;
-
+    print("ZipFindController에서 additionalArgument: "+additionalArgument);
     fetchData();
   }
 

@@ -36,7 +36,7 @@ class NotLoginTopWidget extends StatelessWidget {
                     backgroundColor: Colors.white,
                   ),
                   child: const Text(
-                    '로그인하면 더 많은 기능을 사용할 수 있어요',
+                    '로그인',
                     style: TextStyle(
                       color: Colors.black87,
                       fontSize: 20,

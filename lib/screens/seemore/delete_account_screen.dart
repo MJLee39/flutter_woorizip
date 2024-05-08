@@ -85,10 +85,11 @@ class _DeleteAccountScreenState extends State<DeleteAccountScreen> {
        height: 60,
        color: AppColors.mainColorTest,
        child: TextButton(
-         onPressed: () {
+         onPressed: () async {
           if (_isChecked) {
             // 탈퇴 처리
-            if (_accountController.deleteAccount() == true) {
+            bool deleted = await _accountController.deleteAccount();
+            if (deleted) {
               Get.snackbar('알림', '회원 탈퇴가 완료되었습니다.');
               Get.offAllNamed('/login');
             } else {

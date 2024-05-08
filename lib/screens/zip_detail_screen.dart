@@ -235,9 +235,14 @@ class _DetailScreenState extends State<DetailScreen> {
                           size: 25.0,
                         ),
                         SizedBox(width: 10.0),
-                        Text(
+                        Flexible( // Flexible 위젯으로 감싸서 텍스트가 화면을 벗어나지 않도록 함
+                          child: Text(
                             zipData["hashtag"].toString(),
-                            style: TextStyle(fontSize: 25.0)),
+                            style: TextStyle(fontSize: 25.0),
+                            overflow: TextOverflow.visible, // 텍스트가 화면을 벗어날 때 자르지 않고 그대로 표시
+                            softWrap: true, // 텍스트가 한 줄을 넘어갈 때 줄 바꿈 수행
+                          ),
+                        ),
                       ],
                     ),
                   ],

@@ -4,6 +4,7 @@ import 'package:testapp/account/account_controller.dart';
 import 'package:testapp/widgets/app_bar_widget.dart';
 import 'package:testapp/widgets/bottom_navigation_widget.dart';
 import 'package:testapp/widgets/seemore/loggedin_top_widget.dart';
+import 'package:testapp/widgets/seemore/not_login_top_widget.dart';
 
 class SeeMoreScreen extends StatefulWidget {
   const SeeMoreScreen({super.key});
@@ -31,14 +32,15 @@ class _SeeMoreScreenState extends State<SeeMoreScreen> {
     setState(() {});
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const AppBarWidget(title: '더보기'),
       body: Column(
         children: [
-          if (_accountController.id.isNotEmpty) const LoggedinTopWidget(),
+          _accountController.account != null
+              ? const LoggedinTopWidget()
+              : const NotLoginTopWidget(),
           const Divider(
             color: Colors.grey,
             height: 20,
@@ -49,7 +51,7 @@ class _SeeMoreScreenState extends State<SeeMoreScreen> {
             child: Row(
               children: [
                 Icon(Icons.favorite_border_sharp, color: Colors.grey[400]),
-                const  SizedBox(width: 10),
+                const SizedBox(width: 10),
                 TextButton(
                   onPressed: () {
                     Get.toNamed('/event');
@@ -102,14 +104,18 @@ class _SeeMoreScreenState extends State<SeeMoreScreen> {
                 const SizedBox(width: 10),
                 TextButton(
                   onPressed: () {
-                    Get.toNamed('/conditionreadone');
+                    if (_accountController.role == 'User') {
+                      Get.toNamed('/conditionreadone');
+                    } else if (_accountController.role == 'Agent') {
+                      Get.toNamed('/my_listings');
+                    }
                   },
                   style: TextButton.styleFrom(
                     backgroundColor: Colors.white,
                   ),
-                  child: const Text(
-                    '내 조건',
-                    style: TextStyle(
+                  child: Text(
+                    _accountController.role == 'User' ? '내 조건' : '내 매물보기',
+                    style: const TextStyle(
                       color: Colors.black87,
                       fontSize: 20,
                       fontWeight: FontWeight.normal,
