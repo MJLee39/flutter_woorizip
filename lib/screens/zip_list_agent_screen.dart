@@ -37,7 +37,7 @@ class _ZipListAgentScreenState extends State<ZipListAgentScreen> {
   void initState() {
     super.initState();
     //additionalArgument = Get.arguments;
-    additionalArgument = "명진 부동산88";
+    additionalArgument = "명진 부동산1";
     fetchData();
   }
 
@@ -48,7 +48,7 @@ class _ZipListAgentScreenState extends State<ZipListAgentScreen> {
         Uri.parse('${ApiConfig.apiGetByAgentIdZipUrl}/${additionalArgument}'),
       );
       if (response.statusCode == 200) {
-        List<dynamic> responseData = jsonDecode(utf8.decode(response.bodyBytes));
+        List<dynamic> responseData = jsonDecode(utf8.decode(response.bodyBytes))['Zips'];
         print(responseData);
         setState(() {
           jsonData = responseData.cast<Map<String, dynamic>>();
@@ -63,7 +63,6 @@ class _ZipListAgentScreenState extends State<ZipListAgentScreen> {
 
   void _deleteItem(String itemId) async {
     final url = '${ApiConfig.apiDeleteZipUrl}/$itemId';
-
     try {
       final response = await http.delete(Uri.parse(url));
       if (response.statusCode == 200) {

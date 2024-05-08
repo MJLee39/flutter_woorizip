@@ -144,13 +144,17 @@ class _DetailScreenState extends State<DetailScreen> {
                         Icon(
                           Icons.directions_car,
                           color: Colors.black,
-                          size: 40.0,
+                          size: 24.0,
                         ),
                         SizedBox(width: 10.0),
-                        Text(
-                          zipData["location"],
-                          style: TextStyle(color: Colors.black, fontSize: 24.0),
-                        ),
+                        Wrap(
+                          children: <Widget>[
+                            Text(
+                              zipData["location"],
+                              style: TextStyle(color: Colors.black, fontSize: 20.0),
+                            ),
+                          ],
+                        )
                       ],
                     ),
 
