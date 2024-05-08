@@ -16,7 +16,7 @@ class _SetBuildingtypeButtonsWidgetState
     extends State<SetBuildingtypeButtonsWidget> {
   final ConditionController controller = Get.find<ConditionController>();
 
-  final List<String> buildingTypes = ['아파트', '투룸/빌라+', '원룸', '오피스텔'];
+  final List<String> buildingTypes = ['아파트', '투룸', '원룸', '오피스텔'];
   List<bool> _selections = [false, false, false, false];
 
   @override

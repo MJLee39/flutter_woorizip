@@ -120,7 +120,6 @@ class _SearchTypeSelectorState extends State<SearchTypeSelector> {
       ),
     );
   }
-
   void sendRequest() async {
     final selectedLocation = widget.locationController.text;
     final selectedBuildingTypes = widget.buildingTypeController.selectedBuildingTypes.join(',');

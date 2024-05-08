@@ -34,7 +34,7 @@ class HomeScreen extends StatelessWidget {
                   text: "투룸/빌라+",
                   imagePath: "assets/images/icon_twomore.png",
                   urlPath: "/zipFind",
-                  additionalArgument: "투룸/빌라+",
+                  additionalArgument: "투룸",
                 ),
               ],
             ),
