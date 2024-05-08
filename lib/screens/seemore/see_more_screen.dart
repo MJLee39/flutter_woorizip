@@ -31,7 +31,6 @@ class _SeeMoreScreenState extends State<SeeMoreScreen> {
     setState(() {});
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,7 +48,7 @@ class _SeeMoreScreenState extends State<SeeMoreScreen> {
             child: Row(
               children: [
                 Icon(Icons.favorite_border_sharp, color: Colors.grey[400]),
-                const  SizedBox(width: 10),
+                const SizedBox(width: 10),
                 TextButton(
                   onPressed: () {
                     Get.toNamed('/event');
