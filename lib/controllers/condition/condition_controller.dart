@@ -168,7 +168,7 @@ class ConditionController extends GetxController {
 
       if (response.statusCode == 200) {
         List<dynamic> responseData =
-            jsonDecode(utf8.decode(response.bodyBytes));
+            jsonDecode(utf8.decode(response.bodyBytes))['Conditions'];
         jsonData.assignAll(responseData.cast<Map<String, dynamic>>());
         print('** in readAll controller try, respose: OK');
       } else {
