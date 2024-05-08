@@ -3,15 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:testapp/account/account_controller.dart';
 import 'package:testapp/controllers/chat_controller.dart';
+import 'package:testapp/screens/test/room_detail_screen.dart';
 import 'package:testapp/widgets/app_bar_widget.dart';
 import 'package:testapp/widgets/page_normal_padding_widget.dart';
 import 'package:testapp/widgets/text_header_widget.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:stomp_dart_client/stomp.dart';
 import 'package:stomp_dart_client/stomp_config.dart';
 import 'package:stomp_dart_client/stomp_frame.dart';
 import 'package:get/get.dart';
-import 'package:testapp/screens/zip_detail_screen.dart';
 
 import '../utils/api_config.dart';
 
@@ -21,9 +20,13 @@ class Chat extends StatefulWidget {
   final String myNickname;
   final String otherNickname;
 
-  const Chat({Key? key, required this.chatRoomId, required this.accountId,
-                        required this.myNickname, required this.otherNickname})
-      : super(key: key);
+  const Chat({
+    Key? key,
+    required this.chatRoomId,
+    required this.accountId,
+    required this.myNickname,
+    required this.otherNickname,
+  }) : super(key: key);
 
   @override
   ChatState createState() => ChatState();
@@ -54,19 +57,18 @@ class ChatState extends State<Chat> {
     _chatController
         .fetchChatRoom(widget.chatRoomId)
         .then((value) => {
-      setState(() {
-        if (value != null) {
-          messages.addAll(value);
-        }
-      })
-    });
+              setState(() {
+                if (value != null) {
+                  messages.addAll(value);
+                }
+              })
+            });
   }
 
   void onConnectCallback(StompFrame connectFrame) {
     print(widget.chatRoomId);
 
     _client.subscribe(
-      // destination: '/exchange/chat.exchange/room.${widget.chatRoomId}',
       destination: '/exchange/${widget.chatRoomId}',
       headers: {},
       callback: (frame) {
@@ -98,10 +100,12 @@ class ChatState extends State<Chat> {
   }
 
   void _showItemList() async {
-    final response = await http.get(Uri.parse('https://api.teamwaf.app/v1/zip/agent/' + _accountController.id));
+    final response = await http.get(Uri.parse(
+        'https://api.teamwaf.app/v1/zip/agent/' + _accountController.id));
 
     if (response.statusCode == 200) {
-      final List<dynamic> items = json.decode(utf8.decode(response.bodyBytes))['Zips'];
+      final List<dynamic> items =
+          json.decode(utf8.decode(response.bodyBytes))['Zips'];
       print("나왔다!!!!!!!!!!!!!!!!!!!!" + items.toString());
       _showItems(items);
     } else {
@@ -136,22 +140,24 @@ class ChatState extends State<Chat> {
                       ),
                       SizedBox(width: 10),
                       Container(
-                        width: 100, // 이미지의 폭 설정
-                        height: 90, // 이미지의 높이 설정
+                        width: 100,
+                        height: 90,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10), // 이미지 모서리 둥글게 설정
+                          borderRadius: BorderRadius.circular(10),
                           image: DecorationImage(
                             image: NetworkImage(
-                              '${ApiConfig.attachmentApiEndpointUri}/'+(item['attachments']?.split(',')[0] ?? ''),
+                              '${ApiConfig.attachmentApiEndpointUri}/' +
+                                  (item['attachments']?.split(',')[0] ?? ''),
                             ),
-                            fit: BoxFit.cover, // 이미지가 올바르게 표시되도록 설정
+                            fit: BoxFit.cover,
                           ),
                         ),
                       ),
                     ],
                   ),
                   onTap: () {
-                    _handleMessageTap(item['id'], item['attachments']?.split(',')[0] ?? '');
+                    _handleMessageTap(
+                        item['id'], item['attachments']?.split(',')[0] ?? '');
                     Navigator.of(context).pop();
                   },
                 );
@@ -180,8 +186,8 @@ class ChatState extends State<Chat> {
 
   Widget _buildMessageWidget(Map<String, dynamic> message) {
     final String originalText = message['message'] ?? "안녕하세요.";
-    final String id =
-    (originalText.split('%%room%%%%image%%').first).replaceAll('%%room%%', '');
+    final String id = (originalText.split('%%room%%%%image%%').first)
+        .replaceAll('%%room%%', '');
     final String img = originalText.split('%%room%%%%image%%').last;
     final String nickname = checkNickname(message['accountId']);
     final bool isMyMessage = message['accountId'] == widget.accountId;
@@ -189,25 +195,25 @@ class ChatState extends State<Chat> {
 
     return Column(
       crossAxisAlignment:
-      isMyMessage ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+          isMyMessage ? CrossAxisAlignment.end : CrossAxisAlignment.start,
       children: [
         if (!isMyMessage)
           Row(
             children: [
               Container(
-                width: 30, // 너비 조절
-                height: 30, // 높이 조절
+                width: 30,
+                height: 30,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   border: Border.all(
-                    color: Color(0xFF224488), // 테두리 색상
-                    width: 1, // 테두리 너비
+                    color: Color(0xFF224488),
+                    width: 1,
                   ),
                 ),
                 child: CircleAvatar(
                   backgroundColor: Colors.white,
                   child: Text(
-                    nickname[0], // 닉네임의 첫 글자 표시
+                    nickname[0],
                     style: TextStyle(color: Color(0xFF224488)),
                   ),
                 ),
@@ -224,12 +230,12 @@ class ChatState extends State<Chat> {
           ),
         Padding(
           padding: EdgeInsets.only(left: 30),
-          child:GestureDetector(
+          child: GestureDetector(
             onTap: containsWoorizip
                 ? () {
-              Get.to(DetailScreen(itemID: id),
-                  transition: Transition.noTransition);
-            }
+                    Get.to(RoomDetailScreen(itemID: id),
+                        transition: Transition.noTransition);
+                  }
                 : null,
             child: CustomPaint(
               painter: ChatBubblePainter(
@@ -246,29 +252,29 @@ class ChatState extends State<Chat> {
                   children: [
                     containsWoorizip
                         ? Text(
-                      '매물 보러가기',
-                      style: TextStyle(
-                        color: Colors.white,
-                        decoration: TextDecoration.underline,
-                      ),
-                    )
+                            '매물 보러가기',
+                            style: TextStyle(
+                              color: Colors.white,
+                              decoration: TextDecoration.underline,
+                            ),
+                          )
                         : SizedBox.shrink(),
                     containsWoorizip && img.isNotEmpty
                         ? Image.network(
-                        '${ApiConfig.attachmentApiEndpointUri}/' + img,
+                            '${ApiConfig.attachmentApiEndpointUri}/' + img,
                             fit: BoxFit.cover,
-                            width: 200, // 이미지의 가로 길이를 조절합니다.
+                            width: 200,
                             height: 200,
                           )
                         : SizedBox.shrink(),
                     containsWoorizip
                         ? SizedBox.shrink()
                         : Text(
-                      originalText,
-                      style: TextStyle(
-                        color: Colors.white,
-                      ),
-                    ),
+                            originalText,
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
+                          ),
                   ],
                 ),
               ),
@@ -283,18 +289,30 @@ class ChatState extends State<Chat> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      appBar: AppBarWidget(),
+      appBar: AppBarWidget(
+        title: widget.otherNickname,
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: IconButton(
+              icon: const Icon(Icons.warning_amber, color: Colors.red, size: 30),
+              onPressed: () {
+                Get.back();
+              },
+            ),
+          ),
+        ],
+      ),
       body: PageNormalPaddingWidget(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            TextHeaderWidget(text: widget.otherNickname),
             Expanded(
               child: ListView.separated(
                 reverse: true,
                 itemCount: messages.length,
                 controller: _scrollController,
-                separatorBuilder: (context, index) => SizedBox(height: 15), // Here is the correction
+                separatorBuilder: (context, index) =>
+                    SizedBox(height: 15), // Here is the correction
                 itemBuilder: (context, index) {
                   Map<String, dynamic> item = messages[index];
                   return _buildMessageWidget(
@@ -303,34 +321,33 @@ class ChatState extends State<Chat> {
                 },
               ),
             ),
-            SizedBox(height: 20),
-            Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: _controller,
-                    decoration: InputDecoration(
-                      hintText: 'Type a message',
-                      border: OutlineInputBorder(),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              decoration: BoxDecoration(
+                color: Colors.grey[200],
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Row(
+                children: [
+                  IconButton(
+                    onPressed: _showItemList,
+                    icon: Icon(Icons.add),
+                  ),
+                  Expanded(
+                    child: TextField(
+                      controller: _controller,
+                      decoration: InputDecoration(
+                        hintText: '메시지 입력...',
+                        border: InputBorder.none,
+                      ),
                     ),
                   ),
-                ),
-                SizedBox(width: 10),
-                ElevatedButton(
-                  onPressed: _sendMessage,
-                  child: const Icon(
-                    Icons.send,
-                    color: Colors.black,
+                  IconButton(
+                    onPressed: _sendMessage,
+                    icon: Icon(Icons.send),
                   ),
-                ),
-                SizedBox(width: 10),
-                ElevatedButton(
-                onPressed: _showItemList,
-                child: const Icon(
-                  Icons.add,
-                  color: Colors.black,
-                ),
-                )],
+                ],
+              ),
             ),
           ],
         ),
@@ -352,7 +369,8 @@ class ChatBubblePainter extends CustomPainter {
   final Color color;
   final double minBubbleLength;
 
-  ChatBubblePainter({required this.isMyMessage, required this.color, this.minBubbleLength = 50.0});
+  ChatBubblePainter(
+      {required this.isMyMessage, required this.color, this.minBubbleLength = 50.0});
 
   @override
   void paint(Canvas canvas, Size size) {

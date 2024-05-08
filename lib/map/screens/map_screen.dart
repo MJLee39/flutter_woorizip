@@ -1,3 +1,4 @@
+import 'package:testapp/screens/test/room_detail_screen.dart';
 import 'package:testapp/screens/zip_detail_screen.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
@@ -122,7 +123,7 @@ class _BottomSheetContentState extends State<BottomSheetContent> {
               final item = data[index];
               return GestureDetector(
                 onTap: () {
-                  Get.to(DetailScreen(itemID: '${item["id"]}'), transition: Transition.noTransition);
+                  Get.to(RoomDetailScreen(itemID: '${item["id"]}'), transition: Transition.noTransition);
                 },
                 child: Column(
                   children: [

@@ -9,8 +9,6 @@ import 'package:testapp/widgets/page_normal_padding_widget.dart';
 import 'chat.dart';
 
 class ChatRoomListScreen extends StatefulWidget {
-
-
   const ChatRoomListScreen({super.key});
 
   @override
@@ -18,7 +16,7 @@ class ChatRoomListScreen extends StatefulWidget {
 }
 
 class _ChatRoomListScreenState extends State<ChatRoomListScreen> {
-  late List<ChatRoomResponseDTO> chatRooms = [];
+  final List<ChatRoomResponseDTO> _chatRooms = [];
 
   final ChatController _chatController = ChatController();
   final AccountController _accountController = AccountController();
@@ -29,13 +27,19 @@ class _ChatRoomListScreenState extends State<ChatRoomListScreen> {
     _chatController.fetchChatRooms(_accountController.id)
         .then((value) => {
           setState(() {
-            chatRooms = value;
+            _chatRooms.addAll(value);
             // for (var chatRoom in chatRooms) {
             //   subscribeToChatRoom(chatRoom.id);
             // }
-          }
-        )
-    }).catchError((err) => print(err));
+          })
+        })
+        .catchError((err) => print(err));
+  }
+
+  void _removeChatRoom(ChatRoomResponseDTO chatRoom) {
+    setState(() {
+      _chatRooms.removeWhere((room) => room.id == chatRoom.id);
+    });
   }
 
   void subscribeToChatRoom(String chatRoomId) {
@@ -50,12 +54,12 @@ class _ChatRoomListScreenState extends State<ChatRoomListScreen> {
             var message = eventData['message'] ?? "안녕하세요.";
 
             setState(() {
-              final index = chatRooms.indexWhere((room) => room.id == updatedChatRoomId);
+              final index = _chatRooms.indexWhere((room) => room.id == updatedChatRoomId);
               if (index != -1) {
-                final updatedRoom = chatRooms[index];
-                updatedRoom.recentMessage = message;
-                chatRooms.removeAt(index);
-                chatRooms.insert(0, updatedRoom);
+                final updatedRoom = _chatRooms[index];
+                updatedRoom.recentMessage = message.contains('%%room%%') ? '매물' : message;
+                _chatRooms.removeAt(index);
+                _chatRooms.insert(0, updatedRoom);
               }
             });
           }
@@ -79,81 +83,29 @@ class _ChatRoomListScreenState extends State<ChatRoomListScreen> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Expanded(
-              child: ListView.builder(
-                itemCount: chatRooms.length,
+              child: ListView.separated(
+                itemCount: _chatRooms.length,
+                separatorBuilder: (context, index) => const Divider(color: Colors.grey),
                 itemBuilder: (context, index) {
-                  final chatRoom = chatRooms[index];
-                  return Card(
-                    margin: EdgeInsets.symmetric(vertical: 8.0),
-                    color: Color(0xFF224488),
-                    elevation: 4.0,
-                    child: ListTile(
-                      title: Text(
-                        chatRoom.nickname,
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      subtitle: Text(
-                        chatRoom.recentMessage,
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      leading: CircleAvatar(
-                        backgroundColor: Colors.white,
-                        child: Text(
-                          chatRoom.nickname[0],
-                          style: TextStyle(color: Color(0xFF224488)),
+                  final chatRoom = _chatRooms[index];
+                  return _ChatRoomTile(
+                    chatRoom: chatRoom,
+                    accountController: _accountController,
+                    chatController: _chatController,
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Chat(
+                            chatRoomId: chatRoom.id,
+                            accountId: _accountController.id,
+                            myNickname: _accountController.nickname,
+                            otherNickname: chatRoom.nickname,
+                          ),
                         ),
-                      ),
-                      trailing: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          IconButton(
-                            icon: const Icon(
-                              Icons.warning,
-                              color: Colors.white,
-                            ),
-                            onPressed: () {
-                              var targetId;
-                              final userId = _accountController.id;
-                              if (chatRoom.clientId == userId) {
-                                targetId = chatRoom.agentId;
-                              } else {
-                                targetId = chatRoom.clientId;
-                              }
-                              final result = _chatController.sendReport(_accountController.id, targetId);
-                              print(result);
-                            },
-                          ),
-                          IconButton(
-                            icon: const Icon(
-                              Icons.exit_to_app,
-                              color: Colors.white,
-                            ),
-                            onPressed: () {
-                              _chatController.exitChatRoom(chatRoom.id).then((exitMessage) {
-                                if (exitMessage == 'deleted') {
-                                  setState(() {
-                                    chatRooms.removeWhere((element) => element.id == chatRoom.id);
-                                  });
-                                }
-                              });
-                            },
-                          ),
-                        ],
-                      ),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => Chat(
-                              chatRoomId: chatRoom.id,
-                              accountId: _accountController.id,
-                              myNickname: _accountController.nickname,
-                              otherNickname: chatRoom.nickname,
-                            ),
-                          ),
-                        );
-                      },
-                    ),
+                      );
+                    },
+                    onDismissed: _removeChatRoom,
                   );
                 },
               ),
@@ -164,7 +116,81 @@ class _ChatRoomListScreenState extends State<ChatRoomListScreen> {
       bottomNavigationBar: const BottomNavigationWidget(),
     );
   }
-
-
 }
-//
+
+class _ChatRoomTile extends StatelessWidget {
+  const _ChatRoomTile({
+    required this.chatRoom,
+    required this.accountController,
+    required this.chatController,
+    required this.onTap,
+    required this.onDismissed,
+  });
+
+  final ChatRoomResponseDTO chatRoom;
+  final AccountController accountController;
+  final ChatController chatController;
+  final VoidCallback onTap;
+  final Function(ChatRoomResponseDTO) onDismissed;
+
+  @override
+  Widget build(BuildContext context) {
+    return Dismissible(
+      key: Key(chatRoom.id),
+      direction: DismissDirection.endToStart,
+      background: Container(
+        color: Colors.red,
+        alignment: Alignment.centerRight,
+        padding: const EdgeInsets.only(right: 16.0),
+        child: const Icon(Icons.delete, color: Colors.white),
+      ),
+      onDismissed: (direction) {
+        chatController.exitChatRoom(chatRoom.id).then((exitMessage) {
+          if (exitMessage == 'deleted') {
+            onDismissed(chatRoom);
+          }
+        });
+      },
+      child: ListTile(
+        title: Text(
+          chatRoom.nickname,
+          style: const TextStyle(color: Colors.black),
+        ),
+        subtitle: chatRoom.recentMessage == null
+            ? const Text(
+                '대화 내용이 없습니다.',
+                style: TextStyle(color: Colors.grey),
+              )
+            : Text(
+                chatRoom.recentMessage.contains('%%room%%') ? '매물' : chatRoom.recentMessage,
+                style: const TextStyle(color: Colors.grey),
+              ),
+        leading: CircleAvatar(
+          backgroundColor: Colors.grey[200],
+          child: Text(
+            chatRoom.nickname[0],
+            style: const TextStyle(color: Colors.black),
+          ),
+        ),
+        trailing: IconButton(
+          icon: const Icon(
+            Icons.warning,
+            color: Colors.red,
+          ),
+          onPressed: () {
+            var targetId;
+            final userId = accountController.id;
+            if (chatRoom.clientId == userId) {
+              targetId = chatRoom.agentId;
+            } else {
+              targetId = chatRoom.clientId;
+            }
+            final result = chatController.sendReport(accountController.id, targetId);
+            print(result);
+          },
+        ),
+        onTap: onTap,
+      ),
+    );
+  }
+}
