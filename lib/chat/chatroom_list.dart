@@ -1,17 +1,17 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:eventflux/eventflux.dart';
+import 'package:testapp/account/account_controller.dart';
 import 'package:testapp/controllers/chat_controller.dart';
 import 'package:testapp/widgets/app_bar_widget.dart';
 import 'package:testapp/widgets/bottom_navigation_widget.dart';
 import 'package:testapp/widgets/page_normal_padding_widget.dart';
-import 'package:testapp/widgets/text_header_widget.dart';
 import 'chat.dart';
 
 class ChatRoomListScreen extends StatefulWidget {
-  final String accountId;
 
-  const ChatRoomListScreen({super.key, required this.accountId});
+
+  const ChatRoomListScreen({super.key});
 
   @override
   _ChatRoomListScreenState createState() => _ChatRoomListScreenState();
@@ -21,12 +21,12 @@ class _ChatRoomListScreenState extends State<ChatRoomListScreen> {
   late List<ChatRoomResponseDTO> chatRooms = [];
 
   final ChatController _chatController = ChatController();
+  final AccountController _accountController = AccountController();
 
   @override
   void initState() {
     super.initState();
-    print(widget.accountId);
-    _chatController.fetchChatRooms(widget.accountId)
+    _chatController.fetchChatRooms(_accountController.id)
         .then((value) => {
           setState(() {
             chatRooms = value;
@@ -41,7 +41,7 @@ class _ChatRoomListScreenState extends State<ChatRoomListScreen> {
   void subscribeToChatRoom(String chatRoomId) {
     EventFlux.instance.connect(
       EventFluxConnectionType.get,
-      'https://chat.teamwaf.app/chat/connect/$chatRoomId',
+      'http://15.164.244.88:8080/chat/connect/$chatRoomId',
       onSuccessCallback: (EventFluxResponse? response) {
         response!.stream?.listen((data) {
           if (data.event == 'chat') {
@@ -70,13 +70,14 @@ class _ChatRoomListScreenState extends State<ChatRoomListScreen> {
 
   @override
   Widget build(BuildContext context) {
+    _accountController.id;
+
     return Scaffold(
-      appBar: AppBarWidget(),
+      appBar: AppBarWidget(title: '메시지',),
       body: PageNormalPaddingWidget(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            TextHeaderWidget(text: "채팅방 목록",),
             Expanded(
               child: ListView.builder(
                 itemCount: chatRooms.length,
@@ -106,24 +107,24 @@ class _ChatRoomListScreenState extends State<ChatRoomListScreen> {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           IconButton(
-                            icon: Icon(
+                            icon: const Icon(
                               Icons.warning,
                               color: Colors.white,
                             ),
                             onPressed: () {
                               var targetId;
-                              final userId = widget.accountId;
+                              final userId = _accountController.id;
                               if (chatRoom.clientId == userId) {
                                 targetId = chatRoom.agentId;
                               } else {
                                 targetId = chatRoom.clientId;
                               }
-                              final result = _chatController.sendReport(widget.accountId, targetId);
+                              final result = _chatController.sendReport(_accountController.id, targetId);
                               print(result);
                             },
                           ),
                           IconButton(
-                            icon: Icon(
+                            icon: const Icon(
                               Icons.exit_to_app,
                               color: Colors.white,
                             ),
@@ -145,8 +146,8 @@ class _ChatRoomListScreenState extends State<ChatRoomListScreen> {
                           MaterialPageRoute(
                             builder: (context) => Chat(
                               chatRoomId: chatRoom.id,
-                              accountId: widget.accountId,
-                              myNickname: "허위 매물 사기꾼",
+                              accountId: _accountController.id,
+                              myNickname: _accountController.nickname,
                               otherNickname: chatRoom.nickname,
                             ),
                           ),
@@ -164,4 +165,6 @@ class _ChatRoomListScreenState extends State<ChatRoomListScreen> {
     );
   }
 
+
 }
+//

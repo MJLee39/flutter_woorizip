@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:testapp/controllers/zip_find_controller.dart';
+import 'package:testapp/utils/api_config.dart';
 
 class SearchTypeSelectorController extends GetxController {
   final ZipFindController _zipFindController = Get.put(ZipFindController());
@@ -21,7 +22,7 @@ class SearchTypeSelectorController extends GetxController {
     final selectedFeeType = feeController.selectedFeeType;
     final selectedDeposit = depositController.selectedDepositType;
 
-    final url = Uri.parse('https://api.teamwaf.app/v1/zip/search?location=$selectedLocation&deposit=$selectedDeposit&fee=$selectedFeeType&buildingType=$selectedBuildingTypes');
+    final url = Uri.parse('${ApiConfig.apiSearchZipUrl}?location=$selectedLocation&deposit=$selectedDeposit&fee=$selectedFeeType&buildingType=$selectedBuildingTypes');
     final response = await http.get(url);
 
     if (response.statusCode == 200) {

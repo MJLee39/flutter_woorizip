@@ -3,14 +3,15 @@ import 'package:testapp/services/auth_service.dart';
 import 'package:testapp/services/storage_service.dart';
 
 class AuthGuard extends GetMiddleware {
-  final StorageService steageService = Get.find<StorageService>();
+  final StorageService _storageService = Get.find<StorageService>();
+
   @override
   GetPage? onPageCalled(GetPage? page) {
     AuthService.to.checkLoginStatus();
-
+      print(_storageService.getAccount().toString());
     if (!AuthService.to.isLoggedInValue) {
       String intendedRoute = page?.name ?? '/';
-      steageService.write('intendedRoute', intendedRoute);
+      _storageService.write('intendedRoute', intendedRoute);
       Get.snackbar(
         '로그인 필요',
         '로그인이 필요한 서비스입니다.\n로그인 후 이용해주세요.',

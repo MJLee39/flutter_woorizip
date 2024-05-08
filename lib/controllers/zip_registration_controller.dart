@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:testapp/utils/api_config.dart';
 
 class ZipRegistration extends GetxController {
   late String location = '';
@@ -90,8 +91,7 @@ class ZipRegistration extends GetxController {
 
     try {
       print('** in Save --------------');
-
-      String url = 'https://api.teamwaf.app/v1/zip';
+      String url = '${ApiConfig.apiSaveZipUrl}';
 
       print("controller attachments: "+attachments);
       print("controller direction: "+direction);

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
+import 'package:testapp/utils/api_config.dart';
 
 class ZipListLocationController extends GetxController {
   final RxList<Map<String, dynamic>> jsonData = <Map<String, dynamic>>[].obs;
@@ -19,7 +20,7 @@ class ZipListLocationController extends GetxController {
     isLoading.value = true; // 로딩 상태 시작
 
     try {
-      final response = await http.get(Uri.parse('https://api.teamwaf.app/v1/zip/search?location='+additionalArgument));
+      final response = await http.get(Uri.parse('${ApiConfig.apiSearchZipUrl}?location='+additionalArgument));
       if (response.statusCode == 200) {
         List<dynamic> responseData = jsonDecode(utf8.decode(response.bodyBytes))['Zips'];
         jsonData.assignAll(responseData.cast<Map<String, dynamic>>());

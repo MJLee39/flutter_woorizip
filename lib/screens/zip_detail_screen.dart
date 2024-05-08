@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:testapp/account/account_controller.dart';
 import 'package:testapp/controllers/chat_controller.dart';
 import 'package:testapp/widgets/bottom_navigation_widget.dart';
 import 'package:testapp/controllers/zip_detail_controller.dart';
@@ -279,8 +280,9 @@ class _DetailScreenState extends State<DetailScreen> {
                 children: <Widget>[
                     ElevatedButton(
                       onPressed: () {
-                        final agentId = "qassadsadsa";
-                        const clientId = "qweqwewqeewq";
+                        AccountController _accountController = AccountController();
+                        final agentId = zipData['agentId'];
+                        var clientId = _accountController.id;
                         var otherNickname;
                         _chatController.getNicknameBy(agentId).then(
                                 (value) => otherNickname = value
@@ -292,7 +294,7 @@ class _DetailScreenState extends State<DetailScreen> {
                               builder: (context) => Chat(
                                 chatRoomId: chatRoomInfo['id'],
                                 accountId: clientId,
-                                myNickname: "허위 매물 사기꾼",
+                                myNickname: _accountController.nickname,
                                 otherNickname: otherNickname,
                               ),
                             ),

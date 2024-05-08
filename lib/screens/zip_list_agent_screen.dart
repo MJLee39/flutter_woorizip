@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:testapp/utils/api_config.dart';
 import 'package:testapp/widgets/bottom_navigation_widget.dart';
 import 'package:testapp/screens/zip_detail_screen.dart'; // DetailScreen.dart를 import합니다.
 import 'package:http/http.dart' as http;
@@ -43,7 +44,9 @@ class _ZipListAgentScreenState extends State<ZipListAgentScreen> {
 
   Future<void> fetchData() async {
     try {
-      final response = await http.get(Uri.parse('https://api.teamwaf.app/v1/zip/agent/'+additionalArgument));
+      final response = await http.get(
+        Uri.parse('${ApiConfig.apiGetByAgentIdZipUrl}/${additionalArgument}'),
+      );
       if (response.statusCode == 200) {
         List<dynamic> responseData = jsonDecode(utf8.decode(response.bodyBytes))['Zips'];
         print(responseData);
@@ -59,8 +62,7 @@ class _ZipListAgentScreenState extends State<ZipListAgentScreen> {
   }
 
   void _deleteItem(String itemId) async {
-    final url = 'https://api.teamwaf.app/v1/zip/$itemId';
-
+    final url = '${ApiConfig.apiDeleteZipUrl}/$itemId';
     try {
       final response = await http.delete(Uri.parse(url));
       if (response.statusCode == 200) {
@@ -147,7 +149,7 @@ class _ZipListAgentScreenState extends State<ZipListAgentScreen> {
                           Expanded(
                             flex: 2,
                             child: Image.network(
-                              'https://test.teamwaf.app/attachment/' + item['attachments'],
+                              '${ApiConfig.attachmentApiEndpointUri}/' + item['attachments'],
                               fit: BoxFit.cover,
                               width: 100, // 이미지의 가로 길이를 조절합니다.
                             ),

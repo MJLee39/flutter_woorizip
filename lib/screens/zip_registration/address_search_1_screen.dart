@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:testapp/account/account_controller.dart';
 import 'package:testapp/controllers/api_controller.dart';
 import 'package:testapp/widgets/app_bar_widget.dart';
 import 'package:testapp/widgets/bottom_expend_button_widget.dart';
@@ -11,6 +12,7 @@ class AddressSearchScreen extends GetView<ApiController> {
 
   final Rx<TextEditingController> _searchController =
       TextEditingController().obs;
+
   final RxString _selectedAddress = ''.obs;
   final RxString _selectedDong = ''.obs;
   final RxString _selectedFloor = ''.obs;
@@ -22,6 +24,9 @@ class AddressSearchScreen extends GetView<ApiController> {
   @override
   Widget build(BuildContext context) {
     Get.put(ApiController()); // ApiController 등록
+    final accountController = Get.put(AccountController());
+
+
 
     ever(_searchController, (_) {
       String searchText = _searchController.value.text;

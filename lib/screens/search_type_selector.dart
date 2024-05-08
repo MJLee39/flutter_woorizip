@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:testapp/controllers/zip_find_controller.dart';
+import 'package:testapp/utils/api_config.dart';
 import 'package:testapp/utils/app_colors.dart';
 
 class SearchTypeSelector extends StatefulWidget {
@@ -126,7 +127,7 @@ class _SearchTypeSelectorState extends State<SearchTypeSelector> {
     final selectedFeeType = widget.feeController.selectedFeeType;
     final selectedDeposit = widget.depositController.selectedDepositType;
 
-    final url = Uri.parse('https://api.teamwaf.app/v1/zip/search?location=$selectedLocation&buildingType=$selectedBuildingTypes&fee=$selectedFeeType&deposit=$selectedDeposit');
+    final url = Uri.parse('${ApiConfig.apiSearchZipUrl}?location=$selectedLocation&buildingType=$selectedBuildingTypes&fee=$selectedFeeType&deposit=$selectedDeposit');
 
     final response = await http.get(url);
 
