@@ -23,7 +23,6 @@ class ApiConfig {
   // auth
   static const apiSubfixAuthUrl = '/v1/auth';
   static const apiLoginUrl = '$apiEndpointUrl$apiSubfixAuthUrl/login';
-  static const apiCheckAccountUrl= '$apiEndpointUrl$apiSubfixAuthUrl/checkAccount';
   static const apiGetAccountByTokenUrl= '$apiEndpointUrl$apiSubfixAuthUrl/account';
   static const apiValidationUrl = '$apiEndpointUrl$apiSubfixAuthUrl/validation';
 

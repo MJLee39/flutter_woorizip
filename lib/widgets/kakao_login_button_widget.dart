@@ -17,7 +17,7 @@ class KakaoLoginButtonWidget extends StatelessWidget {
       style: TextButton.styleFrom(
         backgroundColor: AppColors.kakaoColor,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(6),
           // side: BorderSide(
           //   color: Colors.grey[300]!,
           //   width: 1.0,
