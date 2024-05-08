@@ -32,12 +32,13 @@ class _ZipListAgentScreenState extends State<ZipListAgentScreen> {
   final TextEditingController locationController = TextEditingController();
   final DepositController depositController = Get.put(DepositController());
   final FeeTypeController feeController = Get.put(FeeTypeController());
+  final AccountController _accountController = AccountController();
 
   @override
   void initState() {
     super.initState();
     //additionalArgument = Get.arguments;
-    additionalArgument = "명진 부동산1";
+    additionalArgument = _accountController.id;
     fetchData();
   }
 
