@@ -43,11 +43,7 @@ class _SearchTypeSelectorState extends State<SearchTypeSelector> {
     3000,
     4000,
     5000,
-    6000,
-    7000,
-    8000,
-    9000,
-    10000
+    0,
   ];
   final List<int> _feeValues = [
     5,
@@ -61,12 +57,7 @@ class _SearchTypeSelectorState extends State<SearchTypeSelector> {
     60,
     70,
     100,
-    150,
-    200,
-    250,
-    300,
-    400,
-    500
+    0,
   ];
   int _selectedDepositIndex = 0;
   int _selectedFeeIndex = 0;
@@ -106,7 +97,7 @@ class _SearchTypeSelectorState extends State<SearchTypeSelector> {
                     controller: controller,
                     children: [
                       Text('방 종류',
-                          style: TextStyle(fontWeight: FontWeight.bold)),
+                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
                       SizedBox(height: 10),
                       Row(
                         children: [
@@ -142,6 +133,8 @@ class _SearchTypeSelectorState extends State<SearchTypeSelector> {
                       Stack(
                         children: [
                           Slider(
+                            activeColor: AppColors.mainColorTest,
+                            inactiveColor: Colors.grey,
                             value: _selectedDepositIndex.toDouble(),
                             min: 0,
                             max: _depositValues.length - 1,
@@ -182,16 +175,17 @@ class _SearchTypeSelectorState extends State<SearchTypeSelector> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text('${_depositValues[0]}만원'),
-                          Text('${_depositValues[1]}만원'),
-                          Text('${_depositValues[2]}만원'),
                           Text('${_depositValues[3]}만원'),
-                          Text('${_depositValues[4]}만원'),
+                          Text('${_depositValues[7]}만원'),
+                          Text('${_depositValues[11]}만원'),
                         ],
                       ),
                       SizedBox(height: 20),
                       Stack(
                         children: [
                           Slider(
+                            inactiveColor: Colors.grey,
+                            activeColor: AppColors.mainColorTest,
                             value: _selectedFeeIndex.toDouble(),
                             min: 0,
                             max: _feeValues.length - 1,
@@ -232,10 +226,9 @@ class _SearchTypeSelectorState extends State<SearchTypeSelector> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text('${_feeValues[0]}만원'),
-                          Text('${_feeValues[1]}만원'),
-                          Text('${_feeValues[2]}만원'),
                           Text('${_feeValues[3]}만원'),
-                          Text('${_feeValues[4]}만원'),
+                          Text('${_feeValues[7]}만원'),
+                          Text('${_feeValues[11]}만원'),
                         ],
                       ),
                       SizedBox(height: 20),
@@ -246,7 +239,7 @@ class _SearchTypeSelectorState extends State<SearchTypeSelector> {
                           child: Text(
                             '적용하기',
                             style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.bold),
+                                fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
                           ),
                           style: ButtonStyle(
                             padding: MaterialStateProperty.all(
@@ -295,7 +288,7 @@ class _SearchTypeSelectorState extends State<SearchTypeSelector> {
   Widget buildBuildingTypeButton(String buttonText, BuildContext context) {
     final isSelected = widget.buildingTypeController.selectedBuildingTypes
         .contains(buttonText);
-    final buttonColor = isSelected ? AppColors.mainColor : Colors.grey;
+    final buttonColor = isSelected ? AppColors.mainColorTest : Colors.grey;
 
     return ElevatedButton(
       onPressed: () {
@@ -321,7 +314,7 @@ class _SearchTypeSelectorState extends State<SearchTypeSelector> {
   Widget depositTypeButton(String buttonText, BuildContext context) {
     final isSelected =
         widget.depositController.selectedDepositType == buttonText;
-    final buttonColor = isSelected ? AppColors.mainColor : Colors.grey;
+    final buttonColor = isSelected ? AppColors.mainColorTest : Colors.grey;
 
     return ElevatedButton(
       onPressed: () {

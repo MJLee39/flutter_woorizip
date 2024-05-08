@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:testapp/screens/test/room_detail_screen.dart';
 import 'package:testapp/utils/api_config.dart';
 import 'package:testapp/widgets/bottom_navigation_widget.dart';
-import 'package:testapp/screens/zip_detail_screen.dart';
+// import 'package:testapp/screens/zip_detail_screen.dart';
 import 'package:get/get.dart';
 import 'package:testapp/controllers/zip_find_controller.dart';
 import 'package:testapp/controllers/search_condition/building_type_controller.dart';
@@ -109,7 +110,7 @@ class ZipFindScreen extends StatelessWidget {
                   ),
                   child: GestureDetector(
                     onTap: () {
-                      Get.to(DetailScreen(itemID: item['id']), transition: Transition.noTransition);
+                      Get.to(RoomDetailScreen(itemID: item['id']), transition: Transition.noTransition);
                     },
                     child: Padding(
                       padding: const EdgeInsets.all(10.0), // 여기에서 패딩 조정
@@ -156,7 +157,7 @@ class ZipFindScreen extends StatelessWidget {
                 if (index > 0) {
                   return GestureDetector(
                     onTap: () {
-                      Get.to(DetailScreen(itemID: item['id']), transition: Transition.noTransition);
+                      Get.to(RoomDetailScreen(itemID: item['id']), transition: Transition.noTransition);
                     },
                     child: Padding(
                       padding: const EdgeInsets.all(10.0), // 여기에서 패딩 조정
