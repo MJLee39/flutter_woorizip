@@ -253,27 +253,23 @@ class _DetailScreenState extends State<DetailScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                     ElevatedButton(
-                      onPressed: () {
+                      onPressed: () async {
                         AccountController _accountController = AccountController();
                         final agentId = zipData['agentId'];
                         var clientId = _accountController.id;
-                        var otherNickname;
-                        _chatController.getNicknameBy(agentId).then(
-                                (value) => otherNickname = value
-                        );
+                        var otherNickname = await _chatController.getNicknameBy(agentId);
 
-                        _chatController.createChatRoom(clientId, agentId).then((chatRoomInfo) {
-                          Navigator.push(
-                            context, MaterialPageRoute(
-                              builder: (context) => Chat(
-                                chatRoomId: chatRoomInfo['id'],
-                                accountId: clientId,
-                                myNickname: _accountController.nickname,
-                                otherNickname: otherNickname,
-                              ),
-                            ),
-                          );
-                        });
+                        var chatRoomInfo = await _chatController.createChatRoom(clientId, agentId);
+                        Navigator.push(
+                          context, MaterialPageRoute(
+                          builder: (context) => Chat(
+                            chatRoomId: chatRoomInfo['id'],
+                            accountId: clientId,
+                            myNickname: _accountController.nickname,
+                            otherNickname: otherNickname,
+                          ),
+                        ),
+                        );
                       },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.mainColor1,
