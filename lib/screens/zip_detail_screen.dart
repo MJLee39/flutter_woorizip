@@ -6,6 +6,7 @@ import 'package:testapp/controllers/zip_detail_controller.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:testapp/utils/app_colors.dart';
 import '../chat/chat.dart';
+import '../utils/api_config.dart';
 
 class DetailScreen extends StatefulWidget  {
   final String itemID; // zipID를 저장하기 위한 필드
@@ -109,7 +110,8 @@ class _DetailScreenState extends State<DetailScreen> {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(5.0),
                           image: DecorationImage(
-                            image: AssetImage(imageUrl),
+                            image: NetworkImage(
+                                '${ApiConfig.attachmentApiEndpointUri}/'+zipData['attachments'].split(',')),
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -152,6 +154,8 @@ class _DetailScreenState extends State<DetailScreen> {
                             Text(
                               zipData["location"],
                               style: TextStyle(color: Colors.black, fontSize: 20.0),
+                              overflow: TextOverflow.ellipsis, // 텍스트가 길어질 때 생략되도록 설정
+                              maxLines: 2, // 최대 2줄까지 표시하도록 설정
                             ),
                           ],
                         )

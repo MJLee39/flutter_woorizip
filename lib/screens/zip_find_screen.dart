@@ -29,7 +29,7 @@ class ZipFindScreen extends StatelessWidget {
     Get.put(ConditionGuard());
 
     // 타이머 설정: 5초 후에 ConditionGuard 호출
-    Timer(Duration(seconds: 5), () {
+    Timer(Duration(seconds: 60), () {
       Get.find<ConditionGuard>().onPageCalled(null);
     });
 
@@ -113,7 +113,7 @@ class ZipFindScreen extends StatelessWidget {
                           children: [
                             Expanded(
                               flex: 2,
-                              child: Image.network('${ApiConfig.attachmentApiEndpointUri}/'+item['attachments'],
+                              child: Image.network('${ApiConfig.attachmentApiEndpointUri}/'+item['attachments'].split(',')[0],
                                   fit: BoxFit.cover),
                             ),
                             Expanded(
@@ -160,7 +160,7 @@ class ZipFindScreen extends StatelessWidget {
                         children: [
                           Expanded(
                             flex: 2,
-                            child: Image.network('${ApiConfig.attachmentApiEndpointUri}/'+item['attachments'],
+                            child: Image.network('${ApiConfig.attachmentApiEndpointUri}/'+item['attachments'].split(',')[0],
                                 fit: BoxFit.cover),
                           ),
                           Expanded(
