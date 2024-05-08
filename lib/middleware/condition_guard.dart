@@ -4,11 +4,14 @@ import 'package:testapp/services/auth_service.dart';
 import 'package:testapp/services/storage_service.dart';
 
 class ConditionGuard extends GetMiddleware {
+  bool _isSnackbarShown = false;
   @override
   GetPage? onPageCalled(GetPage? page) {
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
-      showSnackbar();
-    });
+    if (!_isSnackbarShown) {
+      WidgetsBinding.instance!.addPostFrameCallback((_) {
+        showSnackbar();
+      });
+    }
     return null; // Returning null to prevent immediate redirection
   }
 
@@ -31,5 +34,7 @@ class ConditionGuard extends GetMiddleware {
         Get.offAllNamed('/conditionreadone');
       },
     );
+    // Snackbar가 표시되었음을 표시하는 플래그를 설정합니다.
+    _isSnackbarShown = true;
   }
 }

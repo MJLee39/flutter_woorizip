@@ -5,7 +5,7 @@ import 'package:testapp/map/dto/custom_location.dart';
 import 'package:http/http.dart' as http;
 
 class LocationService {
-  static const CustomLocation initLocation = CustomLocation(latitude: 37.580842, longitude: 126.895611, address: "서울시 마포구 상암동"); // 기본 위치는 수색역
+  static const CustomLocation initLocation = CustomLocation(latitude: 37.580842, longitude: 126.895611, address: "서울특별시 마포구"); // 기본 위치는 수색역
 
   Future<LocationPermission> hasLocationPermission() async => await Geolocator.checkPermission();
 
