@@ -9,6 +9,7 @@ import 'package:testapp/screens/admin_screen.dart';
 import 'package:testapp/screens/condition/condition_read_all_screen.dart';
 import 'package:testapp/screens/condition/condition_read_by_where_screen.dart';
 import 'package:testapp/screens/condition/condition_update_screen.dart';
+import 'package:testapp/screens/report_list_screen.dart';
 import 'package:testapp/screens/seemore/modify_nickname_screen.dart';
 import 'package:testapp/screens/seemore/myinfo_screen.dart';
 import 'package:testapp/screens/zip_registration/address_search_1_screen.dart';
@@ -248,11 +249,11 @@ class AppPages {
     /*
     신고자 목록 조회
      */
-    // _getPageWithMiddleware(
-    //   name: '/myreport',
-    //   page: () => const ReportListScreen(),
-    //   middlewares: [],
-    // ),
+    _getPageWithMiddleware(
+      name: '/report_history',
+      page: () => const ReportListScreen(),
+      middlewares: [],
+    ),
 
   ];
 }
