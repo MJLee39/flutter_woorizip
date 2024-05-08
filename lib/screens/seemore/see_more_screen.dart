@@ -125,6 +125,31 @@ class _SeeMoreScreenState extends State<SeeMoreScreen> {
               ],
             ),
           ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(20.0, 2.0, 20.0, 2.0),
+            child: Row(
+              children: [
+                Icon(Icons.home_work_outlined, color: Colors.grey[400]),
+                const SizedBox(width: 10),
+                TextButton(
+                  onPressed: () {
+                    Get.toNamed('/conditionreadall');
+                  },
+                  style: TextButton.styleFrom(
+                    backgroundColor: Colors.white,
+                  ),
+                  child: Text(
+                    '매물 살펴보기',
+                    style: const TextStyle(
+                      color: Colors.black87,
+                      fontSize: 20,
+                      fontWeight: FontWeight.normal,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          )
         ],
       ),
       bottomNavigationBar: const BottomNavigationWidget(),
