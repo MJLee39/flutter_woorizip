@@ -18,7 +18,6 @@ class ApiConfig {
   // update
   static const apiUpdateConditionUrl = '$apiEndpointUrl$apiSubfixConditionUrl';
 
-  static const apiAttachmentUrl = '$apiEndpointUrl/attachment';
 
   // auth
   static const apiSubfixAuthUrl = '/v1/auth';
@@ -30,8 +29,8 @@ class ApiConfig {
 
   // account
   static const apiSubfixAccountUrl = '/v1/account';
-  static const apiAccountUpdateUrl = '$apiEndpointUrl$apiSubfixAccountUrl/update';
-  static const apiAccountDeleteUrl = '$apiEndpointUrl$apiSubfixAccountUrl/delete';
+  static const apiAccountUpdateUrl = '$apiEndpointUrl$apiSubfixAccountUrl';
+  static const apiAccountDeleteUrl = '$apiEndpointUrl$apiSubfixAccountUrl';
   static const apiAccountReadAllUrl = '$apiEndpointUrl$apiSubfixAccountUrl';
   static const apiAccountLockUrl = '$apiEndpointUrl$apiSubfixAccountUrl';
 
@@ -72,6 +71,6 @@ class ApiConfig {
   static const apiGetAllReportUrl = '$reportApiEndpointUrl/all/size';
 
   // Attachment
-  static const attachmentApiEndpointUri = 'https://api.teamwaf.app/attachment';
+  static const attachmentApiEndpointUri = 'https://file.teamwaf.app/attachment';
 
 }

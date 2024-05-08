@@ -12,14 +12,14 @@ class MyinfoScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ProfileController profileController = Get.put(ProfileController());
-    final AccountController accountController = Get.put(AccountController());
-    final AuthService _authService = Get.find<AuthService>();
+    final accountController = Get.find<AccountController>();
+    final authService = Get.find<AuthService>();
 
     return Scaffold(
-      appBar: AppBarWidget(title: '내 정보'),
+      appBar: const AppBarWidget(title: '내 정보'),
       body: Column(
         children: <Widget>[
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Stack(
             alignment: Alignment.center,
             children: <Widget>[
@@ -32,7 +32,7 @@ class MyinfoScreen extends StatelessWidget {
                     backgroundImage: profileController.image != null
                         ? FileImage(profileController.image!)
                         : accountController.profileImageId.isNotEmpty
-                            ? NetworkImage('${ApiConfig.apiAttachmentUrl}/${accountController.profileImageId}') as ImageProvider
+                            ? NetworkImage('${ApiConfig.attachmentApiEndpointUri}/${accountController.profileImageId}') as ImageProvider
                             : const AssetImage('assets/images/default_profile.png'),
                   ),
                 ),
@@ -68,9 +68,10 @@ class MyinfoScreen extends StatelessWidget {
             trailing: Icon(Icons.arrow_forward_ios),
           ),
           ListTile(
-            title: Text('닉네임'),
+            title: Text('이름'),
             subtitle: Text(accountController.nickname),
             trailing: Icon(Icons.arrow_forward_ios),
+            onTap: () => Get.toNamed('/modify_nickname'),
           ),
           ListTile(
             title: Text('휴대폰 번호'),
@@ -80,7 +81,7 @@ class MyinfoScreen extends StatelessWidget {
           ListTile(
             title: const Text('로그아웃'),
             trailing: const Icon(Icons.arrow_forward_ios),
-            onTap: () => _authService.logout(),
+            onTap: () => authService.logout(),
           ),
           const Divider(
             color: Colors.grey,

@@ -9,6 +9,7 @@ import 'package:testapp/screens/admin_screen.dart';
 import 'package:testapp/screens/condition/condition_read_all_screen.dart';
 import 'package:testapp/screens/condition/condition_read_by_where_screen.dart';
 import 'package:testapp/screens/condition/condition_update_screen.dart';
+import 'package:testapp/screens/seemore/modify_nickname_screen.dart';
 import 'package:testapp/screens/seemore/myinfo_screen.dart';
 import 'package:testapp/screens/zip_registration/address_search_1_screen.dart';
 import 'package:testapp/screens/home_screen.dart';
@@ -108,6 +109,12 @@ class AppPages {
         final buildingType = Get.parameters['buildingType'];
         return MapScreen(buildingType: buildingType ?? "");
       },
+      middlewares: [],
+    ),
+
+    _getPageWithMiddleware(
+      name: '/modify_nickname',
+      page: () => const ModifyNickNameScreen(),
       middlewares: [],
     ),
 

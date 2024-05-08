@@ -2,9 +2,8 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:http/http.dart' as http;
 import 'package:testapp/account/account_controller.dart';
-import 'package:testapp/utils/api_config.dart';
+import 'package:testapp/controllers/file/upload_file_controller.dart';
 
 class ProfileController extends GetxController {
   final Rxn<File> _image = Rxn<File>();
@@ -12,13 +11,15 @@ class ProfileController extends GetxController {
   final ImagePicker _picker = ImagePicker();
   final AccountController _accountController = Get.find<AccountController>();
 
+  // UploadFileController 인스턴스 생성
+  final UploadFileController _uploadFileController = Get.put(UploadFileController());
+
   Future<void> pickImage() async {
     try {
       final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
       if (pickedFile != null) {
         _image.value = File(pickedFile.path);
-        await updateImageOnServer(_image.value!);
-        _accountController.profileImageId = _image.value!.path; // 프로필 이미지 ID 업데이트
+        await uploadImage(); // 사진 선택 후 자동 업로드
       } else {
         debugPrint('No image selected.');
       }
@@ -27,15 +28,12 @@ class ProfileController extends GetxController {
     }
   }
 
-  Future<void> updateImageOnServer(File image) async {
-    var uri = Uri.parse('${ApiConfig.apiAttachmentUrl}/upload');
-    var request = http.MultipartRequest('POST', uri)
-      ..files.add(await http.MultipartFile.fromPath('profile', image.path));
-    var response = await request.send();
-    if (response.statusCode == 200) {
-      debugPrint('Image uploaded!');
-    } else {
-      debugPrint('Image upload failed!');
+  Future<void> uploadImage() async {
+    if (_image.value != null) {
+      final uploadedFileId = await _uploadFileController.uploadFile(_image.value!);
+      if (uploadedFileId != null) {
+        _accountController.profileImageId = uploadedFileId;
+      }
     }
   }
 }
