@@ -21,8 +21,8 @@ void main() async {
     initialBinding: BindingsBuilder(
       () {
         Get.put(NavigationController());
-        Get.put(AuthService());
         Get.put(AccountController());
+        Get.put(AuthService());
       },
     ),
     theme: ThemeData(
