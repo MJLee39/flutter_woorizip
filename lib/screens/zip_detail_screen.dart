@@ -116,16 +116,14 @@ class _DetailScreenState extends State<DetailScreen> {
                           size: 24.0,
                         ),
                         SizedBox(width: 10.0),
-                        Wrap(
-                          children: <Widget>[
-                            Text(
-                              zipData["location"],
-                              style: TextStyle(color: Colors.black, fontSize: 20.0),
-                              overflow: TextOverflow.ellipsis, // 텍스트가 길어질 때 생략되도록 설정
-                              maxLines: 2, // 최대 2줄까지 표시하도록 설정
-                            ),
-                          ],
-                        )
+                        Expanded( // Expanded 위젯으로 감싸기
+                          child: Text(
+                            zipData["location"],
+                            style: TextStyle(color: Colors.black, fontSize: 20.0),
+                            overflow: TextOverflow.ellipsis, // 텍스트가 길어질 때 생략되도록 설정
+                            maxLines: 1, // 최대 1줄까지 표시하도록 설정
+                          ),
+                        ),
                       ],
                     ),
 

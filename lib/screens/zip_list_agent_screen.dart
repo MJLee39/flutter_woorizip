@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:testapp/account/account_controller.dart';
 import 'package:testapp/utils/api_config.dart';
 import 'package:testapp/widgets/bottom_navigation_widget.dart';
 import 'package:testapp/screens/zip_detail_screen.dart'; // DetailScreen.dart를 import합니다.
@@ -31,7 +32,6 @@ class _ZipListAgentScreenState extends State<ZipListAgentScreen> {
   final TextEditingController locationController = TextEditingController();
   final DepositController depositController = Get.put(DepositController());
   final FeeTypeController feeController = Get.put(FeeTypeController());
-
 
   @override
   void initState() {
