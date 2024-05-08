@@ -5,8 +5,32 @@ import 'package:testapp/widgets/app_bar_widget.dart';
 import 'package:testapp/widgets/bottom_navigation_widget.dart';
 import 'package:testapp/widgets/seemore/loggedin_top_widget.dart';
 
-class SeeMoreScreen extends StatelessWidget {
+class SeeMoreScreen extends StatefulWidget {
+  const SeeMoreScreen({super.key});
+
+  @override
+  _SeeMoreScreenState createState() => _SeeMoreScreenState();
+}
+
+class _SeeMoreScreenState extends State<SeeMoreScreen> {
   final _accountController = Get.find<AccountController>();
+
+  @override
+  void initState() {
+    super.initState();
+    _accountController.addListener(update);
+  }
+
+  @override
+  void dispose() {
+    _accountController.removeListener(update);
+    super.dispose();
+  }
+
+  void update() {
+    setState(() {});
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -14,8 +38,7 @@ class SeeMoreScreen extends StatelessWidget {
       appBar: const AppBarWidget(title: '더보기'),
       body: Column(
         children: [
-          if (_accountController.id.isNotEmpty)
-          const LoggedinTopWidget(),
+          if (_accountController.id.isNotEmpty) const LoggedinTopWidget(),
           const Divider(
             color: Colors.grey,
             height: 20,
@@ -26,7 +49,7 @@ class SeeMoreScreen extends StatelessWidget {
             child: Row(
               children: [
                 Icon(Icons.favorite_border_sharp, color: Colors.grey[400]),
-                SizedBox(width: 10),
+                const  SizedBox(width: 10),
                 TextButton(
                   onPressed: () {
                     Get.toNamed('/event');
@@ -47,11 +70,11 @@ class SeeMoreScreen extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: EdgeInsets.fromLTRB(20.0, 2.0, 20.0, 2.0),
+            padding: const EdgeInsets.fromLTRB(20.0, 2.0, 20.0, 2.0),
             child: Row(
               children: [
                 Icon(Icons.report_gmailerrorred, color: Colors.grey[400]),
-                SizedBox(width: 10),
+                const SizedBox(width: 10),
                 TextButton(
                   onPressed: () {
                     Get.toNamed('/report_history');
@@ -76,7 +99,7 @@ class SeeMoreScreen extends StatelessWidget {
             child: Row(
               children: [
                 Icon(Icons.home_work_outlined, color: Colors.grey[400]),
-                SizedBox(width: 10),
+                const SizedBox(width: 10),
                 TextButton(
                   onPressed: () {
                     Get.toNamed('/conditionreadone');

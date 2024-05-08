@@ -85,4 +85,26 @@ class AccountController extends GetxController {
       print('Error updating account on server: $e');
     }
   }
+
+  Future<bool> deleteAccount() async {
+    try {
+      final serverResponse = await http.delete(
+        Uri.parse(_apiUrl),
+        headers: {'Content-Type': 'application/json'},
+      );
+
+      if (serverResponse.statusCode == 200) {
+        // 서버에서 회원탈퇴 성공 시, 로컬 스토리지에서 계정 정보 삭제
+        _storageService.removeAccount();
+        return true;
+      } else {
+        // 서버에서 회원탈퇴 실패 처리
+        print('Failed to delete account on server: ${serverResponse.statusCode}\n${serverResponse.body}');
+        return false;
+      }
+    } catch (e) {
+      print('Error deleting account on server: $e');
+      return false;
+    }
+  }
 }
