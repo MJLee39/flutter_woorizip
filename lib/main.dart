@@ -16,6 +16,8 @@ void main() async {
     javaScriptAppKey: 'ece3176690e15f855c51937d1d07f3c7',
   );
 
+  print("ID :: ${await KakaoSdk.origin}");
+
   runApp(GetMaterialApp(
     initialBinding: BindingsBuilder(
       () {
