@@ -27,7 +27,7 @@ class Chat extends StatefulWidget {
 }
 
 class ChatState extends State<Chat> {
-  final String webSocketUrl = 'https://chat.teamwaf.app/stomp/chat';
+  final String webSocketUrl = 'http://15.164.244.88:8080/stomp/chat';
   late StompClient _client;
   final ChatController _chatController = ChatController();
   final TextEditingController _controller = TextEditingController();
@@ -58,6 +58,8 @@ class ChatState extends State<Chat> {
   }
 
   void onConnectCallback(StompFrame connectFrame) {
+    print(widget.chatRoomId);
+
     _client.subscribe(
       destination: '/exchange/chat.exchange/room.${widget.chatRoomId}',
       headers: {},

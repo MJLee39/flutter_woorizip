@@ -1,22 +1,22 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:testapp/utils/api_config.dart';
 
 class ChatController {
 
-  final String urlPrefix = "https://chat.teamwaf.app";
+  final String urlPrefix = '${ApiConfig.chatApiEndpointUrl}';
 
   Future<String> getNicknameBy(String accountId) async {
-    // final url = Uri.parse("");
-    // final response = await http.get(url);
-    //
-    // if (response.statusCode == 200) {
-    //   return jsonDecode(utf8.decode(response.bodyBytes));
-    // } else {
-    //   throw Exception("Failed to fetch chat rooms");
-    // }
+    final url = Uri.parse("https://api.teamwaf.app/v1/account/$accountId");
+    final response = await http.get(url);
 
-    return "닉네임";
+    if (response.statusCode == 200) {
+      final account = AccountResponse.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
+      return account.nickname;
+    } else {
+      throw Exception("Failed to fetch chat rooms");
+    }
   }
 
   Future<List<ChatRoomResponseDTO>> fetchChatRooms(String accountId) async {
@@ -114,6 +114,44 @@ class ChatRoomResponseDTO {
       clientId: json['clientId'],
       agentId: json['agentId'],
       recentMessage: json['recentMessage'] ?? "",
+    );
+  }
+}
+
+class AccountResponse {
+  final String id;
+  final String provider;
+  final String providerUserId;
+  final String nickname;
+  final String role;
+  final String licenseId;
+  final String profileImageId;
+  final String premiumDate;
+  final String phone;
+
+  AccountResponse({
+    required this.id,
+    required this.provider,
+    required this.providerUserId,
+    required this.nickname,
+    required this.role,
+    required this.licenseId,
+    required this.profileImageId,
+    required this.premiumDate,
+    required this.phone,
+  });
+
+  factory AccountResponse.fromJson(Map<String, dynamic> json) {
+    return AccountResponse(
+      id: json['Id'],
+      provider: json['Provider'],
+      providerUserId: json['ProviderUserId'],
+      nickname: json['Nickname'],
+      role: json['Role'],
+      licenseId: json['LicenseId'],
+      profileImageId: json['ProfileImageId'],
+      premiumDate: json['PremiumDate'],
+      phone: json['Phone'],
     );
   }
 }

@@ -1,32 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:testapp/account/account_controller.dart';
 import 'package:testapp/widgets/app_bar_widget.dart';
 import 'package:testapp/widgets/bottom_navigation_widget.dart';
 import 'package:testapp/widgets/half_button_widget.dart';
+import 'package:testapp/widgets/home/get_button_widget.dart';
 import 'package:testapp/widgets/page_normal_padding_widget.dart';
 import 'package:testapp/widgets/text_header_widget.dart';
-import 'package:testapp/widgets/home/zip_registration_button_widget.dart';
-import 'package:get/get.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final _accountController = Get.put(AccountController());
-    return Scaffold(
-      appBar: const AppBarWidget(),
+    return const Scaffold(
+      appBar: AppBarWidget(),
       body: PageNormalPaddingWidget(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            const TextHeaderWidget(text: "어떤 집을 찾고 계신가요?"),
-            const SizedBox(height: 30),
-            if (_accountController.role == "Agent")
-            const ZipRegistratitionButtonWidget(),
-
-           
-            const Row(
+            TextHeaderWidget(text: "어떤 집을 찾고 계신가요?"),
+            SizedBox(height: 30),
+            GetButtonWidget(),
+            Row(
               children: [
                 HalfButtonWidget(
                   text: "원룸",
@@ -43,8 +37,8 @@ class HomeScreen extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 10),
-            const Row(
+            SizedBox(height: 10),
+            Row(
               children: [
                 HalfButtonWidget(
                   text: "오피스텔",
@@ -73,7 +67,9 @@ class HomeScreen extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: const BottomNavigationWidget(),
+      bottomNavigationBar: BottomNavigationWidget(),
     );
   }
+  
 }
+

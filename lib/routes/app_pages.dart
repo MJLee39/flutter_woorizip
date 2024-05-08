@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:testapp/account/account_controller.dart';
 import 'package:testapp/chat/chat.dart';
 import 'package:testapp/chat/chatroom_list.dart';
 import 'package:testapp/controllers/chat_controller.dart';
@@ -8,6 +9,7 @@ import 'package:testapp/screens/admin_screen.dart';
 import 'package:testapp/screens/condition/condition_read_all_screen.dart';
 import 'package:testapp/screens/condition/condition_read_by_where_screen.dart';
 import 'package:testapp/screens/condition/condition_update_screen.dart';
+import 'package:testapp/screens/seemore/modify_nickname_screen.dart';
 import 'package:testapp/screens/seemore/myinfo_screen.dart';
 import 'package:testapp/screens/zip_registration/address_search_1_screen.dart';
 import 'package:testapp/screens/home_screen.dart';
@@ -74,20 +76,19 @@ class AppPages {
     ),
     _getPageWithMiddleware(
       name: '/chatRoomList',
-      page: () => ChatRoomListScreen(
-        accountId: 'qassadsadsa',
-      ),
+      page: () => ChatRoomListScreen(),
       middlewares: [],
     ),
     _getPageWithMiddleware(
       name: '/chat/:chatRoomId',
       page: () {
         final ChatController _chatController = ChatController();
+        final AccountController _accountController = AccountController();
         final chatRoomId = Get.parameters['chatRoomId'];
         final accountId = Get.arguments['accountId'];
         var otherNickname;
         _chatController.getNicknameBy(accountId).then((value) => otherNickname = value);
-        return Chat(chatRoomId: chatRoomId ?? "", accountId: accountId ?? "", myNickname: "허위 매물 사기꾼", otherNickname: otherNickname,);
+        return Chat(chatRoomId: chatRoomId ?? "", accountId: accountId ?? "", myNickname: _accountController.nickname, otherNickname: otherNickname,);
       },
       middlewares: [],
     ),
@@ -108,6 +109,12 @@ class AppPages {
         final buildingType = Get.parameters['buildingType'];
         return MapScreen(buildingType: buildingType ?? "");
       },
+      middlewares: [],
+    ),
+
+    _getPageWithMiddleware(
+      name: '/modify_nickname',
+      page: () => const ModifyNickNameScreen(),
       middlewares: [],
     ),
 
@@ -239,6 +246,16 @@ class AppPages {
     ),
 
     _getPageWithMiddleware(
-        name: '/admin', page: () => AdminScreen(), middlewares: [])
+        name: '/admin', page: () => AdminScreen(), middlewares: []),
+
+    /*
+    신고자 목록 조회
+     */
+    // _getPageWithMiddleware(
+    //   name: '/myreport',
+    //   page: () => const ReportListScreen(),
+    //   middlewares: [],
+    // ),
+
   ];
 }

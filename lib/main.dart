@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk_template.dart';
+import 'package:testapp/account/account_controller.dart';
 import 'package:testapp/controllers/navigation_controller.dart';
 import 'package:testapp/routes/app_pages.dart';
 import 'package:testapp/services/auth_service.dart';
@@ -21,6 +22,7 @@ void main() async {
       () {
         Get.put(NavigationController());
         Get.put(AuthService());
+        Get.put(AccountController());
       },
     ),
     theme: ThemeData(
