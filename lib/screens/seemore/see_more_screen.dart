@@ -14,8 +14,7 @@ class SeeMoreScreen extends StatelessWidget {
       appBar: const AppBarWidget(title: '더보기'),
       body: Column(
         children: [
-          if (_accountController.id.isNotEmpty)
-          const LoggedinTopWidget(),
+          if (_accountController.id.isNotEmpty) const LoggedinTopWidget(),
           const Divider(
             color: Colors.grey,
             height: 20,
@@ -79,14 +78,18 @@ class SeeMoreScreen extends StatelessWidget {
                 SizedBox(width: 10),
                 TextButton(
                   onPressed: () {
-                    Get.toNamed('/conditionreadone');
+                    if (_accountController.role == 'User') {
+                      Get.toNamed('/conditionreadone');
+                    } else if (_accountController.role == 'Agent') {
+                      Get.toNamed('/my_listings');
+                    }
                   },
                   style: TextButton.styleFrom(
                     backgroundColor: Colors.white,
                   ),
-                  child: const Text(
-                    '내 조건',
-                    style: TextStyle(
+                  child: Text(
+                    _accountController.role == 'User' ? '내 조건' : '내 매물보기',
+                    style: const TextStyle(
                       color: Colors.black87,
                       fontSize: 20,
                       fontWeight: FontWeight.normal,
