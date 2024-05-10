@@ -263,16 +263,16 @@ class _RoomDetailScreenState extends State<RoomDetailScreen> {
 
               var chatRoomInfo =
                   await _chatController.createChatRoom(clientId, agentId);
-                      Navigator.push(
-                          context, MaterialPageRoute(
-                          builder: (context) => Chat(
-                            chatRoomId: chatRoomInfo['id'],
-                            accountId: clientId,
-                            myNickname: _accountController.nickname,
-                            otherNickname: otherNickname,
-                          ),
-                        ),
-                        );
+                  Navigator.push(
+                      context, MaterialPageRoute(
+                      builder: (context) => Chat(
+                        chatRoomId: chatRoomInfo['id'],
+                        accountId: clientId,
+                        myNickname: _accountController.nickname,
+                        otherNickname: otherNickname,
+                      ),
+                    ),
+                    );
             }),
       );
     }
