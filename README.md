@@ -20,10 +20,10 @@
 
 # 👩‍💻 팀 소개
 
-- 이명진 : 매물(zip, estate) 도메인 개발 및 CI/CD 구성
-- 조승빈 : 채팅(chatting) 도메인 개발 및 CI/CD 구성
-- 권성준 : 조건(condition) 도메인 개발 및 CI/CD 구성
-- 한상우 : 계정(account), 첨부파일(attachment) 도메인 개발 및 CI/CD 구성
+- 이명진 : 매물(zip, estate) 도메인 백/프런트 개발 및 CI/CD 구성
+- 조승빈 : 채팅(chatting) 도메인 백/프런트 개발 및 CI/CD 구성
+- 권성준 : 조건(condition) 도메인 백/프런트 개발 및 CI/CD 구성
+- 한상우 : 계정(account), 첨부파일(attachment) 도메인 백/프런트 개발 및 CI/CD 구성
   
 
 # ✨ 서비스 소개
